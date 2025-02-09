@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../models/product_model.dart';
+import 'package:andb/models/product_model.dart';
 
 class ProductList extends StatelessWidget {
   // final List<Product> products;
