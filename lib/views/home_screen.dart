@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-// import 'package:anbd_app/viewmodels/home_viewmodel.dart';
+import 'package:andb/widgets/custom_bottom_navigation_bar.dart'; // ✅ import 추가
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,23 +15,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("상도동")),
-      body: _buildBody(), // ✅ 화면 변경을 위한 함수 호출
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.black,
-        selectedFontSize: 12,
+      body: _buildBody(), // ✅ 현재 선택된 탭에 따라 화면 변경
+      bottomNavigationBar: CustomBottomNavigationBar( // ✅ 분리한 위젯 사용
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
             _currentIndex = index; // 탭 변경
           });
         },
-        items: [
-          _bottomNavigationBarItem("home", "홈"),
-          _bottomNavigationBarItem("notes", "동네생활"),
-          _bottomNavigationBarItem("chat", "채팅"),
-          _bottomNavigationBarItem("user", "마이페이지"),
-        ],
       ),
     );
   }
@@ -50,21 +39,5 @@ class _HomeScreenState extends State<HomeScreen> {
       default:
         return Center(child: Text("마이페이지"));
     }
-  }
-
-  /// ✅ BottomNavigationBarItem을 쉽게 추가하는 함수
-  BottomNavigationBarItem _bottomNavigationBarItem(
-      String iconName, String label) {
-    return BottomNavigationBarItem(
-      icon: Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: SvgPicture.asset("assets/svg/${iconName}_off.svg", width: 24),
-      ),
-      activeIcon: Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: SvgPicture.asset("assets/svg/${iconName}_on.svg", width: 24),
-      ),
-      label: label,
-    );
   }
 }
