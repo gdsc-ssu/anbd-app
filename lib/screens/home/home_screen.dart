@@ -1,4 +1,4 @@
-import 'package:andb/viewmodels/home_viewmodel.dart';
+import 'package:andb/screens/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:andb/widgets/custom_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart'; // ✅ import 추가

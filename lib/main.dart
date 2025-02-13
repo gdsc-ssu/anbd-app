@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:andb/viewmodels/home_viewmodel.dart';
-import 'package:andb/views/home_screen.dart';
+import 'package:andb/screens/home/home_viewmodel.dart';
+import 'package:andb/screens/home/home_screen.dart';
 
 void main() {
   runApp(
