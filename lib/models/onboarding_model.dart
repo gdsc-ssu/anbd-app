@@ -10,7 +10,7 @@ class OnboardingInfo {
 class OnboardingItems {
   static String basePath = "assets/images/onboarding";
 
-  List<OnboardingInfo> items = [
+  static final List<OnboardingInfo> items = [
     OnboardingInfo(
         content: "무심코 버리려던 물건들이 해양과 환경에 악영향을 끼치고 있다는 사실을 아시나요?",
         image: "$basePath/onboarding1.png"),
