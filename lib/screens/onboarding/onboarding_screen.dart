@@ -22,7 +22,7 @@ class OnboardingScreen extends StatelessWidget {
               onPageChanged: viewModel.updatePage,
               itemBuilder: (context, index) {
                 final item = viewModel.onboardingItems[index];
-                return _buildOnboardingPage(item);
+                return _buildOnboardingPage(item, index);
               },
             ),
           ),
@@ -51,7 +51,7 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOnboardingPage(OnboardingInfo item) {
+  Widget _buildOnboardingPage(OnboardingInfo item, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -63,7 +63,10 @@ class OnboardingScreen extends StatelessWidget {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          Image.asset(item.image, height: 250),
+          Image.asset(
+              item.image,
+              height: index == 0 || index == 3 ? 300 : 250,
+          ),
           const SizedBox(height: 60),
         ],
       ),
