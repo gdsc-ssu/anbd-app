@@ -1,45 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:andb/screens/onboarding/onboarding_viewmodel.dart';
-import 'package:andb/models/onboarding_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:andb/models/onboarding_model.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => OnboardingViewModel(),
-      child: Consumer<OnboardingViewModel>(
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            body: Column(
-              children: [
-                const SizedBox(height: 80),
-                _buildPageIndicator(viewModel),
-                Expanded(
-                  child: PageView.builder(
-                    controller: viewModel.pageController,
-                    itemCount: viewModel.onboardingItems.length,
-                    onPageChanged: viewModel.updatePage,
-                    itemBuilder: (context, index) {
-                      final item = viewModel.onboardingItems[index];
-                      return _buildOnboardingPage(item);
-                    },
-                  ),
-                ),
-                _buildBottomNavigation(viewModel, context),
-              ],
+    final viewModel = context.watch<OnboardingViewModel>();
+    return Scaffold(
+      body: Column(
+        children: [
+          const SizedBox(height: 60),
+          _buildPageIndicator(viewModel),
+          Expanded(
+            child: PageView.builder(
+              controller: viewModel.pageController,
+              itemCount: viewModel.onboardingItems.length,
+              onPageChanged: viewModel.updatePage,
+              itemBuilder: (context, index) {
+                final item = viewModel.onboardingItems[index];
+                return _buildOnboardingPage(item);
+              },
             ),
-          );
-        },
+          ),
+          _buildBottomNavigation(viewModel, context),
+        ],
       ),
     );
   }
 
   Widget _buildPageIndicator(OnboardingViewModel viewModel) {
-    return Align( // ✅ 중앙 정렬
+    return Align(
       alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -47,7 +41,7 @@ class OnboardingScreen extends StatelessWidget {
           controller: viewModel.pageController,
           count: viewModel.onboardingItems.length,
           effect: const ExpandingDotsEffect(
-            activeDotColor: const Color(0xFF1E88E5),
+            activeDotColor: Color(0xFF1E88E5),
             dotColor: Colors.grey,
             dotHeight: 8,
             dotWidth: 8,
@@ -68,7 +62,7 @@ class OnboardingScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Image.asset(item.image, height: 250),
           const SizedBox(height: 60),
         ],
@@ -80,15 +74,15 @@ class OnboardingScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: ElevatedButton(
-        onPressed: () => viewModel.completeOnboarding(context), // 온보딩 완료 처리
+        onPressed: () => viewModel.completeOnboarding(context),
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF1E88E5),
           minimumSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(15),
           ),
         ),
-        child: const Text("Skip", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        child: const Text("Skip", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }

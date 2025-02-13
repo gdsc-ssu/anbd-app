@@ -15,26 +15,9 @@ class OnboardingViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void nextPage() {
-    if (_currentPage < onboardingItems.length - 1) {
-      _pageController.animateToPage(
-        _currentPage + 1,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
   Future<void> completeOnboarding(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isOnboardingCompleted', true);
-
-    // ✅ 온보딩 완료 후 홈 화면으로 이동
     Navigator.pushReplacementNamed(context, "/home");
-  }
-
-  Future<bool> isOnboardingCompleted() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isOnboardingCompleted') ?? false;
   }
 }
