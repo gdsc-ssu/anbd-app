@@ -16,6 +16,8 @@ class OnboardingScreen extends StatelessWidget {
           return Scaffold(
             body: Column(
               children: [
+                const SizedBox(height: 80),
+                _buildPageIndicator(viewModel),
                 Expanded(
                   child: PageView.builder(
                     controller: viewModel.pageController,
@@ -36,19 +38,39 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildPageIndicator(OnboardingViewModel viewModel) {
+    return Align( // ✅ 중앙 정렬
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: SmoothPageIndicator(
+          controller: viewModel.pageController,
+          count: viewModel.onboardingItems.length,
+          effect: const ExpandingDotsEffect(
+            activeDotColor: const Color(0xFF1E88E5),
+            dotColor: Colors.grey,
+            dotHeight: 8,
+            dotWidth: 8,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildOnboardingPage(OnboardingInfo item) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(item.image, height: 250),
-          const SizedBox(height: 30),
           Text(
             item.content,
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 16),
+          Image.asset(item.image, height: 250),
+          const SizedBox(height: 60),
         ],
       ),
     );
@@ -56,32 +78,17 @@ class OnboardingScreen extends StatelessWidget {
 
   Widget _buildBottomNavigation(OnboardingViewModel viewModel, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          SmoothPageIndicator(
-            controller: viewModel.pageController,
-            count: viewModel.onboardingItems.length,
-            effect: const ExpandingDotsEffect(
-              activeDotColor: Colors.blue,
-              dotColor: Colors.grey,
-              dotHeight: 8,
-              dotWidth: 8,
-            ),
+      padding: const EdgeInsets.all(32.0),
+      child: ElevatedButton(
+        onPressed: () => viewModel.completeOnboarding(context), // 온보딩 완료 처리
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF1E88E5),
+          minimumSize: const Size(double.infinity, 50),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => viewModel.completeOnboarding(context), // ✅ 온보딩 완료 처리
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              minimumSize: const Size(double.infinity, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: const Text("Skip", style: TextStyle(color: Colors.white)),
-          ),
-        ],
+        ),
+        child: const Text("Skip", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }
