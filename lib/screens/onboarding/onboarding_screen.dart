@@ -11,10 +11,9 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.watch<OnboardingViewModel>();
     return Scaffold(
+      appBar: OnboardingAppBar(onSkip: () => viewModel.completeOnboarding(context)),
       body: Column(
         children: [
-          const SizedBox(height: 60),
-          _buildPageIndicator(viewModel),
           Expanded(
             child: PageView.builder(
               controller: viewModel.pageController,
@@ -26,7 +25,8 @@ class OnboardingScreen extends StatelessWidget {
               },
             ),
           ),
-          _buildBottomNavigation(viewModel, context),
+          _buildPageIndicator(viewModel),
+          const SizedBox(height: 60),
         ],
       ),
     );
@@ -64,29 +64,46 @@ class OnboardingScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Image.asset(
-              item.image,
-              height: index == 0 || index == 3 ? 300 : 250,
+            item.image,
+            height: index == 0 || index == 3 ? 300 : 250,
           ),
           const SizedBox(height: 60),
         ],
       ),
     );
   }
+}
 
-  Widget _buildBottomNavigation(OnboardingViewModel viewModel, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: ElevatedButton(
-        onPressed: () => viewModel.completeOnboarding(context),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1E88E5),
-          minimumSize: const Size(double.infinity, 50),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+/// ✅ AppBar를 별도 위젯으로 분리
+class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final VoidCallback onSkip;
+
+  const OnboardingAppBar({super.key, required this.onSkip});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 3.0),
+          child: TextButton(
+            onPressed: onSkip,
+            child: const Text(
+              "Skip",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
-        child: const Text("Skip", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+      ],
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
