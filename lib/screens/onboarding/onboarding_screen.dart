@@ -13,7 +13,7 @@ class OnboardingScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: viewModel.currentPage == viewModel.onboardingItems.length - 1
-          ? null // ✅ 마지막 페이지에서는 AppBar를 숨김
+          ? null
           : OnboardingAppBar(onSkip: () => viewModel.completeOnboarding(context)),
       body: Column(
         children: [
@@ -81,7 +81,6 @@ class OnboardingScreen extends StatelessWidget {
   }
 
 
-  /// ✅ 마지막 페이지에서 "ANDB 시작하기" 버튼 표시
   Widget _buildStartButton(OnboardingViewModel viewModel, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
@@ -103,7 +102,6 @@ class OnboardingScreen extends StatelessWidget {
   }
 }
 
-/// ✅ AppBar를 별도 위젯으로 분리
 class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onSkip;
 
