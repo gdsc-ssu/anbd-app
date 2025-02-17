@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white, // 전체 앱 배경색을 흰색으로 설정
-          colorScheme: ColorScheme.light(), // 기본 색상을 라이트 모드로 설정
+          colorScheme: const ColorScheme.light(), // 기본 색상을 라이트 모드로 설정
         ),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Onboarding',
