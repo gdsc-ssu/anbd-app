@@ -18,6 +18,10 @@ class OnboardingViewModel extends ChangeNotifier {
   Future<void> completeOnboarding(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isOnboardingCompleted', true);
-    Navigator.pushReplacementNamed(context, "/home");
+
+    // 현재 프레임이 완료된 후 Navigator 실행
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pushReplacementNamed(context, "/home");
+    });
   }
 }

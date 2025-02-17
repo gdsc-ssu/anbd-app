@@ -11,6 +11,7 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.watch<OnboardingViewModel>();
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: OnboardingAppBar(onSkip: () => viewModel.completeOnboarding(context)),
       body: Column(
         children: [

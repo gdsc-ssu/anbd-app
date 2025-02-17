@@ -1,34 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:andb/screens/onboarding/onboarding_viewmodel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:andb/screens/onboarding/onboarding_screen.dart';
+import 'package:andb/screens/home/home_screen.dart';
+import 'package:andb/screens/onboarding/onboarding_viewmodel.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // ✅ 비동기 초기화 문제 방지
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final bool isOnboardingCompleted = prefs.getBool('isOnboardingCompleted') ?? false;
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => OnboardingViewModel()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(MyApp(isOnboardingCompleted: isOnboardingCompleted));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isOnboardingCompleted;
+
+  const MyApp({super.key, required this.isOnboardingCompleted});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter MVVM Demo',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (_) => OnboardingViewModel(),
+      child: MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white, // 전체 앱 배경색을 흰색으로 설정
+          colorScheme: ColorScheme.light(), // 기본 색상을 라이트 모드로 설정
+        ),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Onboarding',
+        // initialRoute: isOnboardingCompleted ? "/home" : "/onboarding",
+        initialRoute: "/onboarding",
+        routes: {
+          "/onboarding": (context) => const OnboardingScreen(),
+          "/home": (context) => const HomeScreen(),
+        },
       ),
-      home: const OnboardingScreen(),
     );
   }
 }
