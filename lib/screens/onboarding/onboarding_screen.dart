@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:andb/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:andb/models/onboarding_model.dart';
+import 'package:andb/route/routes.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -59,23 +61,21 @@ class OnboardingScreen extends StatelessWidget {
   Widget _buildOnboardingPage(OnboardingInfo item, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Expanded( // ✅ Column을 Expanded로 감싸서 동일한 높이를 유지
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // ✅ 중앙 정렬 유지
-          children: [
-            Text(
-              item.content,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Image.asset(
-              item.image,
-              height: 250,
-            ),
-            index != 4 ? const SizedBox(height: 60) : SizedBox(height: 0),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            item.content,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Image.asset(
+            item.image,
+            height: 250,
+          ),
+          index != 4 ? const SizedBox(height: 60) : const SizedBox(height: 0),
+        ],
       ),
     );
   }
@@ -116,7 +116,9 @@ class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 3.0),
           child: TextButton(
-            onPressed: onSkip,
+            onPressed: () {
+              context.push('/home');
+            },
             child: const Text(
               "Skip",
               style: TextStyle(
