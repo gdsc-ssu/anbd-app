@@ -64,10 +64,12 @@ class OnboardingScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            item.content,
+          RichText(
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            text: TextSpan(
+              children: item.contentSpans,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+            ),
           ),
           const SizedBox(height: 8),
           Image.asset(
