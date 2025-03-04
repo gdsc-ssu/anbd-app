@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:andb/screens/onboarding/onboarding_viewmodel.dart';
-import 'package:andb/route/routes.dart'; // ✅ AppRouter import
+import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
+import 'package:anbd/route/routes.dart'; // ✅ AppRouter import
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
