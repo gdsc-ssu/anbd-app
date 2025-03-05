@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:andb/screens/onboarding/onboarding_viewmodel.dart';
+import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:andb/models/onboarding_model.dart';
-import 'package:andb/route/routes.dart';
+import 'package:anbd/models/onboarding_model.dart';
+import 'package:anbd/route/routes.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -16,7 +16,8 @@ class OnboardingScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: viewModel.currentPage == viewModel.onboardingItems.length - 1
           ? null
-          : OnboardingAppBar(onSkip: () => viewModel.completeOnboarding(context)),
+          : OnboardingAppBar(
+              onSkip: () => viewModel.completeOnboarding(context)),
       body: Column(
         children: [
           Expanded(
@@ -31,7 +32,8 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
           viewModel.currentPage == viewModel.onboardingItems.length - 1
-              ? _buildStartButton(viewModel, context) // ✅ 마지막 페이지에서는 "ANDB 시작하기" 버튼 표시
+              ? _buildStartButton(
+                  viewModel, context) // ✅ 마지막 페이지에서는 "ANDB 시작하기" 버튼 표시
               : _buildPageIndicator(viewModel),
           const SizedBox(height: 50),
         ],
@@ -67,9 +69,9 @@ class OnboardingScreen extends StatelessWidget {
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              children: item.contentSpans,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
-            ),
+                children: item.contentSpans,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ),
           const SizedBox(height: 8),
           Image.asset(
@@ -82,8 +84,8 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 
-
-  Widget _buildStartButton(OnboardingViewModel viewModel, BuildContext context) {
+  Widget _buildStartButton(
+      OnboardingViewModel viewModel, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
       child: ElevatedButton(
@@ -97,7 +99,8 @@ class OnboardingScreen extends StatelessWidget {
         ),
         child: const Text(
           "ANDB 시작하기",
-          style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );

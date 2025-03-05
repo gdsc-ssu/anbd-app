@@ -1,6 +1,6 @@
-import 'package:andb/screens/home/home_viewmodel.dart';
+import 'package:anbd/screens/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:andb/widgets/custom_bottom_navigation_bar.dart';
+import 'package:anbd/widgets/custom_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart'; // ✅ import 추가
 
 class HomeScreen extends StatelessWidget {

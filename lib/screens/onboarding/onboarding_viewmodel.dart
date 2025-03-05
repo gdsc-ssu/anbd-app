@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:andb/models/onboarding_model.dart';
+import 'package:anbd/models/onboarding_model.dart';
 
 class OnboardingViewModel extends ChangeNotifier {
   final PageController _pageController = PageController();
