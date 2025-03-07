@@ -32,6 +32,12 @@ final class AnbdTextStyle {
     color: AnbdColor.systemGray05,
   );
 
+  static const TextStyle Body14 = TextStyle(
+    fontFamily: "PretendardRegular",
+    fontSize: 14,
+    color: AnbdColor.systemGray05,
+  );
+
   static const TextStyle Body15 = TextStyle(
     fontFamily: "PretendardRegular",
     fontSize: 15,
