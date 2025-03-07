@@ -19,15 +19,19 @@ class BasicTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: AnbdTextStyle.Body14.copyWith(color: AnbdColor.systemGray03),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: AnbdColor.systemGray05),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: AnbdColor.systemGray05),
         ),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: AnbdColor.systemGray05),
         ),
+        counterText: '',
       ),
     );
   }
