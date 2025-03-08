@@ -17,12 +17,25 @@ class HomeViewModel extends ChangeNotifier {
   List<Product> get products => _products;
   int get currentIndex => _currentIndex;
 
+  // ✅ 현재 선택된 탭의 제목 반환
+  String get currentAppBarTitle {
+    return _appBarTitles[_currentIndex];
+  }
+
+  // ✅ AppBar에 표시할 제목 리스트
+  final List<String> _appBarTitles = [
+    "홈",      // index 0: 홈
+    "동네생활",  // index 1: Community
+    "채팅",     // index 2: Chat
+    "마이페이지"  // index 3: MyPage
+  ];
+
   void updateIndex(int index) {
     _currentIndex = index;
     notifyListeners();
   }
 
-  // 백엔드에서 데이터 불러오기 (예제 데이터 사용) (임시)
+  // ✅ 백엔드에서 데이터 불러오기 (예제 데이터 사용)
   Future<void> fetchProducts() async {
     await Future.delayed(Duration(seconds: 2)); // API 호출 시뮬레이션
 
@@ -31,7 +44,7 @@ class HomeViewModel extends ChangeNotifier {
         title: "에어팟 프로",
         location: "군자동",
         timeAgo: "3일 전",
-        imageUrl: "https://images.unsplash.com/photo-1573148164257-99a17c75ae6c", // ✅ 정상적인 URL 사용
+        imageUrl: "https://images.unsplash.com/photo-1573148164257-99a17c75ae6c",
         comments: 3,
         likes: 11,
         isFree: true,
@@ -40,7 +53,7 @@ class HomeViewModel extends ChangeNotifier {
         title: "바이레도 블랑쉬 50ml",
         location: "광진구 구의제3동",
         timeAgo: "26초 전",
-        imageUrl: "https://images.unsplash.com/photo-1591076482161-246ef5a30861", // ✅ 정상적인 URL 사용
+        imageUrl: "https://images.unsplash.com/photo-1591076482161-246ef5a30861",
         comments: 0,
         likes: 2,
       ),
@@ -48,7 +61,7 @@ class HomeViewModel extends ChangeNotifier {
         title: "샌드위치",
         location: "동대문구 휘경동",
         timeAgo: "59초 전",
-        imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c", // ✅ 정상적인 URL 사용
+        imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
       ),
     ];
 

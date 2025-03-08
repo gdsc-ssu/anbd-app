@@ -5,13 +5,10 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("채팅")),
-      body: const Center(
-        child: Text(
-          "채팅",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+    return const Center(
+      child: Text(
+        "채팅",
+        style: TextStyle(fontSize: 18),
       ),
     );
   }
