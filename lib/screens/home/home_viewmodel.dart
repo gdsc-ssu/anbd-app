@@ -1,33 +1,7 @@
-// import 'package:flutter/material.dart';
-//
-// class HomeViewModel extends ChangeNotifier {
-//   int _currentIndex = 0;
-//
-//   int get currentIndex => _currentIndex;
-//
-//   void updateIndex(int index) {
-//     _currentIndex = index;
-//     notifyListeners(); // ✅ UI 업데이트
-//   }
-//
-//   Widget get currentScreen {
-//     switch (_currentIndex) {
-//       case 0:
-//         return Center(child: Text("홈 화면"));
-//       case 1:
-//         return Center(child: Text("동네 생활"));
-//       case 2:
-//         return Center(child: Text("채팅"));
-//       default:
-//         return Center(child: Text("마이페이지"));
-//     }
-//   }
-// }
-
 import 'package:flutter/material.dart';
-// import 'package:anbd/screens/community/community_page.dart';
-// import 'package:anbd/screens/chat/chat_page.dart';
-// import 'package:anbd/screens/mypage/mypage_page.dart';
+import 'package:anbd/screens/community/community_screen.dart';
+import 'package:anbd/screens/chat/chat_screen.dart';
+import 'package:anbd/screens/mypage/mypage_screen.dart';
 import 'package:anbd/models/product_model.dart';
 import 'package:anbd/widgets/product_item.dart';
 
@@ -48,7 +22,7 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ✅ 백엔드에서 데이터 불러오기 (예제 데이터 사용)
+  // 백엔드에서 데이터 불러오기 (예제 데이터 사용) (임시)
   Future<void> fetchProducts() async {
     await Future.delayed(Duration(seconds: 2)); // API 호출 시뮬레이션
 
@@ -106,8 +80,8 @@ class HomeViewModel extends ChangeNotifier {
 
   // 기존 네비게이션 화면 리스트 (홈 제외)
   final List<Widget> _screens = [
-    // CommunityPage(),
-    // ChatPage(),
-    // MyPage(),
+    CommunityScreen(),
+    ChatScreen(),
+    MyPageScreen(),
   ];
 }

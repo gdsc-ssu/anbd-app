@@ -26,7 +26,7 @@ class ProductItem extends StatelessWidget {
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
-                    'assets/images/placeholder.png', // ✅ 기본 이미지 (플레이스홀더)
+                    'assets/images/placeholder.png',
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
