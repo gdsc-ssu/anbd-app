@@ -1,26 +1,32 @@
-// class Product {
-//   final String image;
-//   final String title;
-//   final String location;
-//   final String price;
-//   final String likes;
-//
-//   Product({
-//     required this.image,
-//     required this.title,
-//     required this.location,
-//     required this.price,
-//     required this.likes,
-//   });
-//
-//   // JSON 데이터를 Model 객체로 변환하는 factory 생성자
-//   factory Product.fromJson(Map<String, String> json) {
-//     return Product(
-//       image: json["image"] ?? "",
-//       title: json["title"] ?? "정보 없음",
-//       location: json["location"] ?? "정보 없음",
-//       price: json["price"] ?? "0",
-//       likes: json["likes"] ?? "0",
-//     );
-//   }
-// }
+class Product {
+  final String title;
+  final String location;
+  final String timeAgo;
+  final String imageUrl;
+  final int comments;
+  final int likes;
+  final bool isFree;
+
+  Product({
+    required this.title,
+    required this.location,
+    required this.timeAgo,
+    required this.imageUrl,
+    this.comments = 0,
+    this.likes = 0,
+    this.isFree = false,
+  });
+
+  // JSON 데이터를 모델로 변환하는 메서드
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      title: json['title'],
+      location: json['location'],
+      timeAgo: json['timeAgo'],
+      imageUrl: json['imageUrl'],
+      comments: json['comments'] ?? 0,
+      likes: json['likes'] ?? 0,
+      isFree: json['isFree'] ?? false,
+    );
+  }
+}

@@ -1,2 +1,2 @@
-import 'colors.dart';
-import 'style.dart';
+export 'colors.dart';
+export 'style.dart';
