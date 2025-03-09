@@ -1,3 +1,4 @@
+import 'package:anbd/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +23,7 @@ class OnboardingViewModel extends ChangeNotifier {
 
     // 현재 프레임이 완료된 후 Navigator 실행
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.push('/home');
+      context.push(Paths.home);
     });
   }
 }
