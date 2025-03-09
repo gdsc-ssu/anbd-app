@@ -1,3 +1,4 @@
+import 'package:anbd/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -122,7 +123,7 @@ class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 3.0),
           child: TextButton(
             onPressed: () {
-              context.push('/home');
+              context.push(Paths.home);
             },
             child: const Text(
               "Skip",
