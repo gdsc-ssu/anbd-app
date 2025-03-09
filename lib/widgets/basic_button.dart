@@ -37,7 +37,9 @@ class BasicButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          textStyle: AnbdTextStyle.TitleSB18,
+          textStyle: (size == BasicButtonSize.LARGE)
+              ? AnbdTextStyle.TitleSB18
+              : AnbdTextStyle.BodyEB15,
         ),
         child: Text(text),
       ),
