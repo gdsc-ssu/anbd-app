@@ -40,11 +40,11 @@ class ProductItem extends StatelessWidget {
                   children: [
                     Text(
                       product.title,
-                      style: const TextStyle(fontSize: 16),
+                      style: AnbdTextStyle.Body16,
                     ),
                     Text(
                       "${product.location} · ${product.timeAgo}",
-                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
                     ),
                   ],
                 ),

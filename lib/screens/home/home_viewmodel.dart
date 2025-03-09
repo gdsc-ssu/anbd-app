@@ -10,28 +10,39 @@ class HomeViewModel extends ChangeNotifier {
   bool isLoading = true;
   List<Product> _products = [];
 
+  String _currentLocation = "군자동"; // 기본 선택된 위치
+  final List<String> _locations = ["군자동", "광진구 구의제3동", "동대문구 휘경동"];
+
   HomeViewModel() {
     fetchProducts();
   }
 
   List<Product> get products => _products;
   int get currentIndex => _currentIndex;
+  String get currentLocation => _currentLocation;
+  List<String> get locations => _locations;
 
-  // ✅ 현재 선택된 탭의 제목 반환
+  // ✅ 현재 선택된 탭의 제목 반환 (홈에서는 위치 표시)
   String get currentAppBarTitle {
-    return _appBarTitles[_currentIndex];
+    return _currentIndex == 0 ? _currentLocation : _appBarTitles[_currentIndex];
   }
 
   // ✅ AppBar에 표시할 제목 리스트
   final List<String> _appBarTitles = [
-    "홈",      // index 0: 홈
+    "홈",       // index 0: 홈 (실제 사용 시 location으로 표시됨)
     "동네생활",  // index 1: Community
-    "채팅",     // index 2: Chat
+    "채팅",      // index 2: Chat
     "마이페이지"  // index 3: MyPage
   ];
 
   void updateIndex(int index) {
     _currentIndex = index;
+    notifyListeners();
+  }
+
+  // ✅ 선택된 위치 업데이트
+  void updateLocation(String newLocation) {
+    _currentLocation = newLocation;
     notifyListeners();
   }
 
@@ -44,7 +55,7 @@ class HomeViewModel extends ChangeNotifier {
         title: "에어팟 프로",
         location: "군자동",
         timeAgo: "3일 전",
-        imageUrl: "https://images.unsplash.com/photo-1573148164257-99a17c75ae6c",
+        imageUrl: "",
         comments: 3,
         likes: 11,
         isFree: true,
@@ -53,7 +64,7 @@ class HomeViewModel extends ChangeNotifier {
         title: "바이레도 블랑쉬 50ml",
         location: "광진구 구의제3동",
         timeAgo: "26초 전",
-        imageUrl: "https://images.unsplash.com/photo-1591076482161-246ef5a30861",
+        imageUrl: "",
         comments: 0,
         likes: 2,
       ),
@@ -61,7 +72,7 @@ class HomeViewModel extends ChangeNotifier {
         title: "샌드위치",
         location: "동대문구 휘경동",
         timeAgo: "59초 전",
-        imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+        imageUrl: "",
       ),
     ];
 
@@ -81,7 +92,7 @@ class HomeViewModel extends ChangeNotifier {
   // ✅ 홈 화면: ProductItem 리스트
   Widget _buildHomeScreen() {
     if (isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
     return ListView.builder(
       itemCount: _products.length,
