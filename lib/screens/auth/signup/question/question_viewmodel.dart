@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SignupProcessViewModel extends ChangeNotifier {
+class QuestionViewModel extends ChangeNotifier {
   String? _selectedGender; // 선택된 성별
   final TextEditingController ageController =
       TextEditingController(); // 나이 입력 컨트롤러
 
-  SignupProcessViewModel() {
+  QuestionViewModel() {
     ageController.addListener(() {
       notifyListeners(); // 입력 값 변경 시 UI 업데이트
     });

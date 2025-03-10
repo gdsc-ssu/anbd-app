@@ -4,15 +4,15 @@ import 'package:anbd/widgets/basic_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:anbd/screens/auth/signup/signup_process_viewmodel.dart';
+import 'package:anbd/screens/auth/signup/question/question_viewmodel.dart';
 
-class SignupProcessScreen extends StatelessWidget {
-  const SignupProcessScreen({super.key});
+class QuestionScreen extends StatelessWidget {
+  const QuestionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => SignupProcessViewModel(),
+      create: (_) => QuestionViewModel(),
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -24,7 +24,7 @@ class SignupProcessScreen extends StatelessWidget {
                   child: Padding(
                     padding:
                         const EdgeInsets.only(left: 16, right: 16, top: 50),
-                    child: Consumer<SignupProcessViewModel>(
+                    child: Consumer<QuestionViewModel>(
                       builder: (context, viewModel, child) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +57,7 @@ class SignupProcessScreen extends StatelessWidget {
               ),
 
               /// 다음 버튼
-              Consumer<SignupProcessViewModel>(
+              Consumer<QuestionViewModel>(
                 builder: (context, viewModel, child) {
                   return viewModel.isNextButtonVisible
                       ? Padding(
@@ -81,7 +81,7 @@ class SignupProcessScreen extends StatelessWidget {
   }
 
   Widget _buildGenderSelection(
-      BuildContext context, SignupProcessViewModel viewModel) {
+      BuildContext context, QuestionViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -124,8 +124,7 @@ class SignupProcessScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAgeInput(
-      BuildContext context, SignupProcessViewModel viewModel) {
+  Widget _buildAgeInput(BuildContext context, QuestionViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
