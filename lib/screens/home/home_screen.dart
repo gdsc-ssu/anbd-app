@@ -4,6 +4,7 @@ import 'package:anbd/screens/home/home_viewmodel.dart';
 import 'package:anbd/widgets/custom_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:anbd/constants/constants.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -47,15 +48,15 @@ class HomeScreen extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.search),
+              icon: SvgPicture.asset("assets/svg/search.svg"),
               onPressed: () {},
             ),
             IconButton(
-              icon: const Icon(Icons.menu),
+              icon: SvgPicture.asset("assets/svg/menu.svg"),
               onPressed: () {},
             ),
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: SvgPicture.asset("assets/svg/notification.svg"),
               onPressed: () {},
             ),
           ],
