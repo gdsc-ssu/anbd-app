@@ -128,8 +128,8 @@ class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
               "Skip",
               style: TextStyle(
                 fontSize: 15,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
+                fontFamily: "PretendardSemiBold",
+                color: AnbdColor.systemGray03,
               ),
             ),
           ),
