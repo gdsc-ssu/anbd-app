@@ -34,6 +34,7 @@ flutter:
   assets:
     - assets/svg/
     - assets/images/onboarding/
+    - assets/images/
 
   fonts:
     - family: PretendardRegular
