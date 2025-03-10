@@ -35,7 +35,7 @@ class QuestionScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             const Text(
-                              "ANBD를 시작하기 전 질문을 드릴게요",
+                              "ANBD를 시작하기 전 몇가지 질문을 드릴게요",
                               style: AnbdTextStyle.TitleSB18,
                             ),
                             const SizedBox(height: 30),
