@@ -78,12 +78,18 @@ class HomeScreen extends StatelessWidget {
             },
           ),
 
-          Positioned(
-            bottom: 16.0,
-            right: 16.0,
-            child: FloatingComposeButton(
-              onPressed: () {},
-            ),
+          Consumer<HomeViewModel>(
+            builder: (context, viewModel, child) {
+              return viewModel.currentIndex == 0
+                  ? Positioned(
+                bottom: 16.0,
+                right: 16.0,
+                child: FloatingComposeButton(
+                  onPressed: () {},
+                ),
+              )
+                  : const SizedBox();
+            },
           ),
         ],
       ),
