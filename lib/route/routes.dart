@@ -1,3 +1,4 @@
+import 'package:anbd/screens/auth/login/login_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +23,10 @@ class AppRouter {
       GoRoute(
         path: Paths.home,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: Paths.login,
+        builder: (context, state) => const LoginScreen(),
       ),
     ],
   );
