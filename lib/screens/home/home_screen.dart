@@ -1,3 +1,4 @@
+import 'package:anbd/widgets/floating_compose_button.dart';
 import 'package:flutter/material.dart';
 import 'package:anbd/screens/home/home_viewmodel.dart';
 import 'package:anbd/widgets/custom_bottom_navigation_bar.dart';
@@ -59,7 +60,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1.0), // Divider 높이 설정
+            preferredSize: const Size.fromHeight(1.0),
             child: Container(
               color: AnbdColor.systemGray02,
               height: 1.0,
@@ -68,12 +69,24 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
 
+      body: Stack(
+        children: [
+          Consumer<HomeViewModel>(
+            builder: (context, viewModel, child) {
+              return viewModel.currentScreen;
+            },
+          ),
 
-      body: Consumer<HomeViewModel>(
-        builder: (context, viewModel, child) {
-          return viewModel.currentScreen;
-        },
+          Positioned(
+            bottom: 16.0,
+            right: 16.0,
+            child: FloatingComposeButton(
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
+
       bottomNavigationBar: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
           return CustomBottomNavigationBar(
@@ -84,5 +97,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 }
 
