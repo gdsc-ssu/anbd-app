@@ -2,6 +2,7 @@ import 'package:anbd/common/enums/login_platform.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:anbd/screens/auth/login/login_view_model.dart';
 
@@ -43,14 +44,15 @@ class LoginScreen extends StatelessWidget {
                     _loginButton(
                       platform: LoginPlatform.google,
                       onTap: () {
-                        ///클릭시 구글 로그인 구현
+                        ///TODO 클릭시 구글 로그인 구현
+                        context.push(Paths.signupProcess);
                       },
                     ),
                     const SizedBox(height: 15),
                     _loginButton(
                       platform: LoginPlatform.apple,
                       onTap: () {
-                        /// 클릭시 애플 로그인 구현
+                        /// TODO 클릭시 애플 로그인 구현
                       },
                     ),
                     const SizedBox(height: 20),
