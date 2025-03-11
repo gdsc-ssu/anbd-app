@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:anbd/models/onboarding_model.dart';
-import 'package:anbd/route/routes.dart';
+
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -34,7 +34,7 @@ class OnboardingScreen extends StatelessWidget {
           ),
           viewModel.currentPage == viewModel.onboardingItems.length - 1
               ? _buildStartButton(
-                  viewModel, context) // ✅ 마지막 페이지에서는 "ANDB 시작하기" 버튼 표시
+                  viewModel, context)
               : _buildPageIndicator(viewModel),
           const SizedBox(height: 50),
         ],
@@ -51,8 +51,8 @@ class OnboardingScreen extends StatelessWidget {
           controller: viewModel.pageController,
           count: viewModel.onboardingItems.length,
           effect: const ExpandingDotsEffect(
-            activeDotColor: Color(0xFF1E88E5),
-            dotColor: Colors.grey,
+            activeDotColor: AnbdColor.blue,
+            dotColor: AnbdColor.systemGray02,
             dotHeight: 8,
             dotWidth: 8,
           ),
@@ -71,8 +71,7 @@ class OnboardingScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             text: TextSpan(
                 children: item.contentSpans,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                style: AnbdTextStyle.TitleSB18),
           ),
           const SizedBox(height: 8),
           Image.asset(
@@ -92,7 +91,7 @@ class OnboardingScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () => viewModel.completeOnboarding(context),
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1E88E5),
+          backgroundColor: AnbdColor.blue,
           minimumSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -101,7 +100,7 @@ class OnboardingScreen extends StatelessWidget {
         child: const Text(
           "ANDB 시작하기",
           style: TextStyle(
-              fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 16, fontFamily: 'PretendardSemiBold', color: Colors.white),
         ),
       ),
     );
@@ -129,8 +128,8 @@ class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
               "Skip",
               style: TextStyle(
                 fontSize: 15,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
+                fontFamily: "PretendardSemiBold",
+                color: AnbdColor.systemGray03,
               ),
             ),
           ),
