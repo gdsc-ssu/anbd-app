@@ -6,4 +6,5 @@ abstract class Paths {
 
   static const String login = '/login';
   static const String signupProcess = '/signupProcess';
+  static const String location = '/location';
 }

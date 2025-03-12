@@ -1,4 +1,5 @@
 import 'package:anbd/screens/auth/login/login_screen.dart';
+import 'package:anbd/screens/auth/signup/location/location_screen.dart';
 import 'package:anbd/screens/auth/signup/question/question_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:anbd/constants/constants.dart';
@@ -15,7 +16,7 @@ class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: Paths.login, // ✅ 경로를 직접 사용
+    initialLocation: Paths.location, // ✅ 경로를 직접 사용
     routes: [
       GoRoute(
         path: Paths.onboarding,
@@ -32,6 +33,10 @@ class AppRouter {
       GoRoute(
         path: Paths.signupProcess,
         builder: (context, state) => QuestionScreen(),
+      ),
+      GoRoute(
+        path: Paths.location,
+        builder: (context, state) => LocationScreen(),
       ),
     ],
   );
