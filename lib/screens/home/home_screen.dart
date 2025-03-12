@@ -16,47 +16,42 @@ class HomeScreen extends StatelessWidget {
         preferredSize: const Size.fromHeight(kToolbarHeight + 2),
         child: AppBar(
           automaticallyImplyLeading: false,
-          title: Consumer<HomeViewModel>(
-            builder: (context, viewModel, child) {
-              return GestureDetector(
-                onTap: () {
-                  showMenu(
-                    context: context,
-                    position: const RelativeRect.fromLTRB(100, 100, 100, 100),
-                    items: viewModel.locations.map((String location) {
-                      return PopupMenuItem<String>(
-                        value: location,
-                        child: Text(location),
-                        onTap: () => viewModel.updateLocation(location),
-                      );
-                    }).toList(),
-                  );
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      viewModel.currentLocation,
-                      style: AnbdTextStyle.TitleSB18,
-                    ),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.keyboard_arrow_down, size: 20),
-                  ],
-                ),
-              );
-            },
+          title: Align(
+            alignment: Alignment.centerLeft, // ✅ 동네 이름을 왼쪽 정렬
+            child: Consumer<HomeViewModel>(
+              builder: (context, viewModel, child) {
+                return GestureDetector(
+                  onTap: () {
+                    showMenu(
+                      context: context,
+                      position: const RelativeRect.fromLTRB(100, 100, 100, 100),
+                      items: viewModel.locations.map((String location) {
+                        return PopupMenuItem<String>(
+                          value: location,
+                          child: Text(location),
+                          onTap: () => viewModel.updateLocation(location),
+                        );
+                      }).toList(),
+                    );
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        viewModel.currentLocation,
+                        style: AnbdTextStyle.TitleSB18,
+                      ),
+                      const SizedBox(width: 4),
+                      const Icon(Icons.keyboard_arrow_down, size: 20),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
           actions: [
             IconButton(
               icon: SvgPicture.asset("assets/svg/search.svg"),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: SvgPicture.asset("assets/svg/menu.svg"),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: SvgPicture.asset("assets/svg/notification.svg"),
               onPressed: () {},
             ),
           ],
@@ -88,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {},
                 ),
               )
-                  : const SizedBox();
+                : const SizedBox(); // 다른 화면에서는 아무것도 표시하지 않음
             },
           ),
         ],
