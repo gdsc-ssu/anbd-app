@@ -73,7 +73,6 @@ class HomeScreen extends StatelessWidget {
             },
           ),
 
-          // ✅ 홈 화면 (index == 0)일 때만 FloatingComposeButton 표시
           Consumer<HomeViewModel>(
             builder: (context, viewModel, child) {
               return viewModel.currentIndex == 0
@@ -84,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {},
                 ),
               )
-                  : const SizedBox(); // 다른 화면에서는 아무것도 표시하지 않음
+                : const SizedBox(); // 다른 화면에서는 아무것도 표시하지 않음
             },
           ),
         ],
@@ -100,4 +99,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 }
+
