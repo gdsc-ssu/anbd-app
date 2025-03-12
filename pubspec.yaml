@@ -40,6 +40,7 @@ flutter:
   assets:
     - assets/
     - assets/svg/
+    - assets/svg/category/
     - assets/images/login/
     - assets/images/onboarding/
 
