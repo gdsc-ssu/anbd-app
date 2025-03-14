@@ -158,8 +158,9 @@ class _DetailScreenState extends State<DetailScreen> {
         return '${createdTime.year}.${createdTime.month.toString().padLeft(2, '0')}.${createdTime.day.toString().padLeft(2, '0')}';
       }
     }
+
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,10 +193,23 @@ class _DetailScreenState extends State<DetailScreen> {
             product.description,
             style: AnbdTextStyle.Body14,
           ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Text(
+                "관심",
+                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                product.likeCount.toString(),
+                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+              ),
+            ],
+          ),
         ],
       ),
     );
-
   }
 
   Widget _buildBottomSheet() {
