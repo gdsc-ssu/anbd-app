@@ -1,4 +1,5 @@
 class Product {
+  final String id;
   final String title;
   final String location;
   final String timeAgo;
@@ -8,6 +9,7 @@ class Product {
   final bool isFree;
 
   Product({
+    required this.id,
     required this.title,
     required this.location,
     required this.timeAgo,
@@ -20,6 +22,7 @@ class Product {
   // JSON 데이터를 모델로 변환하는 메서드
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
+      id: json['id'] ?? '',
       title: json['title'],
       location: json['location'],
       timeAgo: json['timeAgo'],

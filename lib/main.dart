@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:anbd/screens/home/home_viewmodel.dart';
-import 'package:anbd/route/routes.dart'; // ✅ AppRouter import
+import 'package:anbd/route/routes.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); // ✅ 비동기 실행을 위해 필요
+  await AppRouter.setupRouter(); // ✅ 라우터 설정 (SharedPreferences 조회 후 결정)
 
-  // ✅ 초기 라우트를 동적으로 가져옴
-  final String initialRoute = await AppRouter.initialRoute;
-
-  runApp(MyApp(initialRoute: initialRoute));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final String initialRoute;
-
-  const MyApp({super.key, required this.initialRoute});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +21,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
         ChangeNotifierProvider(create: (_) => HomeViewModel()), // ✅ 홈 화면 관련 ViewModel 추가
-        // ChangeNotifierProvider(create: (_) => 다른 ViewModel 추가 가능),
       ],
       child: MaterialApp.router(
         title: 'Flutter Onboarding',
