@@ -142,19 +142,60 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Widget _buildContent(ProductDetail product) {
+    String formatTimeAgo(DateTime createdAt) {
+      final DateTime createdTime = createdAt.toLocal();
+      final Duration diff = DateTime.now().difference(createdTime);
+
+      if (diff.inMinutes < 1) {
+        return '방금 전';
+      } else if (diff.inMinutes < 60) {
+        return '${diff.inMinutes}분 전';
+      } else if (diff.inHours < 24) {
+        return '${diff.inHours}시간 전';
+      } else if (diff.inDays < 7) {
+        return '${diff.inDays}일 전';
+      } else {
+        return '${createdTime.year}.${createdTime.month.toString().padLeft(2, '0')}.${createdTime.day.toString().padLeft(2, '0')}';
+      }
+    }
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${product.title}",
+            product.title,
             style: AnbdTextStyle.TitleSB18,
           ),
-          // 추가 콘텐츠 작성 가능
+          const SizedBox(height: 8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                product.category,
+                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                '·',
+                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                formatTimeAgo(product.createdAt),
+                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            product.description,
+            style: AnbdTextStyle.Body14,
+          ),
         ],
       ),
     );
+
   }
 
   Widget _buildBottomSheet() {
