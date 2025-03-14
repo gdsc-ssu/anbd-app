@@ -1,6 +1,9 @@
+import 'package:anbd/models/product_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anbd/constants/constants.dart';
+import 'package:anbd/screens/detail/detail_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final String productId;
@@ -20,6 +23,9 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<DetailViewModel>();
+    final product = viewModel.productDetail;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
@@ -31,7 +37,7 @@ class _DetailScreenState extends State<DetailScreen> {
             _buildTopImage(),
             _buildUserInfo(), // 🔥 사용자 정보 추가
             const SizedBox(height: 20),
-            _buildContent(),
+            _buildContent(product),
           ],
         ),
       ),
@@ -135,15 +141,15 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(ProductDetail product) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "상품 ID: ${widget.productId}",
-            style: AnbdTextStyle.Body16,
+            "${product.title}",
+            style: AnbdTextStyle.TitleSB18,
           ),
           // 추가 콘텐츠 작성 가능
         ],

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:anbd/screens/home/home_viewmodel.dart';
+import 'package:anbd/screens/detail/detail_viewmodel.dart';
 import 'package:anbd/route/routes.dart';
 
 void main() async {
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
         ChangeNotifierProvider(create: (_) => HomeViewModel()), // ✅ 홈 화면 관련 ViewModel 추가
+        ChangeNotifierProvider(create: (_) => DetailViewModel()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Onboarding',
