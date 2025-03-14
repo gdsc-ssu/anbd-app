@@ -13,7 +13,6 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // ✅ 클릭 시 DetailScreen으로 이동 (GoRouter 사용)
         context.push('/detail/${product.id}');
       },
       child: Column(
@@ -23,11 +22,12 @@ class ProductItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ✅ 이미지 영역
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: Image.network(
-                    product.imageUrl,
+                    product.imageUrl.isNotEmpty
+                        ? product.imageUrl
+                        : "https://example.com/default_image.jpg", // 기본 이미지 URL 설정
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
