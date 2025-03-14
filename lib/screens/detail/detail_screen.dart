@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/screens/detail/detail_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:anbd/widgets/widgets.dart';
 
 class DetailScreen extends StatefulWidget {
   final String productId;
@@ -130,13 +131,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
         ),
-        const Divider(
-          color: AnbdColor.systemGray01,
-          height: 1,
-          thickness: 1,
-          indent: 16,
-          endIndent: 16,
-        ),
+        const BasicDivider(),
       ],
     );
   }

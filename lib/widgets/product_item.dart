@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:anbd/models/product_model.dart';
 import 'package:anbd/constants/constants.dart';
+import 'package:anbd/widgets/widgets.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
@@ -97,13 +98,7 @@ class ProductItem extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(
-            thickness: 1,
-            height: 1,
-            color: AnbdColor.systemGray02,
-            indent: 16,
-            endIndent: 16,
-          ),
+          const BasicDivider(),
         ],
       ),
     );
