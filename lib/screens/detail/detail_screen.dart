@@ -12,91 +12,140 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  bool isBidPlaced = false; // ✅ 입찰 여부 상태
+  bool isBidPlaced = false;
 
   void toggleBidStatus() {
-    setState(() {
-      isBidPlaced = !isBidPlaced;
-    });
+    setState(() => isBidPlaced = !isBidPlaced);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true, // ✅ AppBar를 배경 위로 확장
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: AppBar(
-          backgroundColor: Colors.transparent, // ✅ AppBar 투명하게 만들기
-          elevation: 0, // ✅ 그림자 제거
-          automaticallyImplyLeading: false, // ✅ 기본 back 버튼 제거
-          flexibleSpace: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.white,
+      appBar: _buildTransparentAppBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildTopImage(),
+            _buildUserInfo(), // 🔥 사용자 정보 추가
+            const SizedBox(height: 20),
+            _buildContent(),
+          ],
+        ),
+      ),
+      bottomSheet: _buildBottomSheet(),
+    );
+  }
+
+  PreferredSizeWidget _buildTransparentAppBar() {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      flexibleSpace: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  // ✅ 왼쪽 아이콘 (뒤로 가기, 홈)
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.keyboard_arrow_left, size: 30, color: AnbdColor.white),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      IconButton(
-                        icon: SvgPicture.asset("assets/svg/home_white.svg"),
-                        onPressed: () {},
-                      ),
-                    ],
+                  IconButton(
+                    icon: const Icon(Icons.keyboard_arrow_left, size: 30, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
                   ),
-                  // ✅ 오른쪽 아이콘 (공유, 더보기)
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: SvgPicture.asset("assets/svg/share.svg"),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: SvgPicture.asset("assets/svg/menu.svg"),
-                        onPressed: () {},
-                      ),
-                    ],
+                  IconButton(
+                    icon: SvgPicture.asset("assets/svg/home_white.svg"),
+                    onPressed: () {},
                   ),
                 ],
               ),
-            ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: SvgPicture.asset("assets/svg/share.svg"),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: SvgPicture.asset("assets/svg/menu.svg"),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          // ✅ 배경 이미지 추가 (AppBar 뒤로 확장)
-          Positioned.fill(
-            child: Image.asset(
-              "assets/images/placeholder.png",
-              fit: BoxFit.cover,
-            ),
-          ),
-          // ✅ 상세 정보 & 바텀 시트
-          Column(
+    );
+  }
+
+  Widget _buildTopImage() {
+    return Image.asset(
+      "assets/images/placeholder.png",
+      fit: BoxFit.cover,
+      width: double.infinity,
+      // height: 300,
+    );
+  }
+
+  Widget _buildUserInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 200), // ✅ 이미지와 중복 방지
-                      Text(
-                        "상품 ID: ${widget.productId}",
-                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                    ],
-                  ),
+              ClipOval(
+                child: Image.asset(
+                  "assets/images/placeholder.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
                 ),
               ),
-              _buildBottomSheet(),
+              const SizedBox(width: 12),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "감성탐방러",
+                    style: AnbdTextStyle.BodyEB15,
+                  ),
+                  Text(
+                    "중랑구 면목동",
+                    style: AnbdTextStyle.BodyL12,
+                  ),
+                ],
+              ),
             ],
           ),
+        ),
+        const Divider(
+          color: AnbdColor.systemGray01,
+          height: 1,
+          thickness: 1,
+          indent: 16,
+          endIndent: 16,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContent() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "상품 ID: ${widget.productId}",
+            style: AnbdTextStyle.Body16,
+          ),
+          // 추가 콘텐츠 작성 가능
         ],
       ),
     );
@@ -104,22 +153,27 @@ class _DetailScreenState extends State<DetailScreen> {
 
   Widget _buildBottomSheet() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 5),
-        ],
+        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          isBidPlaced
-              ? const Text("입찰이 완료되었습니다!", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
-              : const Text("입찰을 진행하시겠습니까?", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text(
+            isBidPlaced ? "입찰이 완료되었습니다!" : "입찰을 진행하시겠습니까?",
+            style: AnbdTextStyle.Body16.copyWith(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 10),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+            ),
             onPressed: toggleBidStatus,
             child: Text(isBidPlaced ? "입찰 취소하기" : "입찰하기"),
           ),

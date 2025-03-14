@@ -24,10 +24,8 @@ class ProductItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: Image.network(
-                    product.imageUrl.isNotEmpty
-                        ? product.imageUrl
-                        : "https://example.com/default_image.jpg", // 기본 이미지 URL 설정
+                  child: Image.asset(
+                    'assets/images/placeholder.png',// 기본 이미지 URL 설정
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
