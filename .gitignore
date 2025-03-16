@@ -233,3 +233,5 @@ fabric.properties
 
 *.freezed.dart
 *.g.dart
+
+android/app/google-services.json

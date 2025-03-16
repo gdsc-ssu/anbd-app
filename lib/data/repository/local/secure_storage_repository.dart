@@ -19,4 +19,17 @@ class SecureStorageRepository {
   Future<void> saveRefreshToken(String refreshToken) async {
     await _storage.write(key: "refresh_token", value: refreshToken);
   }
+
+  ///유저 정보
+  Future<String?> readUserName() async {
+    return await _storage.read(key: "user_name");
+  }
+
+  Future<void> saveUserName(String name) async {
+    await _storage.write(key: "user_name", value: name);
+  }
+
+  Future<void> saveUserEmail(String email) async {
+    await _storage.write(key: "user_email", value: email);
+  }
 }
