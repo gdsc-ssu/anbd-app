@@ -17,7 +17,7 @@ class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: Paths.category, // ✅ 경로를 직접 사용
+    initialLocation: Paths.login, // ✅ 경로를 직접 사용
     routes: [
       GoRoute(
         path: Paths.onboarding,

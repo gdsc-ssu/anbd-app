@@ -3,6 +3,7 @@ import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/basic_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 // 🔹 약관 데이터 모델
 class _Term {
@@ -172,6 +173,6 @@ class _TermsBottomSheetState extends State<TermsBottomSheet> {
 
   /// "시작하기" 버튼 눌렀을 때 (필수 약관 체크 여부 확인)
   void _onStartPressed() {
-    Navigator.pop(context);
+    context.push(Paths.category);
   }
 }
