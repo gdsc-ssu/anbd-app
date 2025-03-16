@@ -60,7 +60,7 @@ class _DetailScreenState extends State<DetailScreen> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.keyboard_arrow_left, size: 30, color: Colors.white),
+                    icon: SvgPicture.asset("assets/svg/arrow_back.svg"),
                     onPressed: () => Navigator.pop(context),
                   ),
                   IconButton(
