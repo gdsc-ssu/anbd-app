@@ -1,3 +1,4 @@
+import 'package:anbd/widgets/basic_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,6 +27,8 @@ class _BidderListState extends State<BidderList> {
         const SizedBox(height: 16),
         _buildBidderTile('장환곤', '10000원', '저 이거 없으면 죽어요'),
         _buildBidderTile('장환곤', '1억', '너무나도 갖고싶습니다'),
+        const BasicDivider(),
+
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:anbd/models/product_detail_model.dart';
 import 'package:anbd/screens/detail/bidder_list.dart';
+import 'package:anbd/screens/detail/recommend_list.dart';
 import 'package:anbd/screens/detail/report_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -116,7 +117,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
 
   Widget _buildRecommendList() {
-    return Column();
+    return const RecommendList();
   }
 
 
