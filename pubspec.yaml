@@ -21,6 +21,12 @@ dependencies:
   go_router: ^14.8.0
   change_app_package_name: ^1.5.0
 
+  # network
+  dio: ^5.3.2
+
+  # 위치 정보 가져오기
+  geolocator: ^13.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -32,7 +38,10 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/
     - assets/svg/
+    - assets/svg/category/
+    - assets/images/login/
     - assets/images/onboarding/
     - assets/images/
 

@@ -4,3 +4,5 @@ export 'blue_snack_bar.dart';
 export 'custom_bottom_navigation_bar.dart';
 export 'floating_compose_button.dart';
 export 'reset_button.dart';
+export 'search_text_field.dart';
+export 'terms_bottom_sheet.dart';
