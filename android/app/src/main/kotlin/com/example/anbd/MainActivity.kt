@@ -1,4 +1,4 @@
-package com.example.andb
+package com.example.anbd
 
 import io.flutter.embedding.android.FlutterActivity
 
