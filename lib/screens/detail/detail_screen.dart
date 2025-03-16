@@ -37,7 +37,6 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             _buildTopImage(),
             _buildUserInfo(), // 🔥 사용자 정보 추가
-            const SizedBox(height: 20),
             _buildContent(product),
           ],
         ),
@@ -154,56 +153,53 @@ class _DetailScreenState extends State<DetailScreen> {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            product.title,
-            style: AnbdTextStyle.TitleSB18,
-          ),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.category,
-                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+                product.title,
+                style: AnbdTextStyle.TitleSB18,
               ),
-              const SizedBox(width: 4),
-              Text(
-                '·',
-                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+              const SizedBox(height: 8),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    product.category,
+                    style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '·',
+                    style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    formatTimeAgo(product.createdAt),
+                    style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
+                  ),
+                ],
               ),
-              const SizedBox(width: 4),
+              const SizedBox(height: 16),
               Text(
-                formatTimeAgo(product.createdAt),
+                product.description,
+                style: AnbdTextStyle.Body14,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                "관심 ${product.likeCount}",
                 style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Text(
-            product.description,
-            style: AnbdTextStyle.Body14,
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Text(
-                "관심",
-                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
-              ),
-              const SizedBox(width: 4),
-              Text(
-                product.likeCount.toString(),
-                style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
-              ),
-            ],
-          ),
-        ],
-      ),
+        ),
+        const BasicDivider(), // 구분선 추가
+      ],
     );
   }
 
