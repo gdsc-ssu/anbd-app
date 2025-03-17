@@ -23,7 +23,7 @@ class DetailViewModel extends ChangeNotifier {
       "createdAt": "2025-03-14T10:42:29.023Z",
       "updatedAt": "2025-03-14T10:42:29.023Z",
       "likeCount": 15,
-      "isLiked": true
+      "isLiked": false
     };
 
     _productDetail = ProductDetail.fromJson(mockJson);

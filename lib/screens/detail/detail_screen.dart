@@ -5,11 +5,14 @@ import 'package:anbd/screens/detail/report_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anbd/constants/constants.dart';
+import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/screens/detail/detail_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:anbd/screens/detail/top_image.dart';
 import 'package:anbd/screens/detail/user_info.dart';
 import 'package:anbd/screens/detail/content.dart';
+import 'package:anbd/screens/detail/bid_complete_bottom_sheet.dart';
+import 'package:anbd/screens/detail/bid_bottom_sheet.dart';
 
 class DetailScreen extends StatefulWidget {
   final String productId;
@@ -27,6 +30,18 @@ class _DetailScreenState extends State<DetailScreen> {
     setState(() => isBidPlaced = !isBidPlaced);
   }
 
+  void _openBidBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) => BidBottomSheet(
+        onBidCompleted: () {
+          setState(() => isBidPlaced = true);
+          Navigator.pop(context); // ✅ 입찰 완료 후 BottomSheet 닫기
+        },
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<DetailViewModel>();
@@ -49,7 +64,9 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
-      // bottomSheet: _buildBottomSheet(),
+      bottomSheet: isBidPlaced
+          ? const BidSuccessView() // ✅ 입찰 후 UI (하트 + 버튼)
+          : _buildBidButton(context, product.isLiked), // ✅ 입찰 전 UI
     );
   }
 
@@ -120,36 +137,46 @@ class _DetailScreenState extends State<DetailScreen> {
     return const RecommendList();
   }
 
-
-
-  Widget _buildBottomSheet() {
+  Widget _buildBidButton(BuildContext context, bool isLiked) {
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      color: Colors.white, // 🔥 배경색 흰색 적용
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            isBidPlaced ? "입찰이 완료되었습니다!" : "입찰을 진행하시겠습니까?",
-            style: AnbdTextStyle.Body16.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white,
+          // 좋아요(하트) 아이콘
+          isLiked
+              ? SvgPicture.asset("assets/svg/heart_on.svg")
+              : SvgPicture.asset("assets/svg/heart_off.svg"),
+
+          // 아이콘과 구분선 사이 간격 조절
+          const SizedBox(width: 8),
+
+          // 구분선 Divider
+          SvgPicture.asset("assets/svg/col_divider.svg"),
+
+          // 구분선과 버튼 사이 간격 조절
+          const SizedBox(width: 16),
+
+          // 입찰하기 버튼 (남은 공간을 최대한 활용)
+            Container(
+              width: 300, // 원하는 크기로 설정
+              child: BasicButton(
+                text: "입찰하기",
+                isClickable: true,
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    BlueSnackBar(text: "입찰이 완료되었습니다!"),
+                  );
+                },
+                size: BasicButtonSize.SMALL,
+              ),
             ),
-            onPressed: toggleBidStatus,
-            child: Text(isBidPlaced ? "입찰 취소하기" : "입찰하기"),
-          ),
         ],
       ),
     );
   }
+
+
 }
