@@ -25,6 +25,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   bool isBidPlaced = false;
+  bool isLiked = false; // ✅ 하트 상태를 state로 관리
 
   void toggleBidStatus() {
     setState(() => isBidPlaced = !isBidPlaced);
@@ -42,6 +43,7 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<DetailViewModel>();
@@ -65,8 +67,8 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
       ),
       bottomSheet: isBidPlaced
-          ? const BidSuccessView() // ✅ 입찰 후 UI (하트 + 버튼)
-          : _buildBidButton(context, product.isLiked), // ✅ 입찰 전 UI
+          ? const BidSuccessView() // ✅ 입찰 후 UI
+          : _buildBidButton(), // ✅ 입찰 전 UI
     );
   }
 
@@ -132,51 +134,53 @@ class _DetailScreenState extends State<DetailScreen> {
     return const BidderList();
   }
 
-
   Widget _buildRecommendList() {
     return const RecommendList();
   }
 
-  Widget _buildBidButton(BuildContext context, bool isLiked) {
+  Widget _buildBidButton() {
     return Container(
-      color: Colors.white, // 🔥 배경색 흰색 적용
+      color: Colors.white,
       padding: const EdgeInsets.all(16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center, // ✅ 중앙 정렬
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // 좋아요(하트) 아이콘
-          isLiked
-              ? SvgPicture.asset("assets/svg/heart_on.svg")
-              : SvgPicture.asset("assets/svg/heart_off.svg"),
-
-          // 아이콘과 구분선 사이 간격 조절
+          // ❤️ 하트 버튼 (클릭 시 상태 변경)
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isLiked = !isLiked; // ✅ 상태 토글
+              });
+            },
+            child: SvgPicture.asset(
+              isLiked ? "assets/svg/heart_on.svg" : "assets/svg/heart_off.svg",
+              width: 24, // 아이콘 크기 지정 (선택 사항)
+              height: 24,
+            ),
+          ),
           const SizedBox(width: 8),
 
           // 구분선 Divider
           SvgPicture.asset("assets/svg/col_divider.svg"),
-
-          // 구분선과 버튼 사이 간격 조절
           const SizedBox(width: 16),
 
-          // 입찰하기 버튼 (남은 공간을 최대한 활용)
-            Container(
-              width: 300, // 원하는 크기로 설정
-              child: BasicButton(
-                text: "입찰하기",
-                isClickable: true,
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    BlueSnackBar(text: "입찰이 완료되었습니다!"),
-                  );
-                },
-                size: BasicButtonSize.SMALL,
-              ),
+          // 입찰하기 버튼
+          SizedBox(
+            width: 300, // ✅ 버튼 크기 조절 가능
+            child: BasicButton(
+              text: "입찰하기",
+              isClickable: true,
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  BlueSnackBar(text: "입찰이 완료되었습니다!"),
+                );
+              },
+              size: BasicButtonSize.SMALL,
             ),
+          ),
         ],
       ),
     );
   }
-
-
 }
