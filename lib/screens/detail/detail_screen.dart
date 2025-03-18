@@ -1,3 +1,4 @@
+import 'package:anbd/constants/colors.dart';
 import 'package:anbd/models/product_detail_model.dart';
 import 'package:anbd/screens/detail/bidder_list.dart';
 import 'package:anbd/screens/detail/recommend_list.dart';
@@ -23,26 +24,22 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   bool isBidPlaced = false;
-  bool isLiked = false; // ✅ 하트 상태를 state로 관리
-
-  void toggleBidStatus() {
-    setState(() => isBidPlaced = !isBidPlaced);
-  }
+  bool isLiked = false;
 
   void _openBidBottomSheet() {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
       isScrollControlled: true,
-      builder: (context) => BidBottomSheet(
-        onBidCompleted: () {
-          setState(() => isBidPlaced = true); // ✅ 버튼 비활성화 상태 업데이트
-        },
+      builder: (context) => SafeArea(
+        child: BidBottomSheet(
+          onBidCompleted: () {
+            setState(() => isBidPlaced = true);
+          },
+        ),
       ),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -112,72 +109,64 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildTopImage() {
-    return const TopImage();
-  }
+  Widget _buildTopImage() => const TopImage();
+  Widget _buildUserInfo() => const UserInfo();
+  Widget _buildContent(ProductDetail product) => Content(product: product);
+  Widget _buildReportButton() => const ReportButton();
+  Widget _buildBidderList() => const BidderList();
+  Widget _buildRecommendList() => const RecommendList();
 
-  Widget _buildUserInfo() {
-    return const UserInfo();
-  }
-
-  Widget _buildContent(ProductDetail product) {
-    return Content(product: product);
-  }
-
-  Widget _buildReportButton() {
-    return const ReportButton();
-  }
-
-  Widget _buildBidderList() {
-    return const BidderList();
-  }
-
-  Widget _buildRecommendList() {
-    return const RecommendList();
-  }
-
-  Widget _buildBidButton(isBidPlaced) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+  Widget _buildBidButton(bool isBidPlaced) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isLiked = !isLiked;
-              });
-            },
-            child: SvgPicture.asset(
-              isLiked ? "assets/svg/heart_on.svg" : "assets/svg/heart_off.svg",
-              width: 24, // 아이콘 크기 지정 (선택 사항)
-              height: 24,
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isLiked = !isLiked;
+                    });
+                  },
+                  child: SvgPicture.asset(
+                    isLiked ? "assets/svg/heart_on.svg" : "assets/svg/heart_off.svg",
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+                const SizedBox(width: 8),
+
+                // 구분선 Divider
+                SvgPicture.asset("assets/svg/col_divider.svg"),
+                const SizedBox(width: 16),
+
+                // 입찰하기 버튼
+                SizedBox(
+                  width: 300,
+                  child: BasicButton(
+                    text: isBidPlaced ? "입찰 완료" : "입찰하기",
+                    isClickable: !isBidPlaced, // ✅ 입찰 후 비활성화
+                    onPressed: isBidPlaced ? null : _openBidBottomSheet,
+                    size: BasicButtonSize.SMALL,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: 8),
-
-          // 구분선 Divider
-          SvgPicture.asset("assets/svg/col_divider.svg"),
-          const SizedBox(width: 16),
-
-          // 입찰하기 버튼
-          SizedBox(
-            width: 300,
-            child: BasicButton(
-              text: "입찰하기",
-              isClickable: isBidPlaced ? false : true,
-              onPressed: isBidPlaced
-                  ? null
-                  : () {
-                _openBidBottomSheet();
-              },
-              size: BasicButtonSize.SMALL,
-            ),
-          ),
+          Container(
+            color: AnbdColor.white,
+            height: 16,
+            width: double.infinity,
+          )
         ],
       ),
     );
   }
+
 }

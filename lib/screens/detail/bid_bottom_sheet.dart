@@ -25,8 +25,8 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
 
   void _onTextChanged() {
     setState(() {
-      isBidButtonEnabled = _bidController.text.isNotEmpty &&
-          _commentController.text.isNotEmpty;
+      isBidButtonEnabled =
+          _bidController.text.isNotEmpty && _commentController.text.isNotEmpty;
     });
   }
 
@@ -66,28 +66,20 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
           const Text("입찰 금액을 입력하세요", style: AnbdTextStyle.TitleSB18),
           const SizedBox(height: 8),
 
-          Container(
-            width: 350,
-            height: 45,
-            child: BasicTextField(
-              controller: _bidController,
-              hintText: "입찰 금액을 입력하세요",
-              onChanged: (value) => _onTextChanged(),
-            ),
+          BasicTextField(
+            controller: _bidController,
+            hintText: "입찰 금액을 입력하세요",
+            onChanged: (value) => _onTextChanged(),
           ),
 
           const SizedBox(height: 20),
           const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
           const SizedBox(height: 8),
 
-          Container(
-            width: 350,
-            height: 45,
-            child: BasicTextField(
-              controller: _commentController,
-              hintText: "코멘트를 입력하세요",
-              onChanged: (value) => _onTextChanged(),
-            ),
+          BasicTextField(
+            controller: _commentController,
+            hintText: "코멘트를 입력하세요",
+            onChanged: (value) => _onTextChanged(),
           ),
 
           const SizedBox(height: 16),
@@ -98,7 +90,6 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
                   setState(() {
                     _bidController.clear();
                     _commentController.clear();
-
                   });
                 },
               ),
