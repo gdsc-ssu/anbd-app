@@ -229,4 +229,9 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/flutter,macos,androidstudio
+.env*
+
+*.freezed.dart
+*.g.dart
+
+android/app/google-services.json

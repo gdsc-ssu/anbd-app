@@ -6,7 +6,6 @@ import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:anbd/models/onboarding_model.dart';
 
-
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
@@ -33,8 +32,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
           viewModel.currentPage == viewModel.onboardingItems.length - 1
-              ? _buildStartButton(
-                  viewModel, context)
+              ? _buildStartButton(viewModel, context)
               : _buildPageIndicator(viewModel),
           const SizedBox(height: 50),
         ],
@@ -70,8 +68,7 @@ class OnboardingScreen extends StatelessWidget {
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-                children: item.contentSpans,
-                style: AnbdTextStyle.TitleSB18),
+                children: item.contentSpans, style: AnbdTextStyle.TitleSB18),
           ),
           const SizedBox(height: 8),
           Image.asset(
@@ -98,9 +95,11 @@ class OnboardingScreen extends StatelessWidget {
           ),
         ),
         child: const Text(
-          "ANDB 시작하기",
+          "ANBD 시작하기",
           style: TextStyle(
-              fontSize: 16, fontFamily: 'PretendardSemiBold', color: Colors.white),
+              fontSize: 16,
+              fontFamily: 'PretendardSemiBold',
+              color: Colors.white),
         ),
       ),
     );
