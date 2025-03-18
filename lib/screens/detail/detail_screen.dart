@@ -4,7 +4,6 @@ import 'package:anbd/screens/detail/recommend_list.dart';
 import 'package:anbd/screens/detail/report_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/screens/detail/detail_viewmodel.dart';
 import 'package:provider/provider.dart';

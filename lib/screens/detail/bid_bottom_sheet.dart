@@ -23,8 +23,11 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
     super.dispose();
   }
 
-  void _onBidAmountChanged(String value) {
-    setState(() => isBidButtonEnabled = value.isNotEmpty);
+  void _onTextChanged() {
+    setState(() {
+      isBidButtonEnabled = _bidController.text.isNotEmpty &&
+          _commentController.text.isNotEmpty;
+    });
   }
 
   void _submitBid() {
@@ -48,7 +51,6 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -63,52 +65,49 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
           const SizedBox(height: 16),
           const Text("입찰 금액을 입력하세요", style: AnbdTextStyle.TitleSB18),
           const SizedBox(height: 8),
-          TextField(
-            controller: _bidController,
-            keyboardType: TextInputType.number,
-            onChanged: _onBidAmountChanged,
-            // enabled: isBidButtonEnabled,
-            // ✅ 입찰 후 입력 비활성화
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              suffixText: "원",
-              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+
+          Container(
+            width: 350,
+            height: 45,
+            child: BasicTextField(
+              controller: _bidController,
+              hintText: "입찰 금액을 입력하세요",
+              onChanged: (value) => _onTextChanged(),
             ),
           ),
+
           const SizedBox(height: 20),
           const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
           const SizedBox(height: 8),
-          TextField(
-            controller: _commentController,
-            keyboardType: TextInputType.text,
-            // enabled: isBidButtonEnabled, // ✅ 입찰 후 입력 비활성화
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+
+          Container(
+            width: 350,
+            height: 45,
+            child: BasicTextField(
+              controller: _commentController,
+              hintText: "코멘트를 입력하세요",
+              onChanged: (value) => _onTextChanged(),
             ),
           ),
+
           const SizedBox(height: 16),
           Row(
             children: [
               ResetButton(
-                onPressed: isBidButtonEnabled // ✅ 비활성화 상태에서는 초기화 불가능
-                    ? () {
+                onPressed: () {
                   setState(() {
                     _bidController.clear();
                     _commentController.clear();
-                    isBidButtonEnabled = false; // ✅ 버튼 상태 초기화
+
                   });
-                }
-                    : null,
+                },
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: BasicButton(
                   text: isBidButtonEnabled ? "입찰하기" : "입찰 완료",
-                  // ✅ 텍스트 변경
-                  isClickable: true,
+                  isClickable: isBidButtonEnabled,
                   onPressed: isBidButtonEnabled ? _submitBid : null,
-                  // ✅ 비활성화 상태에서 클릭 불가능
                   size: BasicButtonSize.SMALL,
                 ),
               ),
