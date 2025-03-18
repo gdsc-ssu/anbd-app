@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:anbd/screens/detail/top_image.dart';
 import 'package:anbd/screens/detail/user_info.dart';
 import 'package:anbd/screens/detail/content.dart';
-import 'package:anbd/screens/detail/bid_complete_bottom_sheet.dart';
 import 'package:anbd/screens/detail/bid_bottom_sheet.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -35,14 +34,16 @@ class _DetailScreenState extends State<DetailScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
+      isScrollControlled: true,
       builder: (context) => BidBottomSheet(
         onBidCompleted: () {
-          setState(() => isBidPlaced = true);
-          Navigator.pop(context); // ✅ 입찰 완료 후 BottomSheet 닫기
+          setState(() => isBidPlaced = true); // ✅ 버튼 비활성화 상태 업데이트
         },
       ),
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +67,7 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
-      bottomSheet: isBidPlaced
-          ? const BidSuccessView() // ✅ 입찰 후 UI
-          : _buildBidButton(), // ✅ 입찰 전 UI
+      bottomSheet: _buildBidButton(isBidPlaced),
     );
   }
 
@@ -138,19 +137,18 @@ class _DetailScreenState extends State<DetailScreen> {
     return const RecommendList();
   }
 
-  Widget _buildBidButton() {
+  Widget _buildBidButton(isBidPlaced) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center, // ✅ 중앙 정렬
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // ❤️ 하트 버튼 (클릭 시 상태 변경)
           GestureDetector(
             onTap: () {
               setState(() {
-                isLiked = !isLiked; // ✅ 상태 토글
+                isLiked = !isLiked;
               });
             },
             child: SvgPicture.asset(
@@ -167,14 +165,14 @@ class _DetailScreenState extends State<DetailScreen> {
 
           // 입찰하기 버튼
           SizedBox(
-            width: 300, // ✅ 버튼 크기 조절 가능
+            width: 300,
             child: BasicButton(
               text: "입찰하기",
-              isClickable: true,
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  BlueSnackBar(text: "입찰이 완료되었습니다!"),
-                );
+              isClickable: isBidPlaced ? false : true,
+              onPressed: isBidPlaced
+                  ? null
+                  : () {
+                _openBidBottomSheet();
               },
               size: BasicButtonSize.SMALL,
             ),

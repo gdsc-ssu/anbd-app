@@ -23,7 +23,6 @@ class ResetButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: const BorderSide(
-              color: AnbdColor.systemGray05,
               width: 0.5,
             ),
           ),
