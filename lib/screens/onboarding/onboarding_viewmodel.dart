@@ -23,7 +23,7 @@ class OnboardingViewModel extends ChangeNotifier {
 
     // 현재 프레임이 완료된 후 Navigator 실행
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.push(Paths.home);
+      context.push(Paths.login);
     });
   }
 }
