@@ -22,8 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
-        ChangeNotifierProvider(create: (_) => HomeViewModel()), // ✅ 홈 화면 관련 ViewModel 추가
+        ChangeNotifierProvider(
+            create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
+        ChangeNotifierProvider(
+            create: (_) => HomeViewModel()), // ✅ 홈 화면 관련 ViewModel 추가
         ChangeNotifierProvider(create: (_) => DetailViewModel()),
       ],
       child: MaterialApp.router(
@@ -37,10 +39,12 @@ class MyApp extends StatelessWidget {
           useMaterial3: true, // Material3 사용
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
-            surfaceTintColor: Colors.transparent, // ✅ AppBar나 Surface 위젯의 보라색 tint 제거
+            surfaceTintColor:
+                Colors.transparent, // ✅ AppBar나 Surface 위젯의 보라색 tint 제거
             elevation: 0,
             iconTheme: IconThemeData(color: Colors.black), // 앱바 아이콘 색상 검정
-            titleTextStyle: TextStyle(color: Colors.black, fontSize: 20), // 앱바 타이틀 색상
+            titleTextStyle:
+                TextStyle(color: Colors.black, fontSize: 20), // 앱바 타이틀 색상
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(

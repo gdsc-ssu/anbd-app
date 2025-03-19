@@ -12,13 +12,21 @@ class LocationScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leadingWidth: 500,
-          leading: SearchTextField(
-            hintText: '동명(읍, 면) 검색',
-            onBackPressed: () {
-              Navigator.pop(context); // 뒤로가기 동작
-            },
-            onSearchChanged: (String value) {
-              // 검색 로직
+          leading: Builder(
+            builder: (context) {
+              return SearchTextField(
+                hintText: '동명(읍, 면) 검색',
+                onBackPressed: () {
+                  Navigator.pop(context);
+                },
+                // onSearchChanged는 추가 처리가 필요하면 사용 (여기서는 생략)
+                onSearchChanged: (String value) {},
+                // 엔터 제출 시, Provider의 searchLocation 호출
+                onSubmitted: (String value) {
+                  Provider.of<LocationViewModel>(context, listen: false)
+                      .searchLocation(value);
+                },
+              );
             },
           ),
         ),
@@ -36,22 +44,50 @@ class LocationScreen extends StatelessWidget {
                   },
                   size: BasicButtonSize.SMALL,
                 ),
-                const SizedBox(height: 10),
-
-                const Text('근처 동네', style: AnbdTextStyle.BodySB15),
-
                 const SizedBox(height: 20),
-
-                /// TODO 검색 결과 리스트 api 붙이고 수정
-                /* Expanded(
+                // 상단 텍스트: 검색어가 있을 경우 "검색 단어 검색 결과", 없으면 "근처 동네"
+                Consumer<LocationViewModel>(
+                  builder: (context, viewModel, child) {
+                    final displayText = viewModel.currentSearchTerm.isEmpty
+                        ? "근처 동네"
+                        : "'${viewModel.currentSearchTerm}' 검색 결과";
+                    return Text(
+                      displayText,
+                      style: AnbdTextStyle.BodySB15,
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                // 예측 결과 리스트 출력
+                Expanded(
                   child: Consumer<LocationViewModel>(
                     builder: (context, viewModel, child) {
-                      //return ListView.builder(
-
-                      //);
+                      return ListView.separated(
+                        itemCount: viewModel.predictions.length,
+                        separatorBuilder: (context, index) => const Divider(
+                          height: 1,
+                          color: AnbdColor.systemGray02,
+                        ),
+                        itemBuilder: (context, index) {
+                          final prediction = viewModel.predictions[index];
+                          return ListTile(
+                            dense: true,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            title: Text(
+                              prediction.description ??
+                                  "검색 결과가 없어요.\n동네 이름을 다시 확인해주세요!",
+                              style: AnbdTextStyle.Body15,
+                            ),
+                            onTap: () {
+                              viewModel.onItemClicked(prediction);
+                            },
+                          );
+                        },
+                      );
                     },
                   ),
-                ),*/
+                ),
               ],
             ),
           ),

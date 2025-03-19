@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:anbd/screens/auth/login/login_screen.dart';
 import 'package:anbd/screens/auth/signup/category/category_screen.dart';
 import 'package:anbd/screens/auth/signup/location/location_screen.dart';
 import 'package:anbd/screens/auth/signup/question/question_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:anbd/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:anbd/screens/home/home_screen.dart';
 import 'package:anbd/screens/onboarding/onboarding_screen.dart';

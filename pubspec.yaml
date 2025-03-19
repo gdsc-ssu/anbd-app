@@ -33,6 +33,9 @@ dependencies:
 
   #구글 로그인
   google_sign_in: ^6.2.1
+  google_maps_flutter: ^2.10.1
+  google_places_flutter: ^2.1.0
+  flutter_google_maps_webservices: ^1.1.1
 
 dev_dependencies:
   flutter_test:
