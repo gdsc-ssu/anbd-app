@@ -28,7 +28,7 @@ class TermsBottomSheet extends StatefulWidget {
 class _TermsBottomSheetState extends State<TermsBottomSheet> {
   bool _allAgree = false;
 
-  // 약관 목록
+  /// 약관 목록
   final List<_Term> _terms = [
     _Term(title: "(필수) ANBD 약관 및 동의사항", isRequired: true),
     _Term(title: "(필수) 서비스 이용약관", isRequired: true),
@@ -40,7 +40,7 @@ class _TermsBottomSheetState extends State<TermsBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final sheetHeight = screenHeight * 0.4;
+    final sheetHeight = screenHeight * 0.45;
 
     bool isAllRequiredAgreed =
         _terms.where((t) => t.isRequired).every((term) => term.agreed);
