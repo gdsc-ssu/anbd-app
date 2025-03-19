@@ -8,4 +8,7 @@ abstract class Paths {
   static const String signupProcess = '/signupProcess';
   static const String location = '/location';
   static const String category = '/category';
+
+  static const String detail = '/detail/:id';
+  static const String loading = '/loading';
 }

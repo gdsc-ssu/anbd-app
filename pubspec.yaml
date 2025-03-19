@@ -65,10 +65,14 @@ flutter:
       fonts:
         - asset: assets/fonts/Pretendard-Medium.ttf
 
-    - family: PretendardEtraBold
+    - family: PretendardExtraBold
       fonts:
         - asset: assets/fonts/Pretendard-ExtraBold.ttf
 
     - family: PretendardLight
       fonts:
         - asset: assets/fonts/Pretendard-Light.ttf
+
+    - family: PretendardBold
+      fonts:
+        - asset: assets/fonts/Pretendard-Bold.ttf

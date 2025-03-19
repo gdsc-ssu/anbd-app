@@ -52,6 +52,7 @@ class HomeViewModel extends ChangeNotifier {
 
     _products = [
       Product(
+        id : "1",
         title: "에어팟 프로",
         location: "군자동",
         timeAgo: "3일 전",
@@ -61,6 +62,7 @@ class HomeViewModel extends ChangeNotifier {
         isFree: true,
       ),
       Product(
+        id: "2",
         title: "바이레도 블랑쉬 50ml",
         location: "광진구 구의제3동",
         timeAgo: "26초 전",
@@ -69,6 +71,7 @@ class HomeViewModel extends ChangeNotifier {
         likes: 2,
       ),
       Product(
+        id: "3",
         title: "샌드위치",
         location: "동대문구 휘경동",
         timeAgo: "59초 전",
