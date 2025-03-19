@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
@@ -9,6 +10,7 @@ import 'package:anbd/route/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ 비동기 실행을 위해 필요
   await AppRouter.setupRouter(); // ✅ 라우터 설정 (SharedPreferences 조회 후 결정)
+  await FlutterConfig.loadEnvVariables(); // 환경 변수 로드
 
   runApp(MyApp());
 }
