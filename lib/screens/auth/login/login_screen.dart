@@ -43,16 +43,15 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 50),
                     _loginButton(
                       platform: LoginPlatform.google,
-                      onTap:
-
-                          ///TODO 클릭시 구글 로그인 구현
-                          () async {
+                      onTap: () async {
                         await viewModel.signInWithGoogle();
-                        if (viewModel.isNewUser) {
-                          context.push(Paths.login);
+                        context.push(Paths.question);
+                        //TODO 자동로그인 구현
+                        /*if (viewModel.isNewUser) {
+                          context.push(Paths.question);
                         } else {
                           context.push(Paths.home);
-                        }
+                        }*/
                       },
                     ),
                     const SizedBox(height: 15),
