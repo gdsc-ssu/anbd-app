@@ -38,10 +38,11 @@ class LoginViewModel extends ChangeNotifier {
       final authCode = googleSignInAuthentication.accessToken;
       log("토큰: $authCode");
 
+      /// 사용자 정보 저장(이름, 이메일)
+      await _saveUserInfo(googleUser.displayName, googleUser.email);
+
       /// 서버에서 구글 authCode로 access Token 받아오기
       await authService.getAccessToken(authCode!);
-
-      await _saveUserInfo(googleUser.displayName, googleUser.email);
 
       _loginPlatform = LoginPlatform.google;
     }
@@ -49,7 +50,7 @@ class LoginViewModel extends ChangeNotifier {
 
   Future<void> _saveUserInfo(String? name, String email) async {
     final SecureStorageRepository secureStorage = SecureStorageRepository();
-    secureStorage.saveUserName(name ?? '');
+    secureStorage.saveUserName(name ?? '사용자');
     secureStorage.saveUserEmail(email);
   }
 

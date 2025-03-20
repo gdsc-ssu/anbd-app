@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class QuestionViewModel extends ChangeNotifier {
   final SecureStorageRepository _secureStorage = SecureStorageRepository();
@@ -17,27 +18,54 @@ class QuestionViewModel extends ChangeNotifier {
   final TextEditingController ageController = TextEditingController();
 
   QuestionViewModel() {
-    // name을 비동기적으로 로드
     _loadName();
-    // ageController의 변경에도 notifyListeners() 호출
     ageController.addListener(() {
       notifyListeners();
     });
   }
 
   Future<void> _loadName() async {
-    // 예를 들어, readAccessToken()이 Future<String>를 반환한다고 가정합니다.
     _name = await _secureStorage.readUserName();
     notifyListeners();
   }
+
+  /// 성별 Getter
   String? get selectedGender => _selectedGender;
 
+  /// 날짜 Getter
+  DateTime? get selectedDate => _selectedDate;
+
+  /// '다음' 버튼 표시 여부 (성별과 날짜 모두 선택해야 true)
+  bool get isNextButtonVisible =>
+      _selectedGender != null && _selectedDate != null;
+
+  /// 성별 설정
   void setGender(String gender) {
     _selectedGender = gender;
+
     notifyListeners();
   }
 
-  bool get isNextButtonVisible => ageController.text.isNotEmpty; // 버튼 표시 여부
+  /// 날짜 설정 + TextField 업데이트
+  void setDate(DateTime date) {
+    _selectedDate = date;
+    final dateString = DateFormat('yyyy-MM-dd').format(date);
+    ageController.text = dateString;
+    notifyListeners();
+  }
+
+  Future<void> saveUserInfo(
+      String? selectedGender, String? selectedDate) async {
+    final SecureStorageRepository secureStorage = SecureStorageRepository();
+
+    if (selectedGender == '남성') {
+      selectedGender = 'MALE';
+    } else {
+      selectedGender = 'FEMALE';
+    }
+    await secureStorage.saveUserGender(selectedGender);
+    await secureStorage.saveUserBirthDate(selectedDate!);
+  }
 
   @override
   void dispose() {
