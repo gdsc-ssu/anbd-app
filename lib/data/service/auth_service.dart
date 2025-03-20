@@ -37,6 +37,8 @@ class AuthService {
         if (tokenResponse != null) {
           await _secureStorage.saveAccessToken(tokenResponse.accessToken);
           await _secureStorage.saveRefreshToken(tokenResponse.refreshToken);
+
+          log("accessToken ${tokenResponse.accessToken} refreshtoken ${tokenResponse.refreshToken}");
         }
 
         return tokenResponse;
