@@ -41,7 +41,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "안녕하세요 ${viewModel.name ?? '사용자'}님!",
+                              "안녕하세요 ${viewModel.name}님!",
                               style: AnbdTextStyle.TitleSB18,
                             ),
                             const SizedBox(height: 8),
