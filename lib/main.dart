@@ -1,5 +1,7 @@
+import 'package:anbd/data/di/get_it_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
@@ -11,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ 비동기 실행을 위해 필요
   await AppRouter.setupRouter(); // ✅ 라우터 설정 (SharedPreferences 조회 후 결정)
   await FlutterConfig.loadEnvVariables(); // 환경 변수 로드
+  setupServiceLocator(); //get it
 
   runApp(MyApp());
 }
@@ -29,6 +32,18 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DetailViewModel()),
       ],
       child: MaterialApp.router(
+        /// 나라 지역 설정
+        locale: const Locale('ko', 'KR'),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('ko', 'KR'),
+          Locale('en', 'US'),
+        ],
+
         title: 'Flutter Onboarding',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

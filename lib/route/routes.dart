@@ -16,7 +16,7 @@ class AppRouter {
 
   static Future<void> setupRouter() async {
     final prefs = await SharedPreferences.getInstance();
-    const String initialLocation = Paths.onboarding;
+    const String initialLocation = Paths.login;
 
     router = GoRouter(
       initialLocation: initialLocation,
@@ -34,7 +34,7 @@ class AppRouter {
           builder: (context, state) => const LoginScreen(),
         ),
         GoRoute(
-          path: Paths.signupProcess,
+          path: Paths.question,
           builder: (context, state) => QuestionScreen(),
         ),
         GoRoute(

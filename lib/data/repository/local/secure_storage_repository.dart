@@ -32,4 +32,24 @@ class SecureStorageRepository {
   Future<void> saveUserEmail(String email) async {
     await _storage.write(key: "user_email", value: email);
   }
+
+  Future<void> readUserEmail() async {
+    await _storage.read(key: "user_email");
+  }
+
+  Future<void> saveUserGender(String gender) async {
+    await _storage.write(key: "user_gender", value: gender);
+  }
+
+  Future<void> readUserGender() async {
+    await _storage.read(key: "user_gender");
+  }
+
+  Future<void> saveUserBirthDate(String birthDate) async {
+    await _storage.write(key: "user_birth_date", value: birthDate);
+  }
+
+  Future<void> readUserBirthDate() async {
+    await _storage.read(key: "user_birth_date");
+  }
 }

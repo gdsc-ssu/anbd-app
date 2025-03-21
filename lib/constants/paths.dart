@@ -5,7 +5,7 @@ abstract class Paths {
   static const String home = '/home';
 
   static const String login = '/login';
-  static const String signupProcess = '/signupProcess';
+  static const String question = '/question';
   static const String location = '/location';
   static const String category = '/category';
 
