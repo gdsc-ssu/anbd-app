@@ -43,6 +43,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.white,
       child: Row(
         children: [
           IconButton(
