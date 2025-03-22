@@ -5,6 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:anbd/screens/auth/signup/location/location_view_model.dart';
 
 class LocationScreen extends StatelessWidget {
+  const LocationScreen({Key? key}) : super(key: key);
+
+  // initState()는 StatelessWidget에서 사용할 수 없습니다. 제거하거나 StatefulWidget으로 전환해야 합니다.
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -14,12 +18,12 @@ class LocationScreen extends StatelessWidget {
           leadingWidth: 500,
           leading: Builder(
             builder: (context) {
+              // 상단 동네 검색 text field
               return SearchTextField(
                 hintText: '동명(읍, 면) 검색',
                 onBackPressed: () {
                   Navigator.pop(context);
                 },
-                // onSearchChanged는 추가 처리가 필요하면 사용 (여기서는 생략)
                 onSearchChanged: (String value) {},
                 // 엔터 제출 시, Provider의 searchLocation 호출
                 onSubmitted: (String value) {
@@ -33,36 +37,46 @@ class LocationScreen extends StatelessWidget {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BasicButton(
-                  text: '현재위치로 찾기',
-                  isClickable: true,
-                  onPressed: () {
-                    showTermsBottomSheet(context);
-                  },
-                  size: BasicButtonSize.SMALL,
-                ),
-                const SizedBox(height: 20),
-                // 상단 텍스트: 검색어가 있을 경우 "검색 단어 검색 결과", 없으면 "근처 동네"
-                Consumer<LocationViewModel>(
-                  builder: (context, viewModel, child) {
-                    final displayText = viewModel.currentSearchTerm.isEmpty
-                        ? "근처 동네"
-                        : "'${viewModel.currentSearchTerm}' 검색 결과";
-                    return Text(
+            child: Consumer<LocationViewModel>(
+              builder: (context, viewModel, child) {
+                final displayText = viewModel.currentSearchTerm.isEmpty
+                    ? "근처 동네"
+                    : "'${viewModel.currentSearchTerm}' 검색 결과";
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BasicButton(
+                      text: '현재위치로 찾기',
+                      isClickable: true,
+                      onPressed: () {
+                        // 권한 요청 후 위치 가져오기
+                        viewModel.getGeoData();
+                      },
+                      size: BasicButtonSize.SMALL,
+                    ),
+                    const SizedBox(height: 20),
+
+                    // 검색어 표시
+                    Text(
                       displayText,
                       style: AnbdTextStyle.BodySB15,
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                // 예측 결과 리스트 출력
-                Expanded(
-                  child: Consumer<LocationViewModel>(
-                    builder: (context, viewModel, child) {
-                      return ListView.separated(
+                    ),
+                    const SizedBox(height: 20),
+
+                    // 위도/경도 표시 (디버깅용)
+                    if (viewModel.latitude != null &&
+                        viewModel.longitude != null)
+                      Text(
+                        "현재 위치: 위도 ${viewModel.latitude}, 경도 ${viewModel.longitude}",
+                        style: AnbdTextStyle.Body14,
+                      ),
+
+                    const SizedBox(height: 20),
+
+                    // 예측 결과 리스트
+                    Expanded(
+                      child: ListView.separated(
                         itemCount: viewModel.predictions.length,
                         separatorBuilder: (context, index) => const Divider(
                           height: 1,
@@ -84,11 +98,11 @@ class LocationScreen extends StatelessWidget {
                             },
                           );
                         },
-                      );
-                    },
-                  ),
-                ),
-              ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),

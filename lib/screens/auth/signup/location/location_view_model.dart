@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_google_maps_webservices/places.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Prediction {
   final String? description;
@@ -26,16 +28,19 @@ class LocationViewModel extends ChangeNotifier {
   Prediction? _selectedPrediction;
   Prediction? get selectedPrediction => _selectedPrediction;
 
-  // 현재 검색어를 보관하는 변수. 빈 문자열이면 기본값을 표시할 예정.
+  // 현재 검색어
   String currentSearchTerm = "";
+
+  // 위도/경도 (String으로 관리)
+  String? latitude;
+  String? longitude;
 
   LocationViewModel() {
     _places = GoogleMapsPlaces(apiKey: googleApiKey);
   }
 
-  /// 엔터 제출 시 호출하여 검색어를 저장하고 API 호출
+  /// 검색어에 맞춰 장소 예측 목록 가져오기
   Future<void> searchLocation(String query) async {
-    // 검색어 업데이트 (빈 문자열이면 기본 텍스트를 유지)
     currentSearchTerm = query;
     notifyListeners();
 
@@ -47,8 +52,8 @@ class LocationViewModel extends ChangeNotifier {
 
     final response = await _places.autocomplete(
       query,
-      language: "ko", // 한국어 결과
-      components: [Component("country", "kr")], // 특정 국가 제한
+      language: "ko",
+      components: [Component("country", "kr")],
     );
 
     if (response.isOkay) {
@@ -64,27 +69,67 @@ class LocationViewModel extends ChangeNotifier {
     }
   }
 
-  /// 선택된 장소의 상세 정보를 가져와 위도/경도 업데이트
-  Future<void> getPlaceDetails(String placeId) async {
-    final detailResponse = await _places.getDetailsByPlaceId(placeId);
-    if (detailResponse.isOkay) {
-      final location = detailResponse.result.geometry?.location;
-      if (location != null) {
-        _selectedPrediction = Prediction(
-          description: detailResponse.result.formattedAddress ?? "",
-          placeId: placeId,
-          lat: location.lat,
-          lng: location.lng,
-        );
-        notifyListeners();
-        log("장소 좌표 - Lat: ${location.lat}, Lng: ${location.lng}");
-      }
-    } else {
-      log("Place Details Error: ${detailResponse.errorMessage}");
+  /// 위치 권한 요청 후, 위치 정보 가져오기
+  Future<void> getGeoData() async {
+    // 위치 서비스 활성화 여부 확인
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      log('위치 서비스가 꺼져 있습니다.');
+      return;
     }
+
+    // 권한 확인 및 요청 (필요시 자동으로 시스템 다이얼로그 뜸)
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.always &&
+          permission != LocationPermission.whileInUse) {
+        log('위치 권한이 거부되었습니다.');
+        return;
+      }
+    }
+
+    // 위치 가져오기
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    latitude = position.latitude.toString();
+    longitude = position.longitude.toString();
+
+    log("위도: $latitude, 경도: $longitude");
+    notifyListeners();
   }
 
-  /// 리스트 항목 클릭 시 호출
+  /// 권한 요청
+  Future<void> permission(BuildContext context) async {
+    var requestStatus = await Permission.location.request();
+    var status = await Permission.location.status;
+
+    if (status.isGranted) {
+      // 권한이 허용되었으면 위치 가져오기
+      await getGeoData();
+    } else if (status.isLimited) {
+      // 제한적 허용 (iOS)
+      await getGeoData();
+    } else if (status.isPermanentlyDenied) {
+      log("isPermanentlyDenied");
+      // 앱 설정으로 이동
+      openAppSettings();
+    } else if (status.isRestricted) {
+      log("isRestricted");
+      openAppSettings();
+    } else if (status.isDenied) {
+      log("isDenied");
+    }
+
+    log("requestStatus: ${requestStatus.name}");
+    log("status: ${status.name}");
+  }
+
+  /// 리스트 항목 탭 시 호출
   void onItemClicked(Prediction prediction) {
     _selectedPrediction = prediction;
     notifyListeners();
