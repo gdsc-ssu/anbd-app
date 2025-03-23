@@ -1,11 +1,58 @@
 import 'package:anbd/constants/constants.dart';
+import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 String baseSvgPicture = 'assets/svg/category/';
 
+/// 카테고리 아이템 모델
+class CategoryItem {
+  final SvgPicture icon;
+  final String label;
+  final String categoryKey;
+
+  CategoryItem({
+    required this.label,
+    required this.categoryKey,
+    required this.icon,
+  });
+}
+
 class CategoryViewModel extends ChangeNotifier {
+  final SecureStorageRepository _secureStorage = SecureStorageRepository();
+
+  String? _name;
+  String? get name => _name;
+
+  /// 선택한 카테고리 저장 리스트
+  final Set<String> _selectedCategoryKeys = {};
+  Set<String> get selectedCategoryKeys => _selectedCategoryKeys;
+
+  Future<void> _loadName() async {
+    _name = await _secureStorage.readUserName();
+    notifyListeners();
+  }
+
+  CategoryViewModel() {
+    _loadName();
+  }
+
+  /// 카테고리 선택 토글
+  void toggleCategory(String categoryKey) {
+    if (_selectedCategoryKeys.contains(categoryKey)) {
+      _selectedCategoryKeys.remove(categoryKey);
+    } else {
+      _selectedCategoryKeys.add(categoryKey);
+    }
+    notifyListeners();
+  }
+
+  /// 선택 완료 시 다음 화면으로 이동
+  void selectCategoryComplete(BuildContext context) async {
+    context.push(Paths.home);
+  }
+
   /// 카테고리 목록
   final List<CategoryItem> categories = [
     CategoryItem(
@@ -57,22 +104,4 @@ class CategoryViewModel extends ChangeNotifier {
         label: "도서",
         categoryKey: "book"),
   ];
-
-  /// 카테고리를 선택하면 다음 화면으로 이동
-  void selectCategory(String categoryKey, BuildContext context) {
-    context.push(Paths.home);
-  }
-}
-
-/// 카테고리 아이템 모델
-class CategoryItem {
-  final SvgPicture icon;
-  final String label;
-  final String categoryKey;
-
-  CategoryItem({
-    required this.label,
-    required this.categoryKey,
-    required this.icon,
-  });
 }
