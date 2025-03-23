@@ -11,7 +11,8 @@ class UserService {
   static const apiVersion = "v1/";
 
   /// 최초 회원가입시 사용자 프로필 업데이트
-  Future<TokenResponse> putUsersProfiles() async {
+  Future<TokenResponse> putUsersProfiles(String? gender, String? birthDate,
+      String? neighborhood, Set<String> shareCategories) async {
     try {
       final response = await _apiClient.dio.post(
         options: Options(
@@ -19,10 +20,10 @@ class UserService {
         ),
         apiVersion + Apis.putUsersProfiles,
         data: {
-          'gender': authCode,
-          'birthDate': authCode,
-          'neighborhood': authCode,
-          'shareCategories': authCode,
+          'gender': gender,
+          'birthDate': birthDate,
+          'neighborhood': neighborhood,
+          'shareCategories': shareCategories,
         },
       );
 

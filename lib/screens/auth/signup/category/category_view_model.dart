@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
+import 'package:anbd/data/service/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 String baseSvgPicture = 'assets/svg/category/';
@@ -21,21 +25,34 @@ class CategoryItem {
 
 class CategoryViewModel extends ChangeNotifier {
   final SecureStorageRepository _secureStorage = SecureStorageRepository();
+  final UserService userService = GetIt.instance<UserService>();
 
   String? _name;
   String? get name => _name;
+
+  String? _gender;
+  String? get gender => _gender;
+
+  String? _birthDate;
+  String? get birthDate => _birthDate;
+
+  String? _neighborhood;
+  String? get neighborhood => _neighborhood;
 
   /// 선택한 카테고리 저장 리스트
   final Set<String> _selectedCategoryKeys = {};
   Set<String> get selectedCategoryKeys => _selectedCategoryKeys;
 
-  Future<void> _loadName() async {
+  Future<void> _loadStoreRepository() async {
     _name = await _secureStorage.readUserName();
+    _gender = await _secureStorage.readUserGender();
+    _birthDate = await _secureStorage.readUserBirthDate();
+    _neighborhood = await _secureStorage.readUserNearbyDistricts();
     notifyListeners();
   }
 
   CategoryViewModel() {
-    _loadName();
+    Future.microtask(() => _loadStoreRepository());
   }
 
   /// 카테고리 선택 토글
@@ -50,6 +67,10 @@ class CategoryViewModel extends ChangeNotifier {
 
   /// 선택 완료 시 다음 화면으로 이동
   void selectCategoryComplete(BuildContext context) async {
+    await userService.putUsersProfiles(
+        gender, birthDate, neighborhood, selectedCategoryKeys);
+
+    log("$selectedCategoryKeys");
     context.push(Paths.home);
   }
 
