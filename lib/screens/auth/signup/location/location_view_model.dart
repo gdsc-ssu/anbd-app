@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:anbd/common/utils/address_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_google_maps_webservices/places.dart';
@@ -25,6 +26,7 @@ class LocationViewModel extends ChangeNotifier {
     _places = GoogleMapsPlaces(apiKey: googleApiKey);
   }
 
+  /// 검색어로 근처 동네 리스트 검색
   Future<void> searchLocation(String query) async {
     isFromLocation = false;
     currentSearchTerm = query;
@@ -44,7 +46,6 @@ class LocationViewModel extends ChangeNotifier {
 
     if (autocompleteResponse.isOkay) {
       final Set<String> districtSet = {};
-      log("🧾 Autocomplete Raw Response: ${autocompleteResponse.toJson()}");
 
       for (final prediction in autocompleteResponse.predictions) {
         final placeId = prediction.placeId;
@@ -56,7 +57,6 @@ class LocationViewModel extends ChangeNotifier {
           );
 
           if (details == null || details.result == null) {
-            log("Details not found for placeId: $placeId");
             continue;
           }
 
@@ -70,7 +70,6 @@ class LocationViewModel extends ChangeNotifier {
             districtSet.add(parsed);
           }
         } catch (e) {
-          log("Error fetching details for placeId: $placeId - $e");
           continue;
         }
       }
@@ -113,8 +112,6 @@ class LocationViewModel extends ChangeNotifier {
     isFromLocation = true;
     notifyListeners();
     await searchNearbyPlaces();
-
-    log("위도: \$latitude, 경도: \$longitude");
   }
 
   /// 위치 정보로 근처 동네 리스트 검색
@@ -123,7 +120,7 @@ class LocationViewModel extends ChangeNotifier {
 
     final response = await _places.searchNearbyWithRadius(
       Location(lat: double.parse(latitude!), lng: double.parse(longitude!)),
-      1000,
+      2000,
       language: 'ko',
     );
 
@@ -137,8 +134,6 @@ class LocationViewModel extends ChangeNotifier {
         );
         final fullAddress = detail.result.formattedAddress;
 
-        log("📍 Raw address: $fullAddress");
-
         if (fullAddress == null) continue;
 
         final parsed = extractDistrictFromAddress(fullAddress);
@@ -150,34 +145,9 @@ class LocationViewModel extends ChangeNotifier {
       nearbyDistricts = districtSet.toList();
       notifyListeners();
     } else {
-      log("주소 검색 실패: ${response.errorMessage}");
       nearbyDistricts = [];
       notifyListeners();
     }
-  }
-
-  String extractDistrictFromAddress(String address) {
-    final parts = address.trim().split(" ");
-    final buffer = <String>[];
-
-    for (final part in parts) {
-      buffer.add(part);
-      if (part.endsWith("동") || part.endsWith("읍") || part.endsWith("면")) {
-        break;
-      }
-    }
-
-    if (buffer.isNotEmpty &&
-        (buffer.last.endsWith("동") ||
-            buffer.last.endsWith("읍") ||
-            buffer.last.endsWith("면"))) {
-      return buffer.join(" ");
-    } else if (parts.length >= 2 &&
-        (parts[0].endsWith("시") || parts[0].endsWith("도"))) {
-      return "${parts[0]} ${parts[1]}";
-    }
-
-    return "";
   }
 
   @override
