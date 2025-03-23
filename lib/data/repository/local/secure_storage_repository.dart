@@ -33,7 +33,7 @@ class SecureStorageRepository {
     await _storage.write(key: "user_email", value: email);
   }
 
-  Future<void> readUserEmail() async {
+  Future<String?> readUserEmail() async {
     await _storage.read(key: "user_email");
   }
 
@@ -41,7 +41,7 @@ class SecureStorageRepository {
     await _storage.write(key: "user_gender", value: gender);
   }
 
-  Future<void> readUserGender() async {
+  Future<String?> readUserGender() async {
     await _storage.read(key: "user_gender");
   }
 
@@ -49,7 +49,7 @@ class SecureStorageRepository {
     await _storage.write(key: "user_birth_date", value: birthDate);
   }
 
-  Future<void> readUserBirthDate() async {
+  Future<String?> readUserBirthDate() async {
     await _storage.read(key: "user_birth_date");
   }
 
@@ -57,7 +57,7 @@ class SecureStorageRepository {
     await _storage.write(key: "nearby_districts", value: nearbyDistricts);
   }
 
-  Future<void> readUserNearbyDistricts() async {
+  Future<String?> readUserNearbyDistricts() async {
     await _storage.read(key: "nearby_districts");
   }
 }
