@@ -55,19 +55,19 @@ class ProductItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          if (product.isFree)
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Text(
-                                "무료나눔",
-                                style: AnbdTextStyle.BodyL12.copyWith(color: Colors.blue),
-                              ),
-                            ),
+                          // if (product.isFree)
+                          //   Padding(
+                          //     padding: const EdgeInsets.only(left: 8),
+                          //     child: Text(
+                          //       "무료나눔",
+                          //       style: AnbdTextStyle.BodyL12.copyWith(color: Colors.blue),
+                          //     ),
+                          //   ),
                         ],
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "${product.location} · ${product.timeAgo}",
+                        "${product.location} · ${product.createdAt}",
                         style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
                       ),
                       Align(
@@ -85,7 +85,7 @@ class ProductItem extends StatelessWidget {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                "${product.likes}",
+                                "${product.likeCount}",
                                 style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
                               ),
                             ],
