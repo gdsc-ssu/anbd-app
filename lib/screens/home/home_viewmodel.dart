@@ -4,8 +4,8 @@ import 'package:anbd/screens/chat/chat_screen.dart';
 import 'package:anbd/screens/mypage/mypage_screen.dart';
 import 'package:anbd/models/product_model.dart';
 import 'package:anbd/widgets/product_item.dart';
-import 'package:anbd/data/service/share_post_service.dart';
-import 'package:anbd/data/dto/response/share_post_response.dart';
+import 'package:anbd/data/service/share_all_post_service.dart'; // ✅ 이걸 사용합니다.
+import 'package:anbd/data/dto/response/share_all_post_response.dart';
 
 class HomeViewModel extends ChangeNotifier {
   int _currentIndex = 0;
@@ -15,7 +15,7 @@ class HomeViewModel extends ChangeNotifier {
   String _currentLocation = "군자동";
   final List<String> _locations = ["군자동", "광진구 구의제3동", "동대문구 휘경동"];
 
-  final SharePostService _service = SharePostService();
+  final ShareAllPostService _service = ShareAllPostService(); // ✅ 변경됨
 
   HomeViewModel() {
     fetchProducts();
@@ -47,23 +47,16 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ✅ 실제 API를 통한 데이터 불러오기 (최종 구현본)
+  // ✅ 실제 목록 API로부터 데이터를 가져오는 최종 구현
   Future<void> fetchProducts() async {
     isLoading = true;
     notifyListeners();
 
     try {
-      // 실제 앱에서는 목록 조회 API를 호출해야 하지만, 임시로 예시 id를 사용
-      List<int> postIds = [1, 2, 3];
+      ShareAllPostResponse response = await _service.fetchPosts(page: 0, size: 10);
 
-      List<Product> loadedProducts = [];
+      _products = response.content.map((post) => Product.fromJson(post.toJson())).toList();
 
-      for (int id in postIds) {
-        SharePostResponse response = await _service.fetchPost(id);
-        loadedProducts.add(_mapResponseToProduct(response));
-      }
-
-      _products = loadedProducts;
     } catch (e) {
       print("에러 발생: $e");
       _products = [];
@@ -73,28 +66,6 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ✅ API 응답을 Product 모델로 변환하는 전용 메서드
-  Product _mapResponseToProduct(SharePostResponse response) {
-    return Product(
-      id: response.id,
-      userId: response.userId,
-      title: response.title,
-      category: response.category,
-      content: response.content,
-      images: response.images,
-      type: response.type,
-      description: response.description,
-      location: response.location,
-      isSold: response.isSold,
-      hits: response.hits,
-      createdAt: response.createdAt,
-      updatedAt: response.updatedAt,
-      likeCount: response.likeCount,
-      isLiked: response.isLiked,
-    );
-  }
-
-  // ✅ 화면 전환
   Widget get currentScreen {
     if (_currentIndex == 0) {
       return _buildHomeScreen();

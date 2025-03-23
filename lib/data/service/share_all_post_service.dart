@@ -1,5 +1,6 @@
 import 'package:anbd/data/di/api_client.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:anbd/data/dto/response/share_all_post_response.dart';
 import 'package:anbd/data/dto/response/base_response.dart';
 import 'package:anbd/constants/apis.dart';
@@ -7,12 +8,13 @@ import 'package:anbd/constants/apis.dart';
 class ShareAllPostService {
   final ApiClient _apiClient = ApiClient();
   static const apiVersion = "v1/";
+  String token = FlutterConfig.get('master_access_token');
 
-  // 🔥 id 대신 페이징 파라미터로 수정 (페이지 목록 조회 API)
   Future<ShareAllPostResponse> fetchPosts({
     int page = 0,
     int size = 10,
     String sort = 'createdAt,desc',
+    String? overrideToken, // ✅ 이걸 추가로 받음
   }) async {
     try {
       final response = await _apiClient.dio.get(
@@ -22,6 +24,14 @@ class ShareAllPostService {
           'size': size,
           'sort': sort,
         },
+        options: Options(
+          extra: {'skipAuthToken': true}, // ✅ interceptor에서 토큰을 안 넣도록 막음
+          headers: overrideToken != null
+              ? {
+            'Authorization': 'Bearer ${token}', // ✅ 직접 토큰 설정
+          }
+              : null,
+        ),
       );
 
       final baseResponse = BaseResponse.fromJson(
