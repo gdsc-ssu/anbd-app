@@ -5,7 +5,6 @@ import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:anbd/data/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginViewModel extends ChangeNotifier {

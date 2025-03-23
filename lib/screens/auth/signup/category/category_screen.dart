@@ -2,6 +2,7 @@ import 'package:anbd/constants/constants.dart';
 import 'package:anbd/screens/auth/signup/category/category_view_model.dart';
 import 'package:anbd/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class CategoryScreen extends StatelessWidget {
                         itemCount: viewModel.categories.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3, // 한 행에 3개
+                          crossAxisCount: 3,
                           childAspectRatio: 1,
                         ),
                         itemBuilder: (context, index) {
@@ -72,6 +73,7 @@ class CategoryScreen extends StatelessWidget {
                           isClickable: true,
                           onPressed: () {
                             viewModel.selectCategoryComplete(context);
+                            context.push(Paths.home);
                           },
                         ),
                       ),

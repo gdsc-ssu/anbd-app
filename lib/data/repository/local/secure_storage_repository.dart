@@ -34,7 +34,7 @@ class SecureStorageRepository {
   }
 
   Future<String?> readUserEmail() async {
-    await _storage.read(key: "user_email");
+    return await _storage.read(key: "user_email");
   }
 
   Future<void> saveUserGender(String gender) async {
@@ -42,7 +42,7 @@ class SecureStorageRepository {
   }
 
   Future<String?> readUserGender() async {
-    await _storage.read(key: "user_gender");
+    return await _storage.read(key: "user_gender");
   }
 
   Future<void> saveUserBirthDate(String birthDate) async {
@@ -50,7 +50,7 @@ class SecureStorageRepository {
   }
 
   Future<String?> readUserBirthDate() async {
-    await _storage.read(key: "user_birth_date");
+    return await _storage.read(key: "user_birth_date");
   }
 
   Future<void> saveUserNearbyDistricts(String nearbyDistricts) async {
@@ -58,6 +58,6 @@ class SecureStorageRepository {
   }
 
   Future<String?> readUserNearbyDistricts() async {
-    await _storage.read(key: "nearby_districts");
+    return await _storage.read(key: "nearby_districts");
   }
 }

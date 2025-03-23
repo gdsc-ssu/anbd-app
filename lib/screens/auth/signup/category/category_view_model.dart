@@ -28,20 +28,25 @@ class CategoryViewModel extends ChangeNotifier {
   final UserService userService = GetIt.instance<UserService>();
 
   String? _name;
+
   String? get name => _name;
 
   String? _gender;
+
   String? get gender => _gender;
 
   String? _birthDate;
+
   String? get birthDate => _birthDate;
 
   String? _neighborhood;
+
   String? get neighborhood => _neighborhood;
 
   /// 선택한 카테고리 저장 리스트
-  final Set<String> _selectedCategoryKeys = {};
-  Set<String> get selectedCategoryKeys => _selectedCategoryKeys;
+  final List<String> _selectedCategoryKeys = [];
+
+  List<String> get selectedCategoryKeys => _selectedCategoryKeys;
 
   Future<void> _loadStoreRepository() async {
     _name = await _secureStorage.readUserName();
@@ -65,64 +70,73 @@ class CategoryViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 선택 완료 시 다음 화면으로 이동
+  /// 선택 완료 시 회원가입 api 호출
   void selectCategoryComplete(BuildContext context) async {
     await userService.putUsersProfiles(
         gender, birthDate, neighborhood, selectedCategoryKeys);
-
-    log("$selectedCategoryKeys");
-    context.push(Paths.home);
   }
 
   /// 카테고리 목록
   final List<CategoryItem> categories = [
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}food.svg'),
-        label: "음식",
-        categoryKey: "food"),
+      icon: SvgPicture.asset('${baseSvgPicture}food.svg'),
+      label: "음식",
+      categoryKey: "FOOD",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}digital.svg'),
-        label: "디지털 기기",
-        categoryKey: "digital"),
+      icon: SvgPicture.asset('${baseSvgPicture}digital.svg'),
+      label: "디지털 기기",
+      categoryKey: "DIGITAL",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}home_appliance.svg'),
-        label: "생활/가전",
-        categoryKey: "home_appliance"),
+      icon: SvgPicture.asset('${baseSvgPicture}home_appliance.svg'),
+      label: "생활/가전",
+      categoryKey: "HOME_APPLIANCE",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}furniture_interior.svg'),
-        label: "가구/인테리어",
-        categoryKey: "furniture_interior"),
+      icon: SvgPicture.asset('${baseSvgPicture}furniture_interior.svg'),
+      label: "가구/인테리어",
+      categoryKey: "FURNITURE_INTERIOR",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}woman_accessory.svg'),
-        label: "여성잡화",
-        categoryKey: "woman_accessory"),
+      icon: SvgPicture.asset('${baseSvgPicture}woman_accessory.svg'),
+      label: "여성잡화",
+      categoryKey: "WOMAN_ACCESSORY",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}man_fashion.svg'),
-        label: "남성패션/잡화",
-        categoryKey: "man_fashion"),
+      icon: SvgPicture.asset('${baseSvgPicture}man_fashion.svg'),
+      label: "남성패션/잡화",
+      categoryKey: "MAN_FASHION",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}living_kitchen.svg'),
-        label: "생활/주방",
-        categoryKey: "living_kitchen"),
+      icon: SvgPicture.asset('${baseSvgPicture}living_kitchen.svg'),
+      label: "생활/주방",
+      categoryKey: "LIVING_KITCHEN",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}sport_leisure.svg'),
-        label: "스포츠/레저",
-        categoryKey: "sport_leisure"),
+      icon: SvgPicture.asset('${baseSvgPicture}sport_leisure.svg'),
+      label: "스포츠/레저",
+      categoryKey: "SPORT_LEISURE",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}hobby_game_music.svg'),
-        label: "취미/게임/음반",
-        categoryKey: "hobby_game_music"),
+      icon: SvgPicture.asset('${baseSvgPicture}hobby_game_music.svg'),
+      label: "취미/게임/음반",
+      categoryKey: "HOBBY_GAME_MUSIC",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}beauty_cosmetic.svg'),
-        label: "뷰티/미용",
-        categoryKey: "beauty_cosmetic"),
+      icon: SvgPicture.asset('${baseSvgPicture}beauty_cosmetic.svg'),
+      label: "뷰티/미용",
+      categoryKey: "BEAUTY_COSMETIC",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}plant.svg'),
-        label: "식물",
-        categoryKey: "plant"),
+      icon: SvgPicture.asset('${baseSvgPicture}plant.svg'),
+      label: "식물",
+      categoryKey: "PLANT",
+    ),
     CategoryItem(
-        icon: SvgPicture.asset('${baseSvgPicture}book.svg'),
-        label: "도서",
-        categoryKey: "book"),
+      icon: SvgPicture.asset('${baseSvgPicture}book.svg'),
+      label: "도서",
+      categoryKey: "BOOK",
+    ),
   ];
 }

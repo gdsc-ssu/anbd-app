@@ -12,9 +12,9 @@ class UserService {
 
   /// 최초 회원가입시 사용자 프로필 업데이트
   Future<TokenResponse> putUsersProfiles(String? gender, String? birthDate,
-      String? neighborhood, Set<String> shareCategories) async {
+      String? neighborhood, List<String> shareCategories) async {
     try {
-      final response = await _apiClient.dio.post(
+      final response = await _apiClient.dio.put(
         options: Options(
           extra: {'skipAuthToken': false},
         ),
