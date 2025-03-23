@@ -52,4 +52,12 @@ class SecureStorageRepository {
   Future<void> readUserBirthDate() async {
     await _storage.read(key: "user_birth_date");
   }
+
+  Future<void> saveUserNearbyDistricts(String nearbyDistricts) async {
+    await _storage.write(key: "nearby_districts", value: nearbyDistricts);
+  }
+
+  Future<void> readUserNearbyDistricts() async {
+    await _storage.read(key: "nearby_districts");
+  }
 }
