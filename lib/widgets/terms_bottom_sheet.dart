@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-// 🔹 약관 데이터 모델
+/// 약관 데이터 모델
 class _Term {
   final String title;
   final bool isRequired;
@@ -45,48 +45,55 @@ class _TermsBottomSheetState extends State<TermsBottomSheet> {
     bool isAllRequiredAgreed =
         _terms.where((t) => t.isRequired).every((term) => term.agreed);
 
-    return SizedBox(
-      height: sheetHeight,
-      child: Column(
-        children: [
-          /// 상단 드래그 인디케이터
-          Container(
-            width: 40,
-            height: 4,
-            margin: const EdgeInsets.only(top: 12, bottom: 8),
-            decoration: BoxDecoration(
-              color: AnbdColor.systemGray03,
-              borderRadius: BorderRadius.circular(2),
+    return Material(
+      color: AnbdColor.white,
+      borderRadius: const BorderRadius.vertical(
+        top: Radius.circular(16),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: SizedBox(
+        height: sheetHeight,
+        child: Column(
+          children: [
+            /// 상단 드래그 인디케이터
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(top: 12, bottom: 8),
+              decoration: BoxDecoration(
+                color: AnbdColor.systemGray03,
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
-          ),
-          // 모두 동의
-          _buildAllAgreeTile(),
+            // 모두 동의
+            _buildAllAgreeTile(),
 
-          const Divider(color: AnbdColor.systemGray02, thickness: 1),
+            const Divider(color: AnbdColor.systemGray02, thickness: 1),
 
-          /// 약관 목록
-          Expanded(
-            child: ListView.builder(
-              itemCount: _terms.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: _buildTermTile(_terms[index]),
-                );
-              },
+            /// 약관 목록
+            Expanded(
+              child: ListView.builder(
+                itemCount: _terms.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: _buildTermTile(_terms[index]),
+                  );
+                },
+              ),
             ),
-          ),
 
-          /// 시작하기 버튼
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: BasicButton(
-              text: '시작하기',
-              isClickable: isAllRequiredAgreed,
-              onPressed: _onStartPressed,
+            /// 시작하기 버튼
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: BasicButton(
+                text: '시작하기',
+                isClickable: isAllRequiredAgreed,
+                onPressed: _onStartPressed,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

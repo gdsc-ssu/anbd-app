@@ -74,7 +74,10 @@ class LocationScreen extends StatelessWidget {
                               items[index],
                               style: AnbdTextStyle.Body15,
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              viewModel.selectAndSaveDistrict(items[index]);
+                              showTermsBottomSheet(context);
+                            },
                           );
                         },
                       ),
@@ -86,6 +89,16 @@ class LocationScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void showTermsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return const TermsBottomSheet();
+      },
     );
   }
 }
