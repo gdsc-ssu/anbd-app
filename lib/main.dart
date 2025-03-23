@@ -15,6 +15,8 @@ void main() async {
   await FlutterConfig.loadEnvVariables(); // 환경 변수 로드
   setupServiceLocator(); //get it
 
+  print("🔥 환경변수 토큰 확인: ${FlutterConfig.get('master_access_token')}");
+
   runApp(MyApp());
 }
 
@@ -28,7 +30,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
         ChangeNotifierProvider(
-            create: (_) => HomeViewModel()), // ✅ 홈 화면 관련 ViewModel 추가
+          create: (_) => HomeViewModel(
+            masterToken: FlutterConfig.get('master_access_token') ?? '',
+          ),
+        ),
         ChangeNotifierProvider(create: (_) => DetailViewModel()),
       ],
       child: MaterialApp.router(

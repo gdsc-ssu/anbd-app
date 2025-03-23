@@ -12,12 +12,13 @@ class HomeViewModel extends ChangeNotifier {
   bool isLoading = true;
   List<Product> _products = [];
 
-  String _currentLocation = "군자동";
+  String _currentLocation = "서울";
   final List<String> _locations = ["군자동", "광진구 구의제3동", "동대문구 휘경동"];
 
-  final ShareAllPostService _service = ShareAllPostService(); // ✅ 변경됨
+  final ShareAllPostService _service;
 
-  HomeViewModel() {
+  HomeViewModel({required String masterToken})
+    : _service = ShareAllPostService(token: masterToken) {
     fetchProducts();
   }
 
@@ -53,8 +54,8 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      ShareAllPostResponse response = await _service.fetchPosts(page: 0, size: 10);
-
+      ShareAllPostResponse response = await _service.fetchPosts(page: 0, size: 5, location: _currentLocation);
+      print("✅ API 응답 content 길이: ${response.content.length}");
       _products = response.content.map((post) => Product.fromJson(post.toJson())).toList();
 
     } catch (e) {

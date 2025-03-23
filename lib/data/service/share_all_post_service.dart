@@ -1,6 +1,5 @@
 import 'package:anbd/data/di/api_client.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:anbd/data/dto/response/share_all_post_response.dart';
 import 'package:anbd/data/dto/response/base_response.dart';
 import 'package:anbd/constants/apis.dart';
@@ -8,31 +7,40 @@ import 'package:anbd/constants/apis.dart';
 class ShareAllPostService {
   final ApiClient _apiClient = ApiClient();
   static const apiVersion = "v1/";
-  String token = FlutterConfig.get('master_access_token');
+
+  final String token;
+
+  ShareAllPostService({required this.token});
 
   Future<ShareAllPostResponse> fetchPosts({
     int page = 0,
     int size = 10,
     String sort = 'createdAt,desc',
-    String? overrideToken, // ✅ 이걸 추가로 받음
+    String? location,
+    String? overrideToken,
   }) async {
     try {
+      // ✅ 먼저 queryParameters 맵을 생성하고 location도 같이 넣어줌
+      final queryParameters = {
+        'page': page,
+        'size': size,
+        'sort': sort,
+        if (location != null) 'location': location,
+      };
+
       final response = await _apiClient.dio.get(
         '$apiVersion${Apis.sharePostList}',
-        queryParameters: {
-          'page': page,
-          'size': size,
-          'sort': sort,
-        },
+        queryParameters: queryParameters,
         options: Options(
-          extra: {'skipAuthToken': true}, // ✅ interceptor에서 토큰을 안 넣도록 막음
-          headers: overrideToken != null
-              ? {
-            'Authorization': 'Bearer ${token}', // ✅ 직접 토큰 설정
-          }
-              : null,
+          extra: {'skipAuthToken': true},
+          headers: {
+            'Authorization': 'Bearer ${overrideToken ?? token}',
+          },
         ),
       );
+
+      print("🧾 [DEBUG] response.data: ${response.data}");
+      print("🧾 [DEBUG] body type: ${response.data['body'].runtimeType}");
 
       final baseResponse = BaseResponse.fromJson(
         response.data,

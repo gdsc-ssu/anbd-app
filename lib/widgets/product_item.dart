@@ -12,6 +12,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("🔍 렌더링 중: ${product.title}");
     return GestureDetector(
       onTap: () {
         context.push('/detail/${product.id}');

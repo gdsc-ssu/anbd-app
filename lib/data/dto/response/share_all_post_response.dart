@@ -6,7 +6,7 @@ class ShareAllPostResponse {
   final int size;
   final List<SharePostResponse> content;
   final int number;
-  final Sort sort;
+  final List<Sort> sort;
   final int numberOfElements;
   final Pageable pageable;
   final bool first;
@@ -36,7 +36,9 @@ class ShareAllPostResponse {
           .map((item) => SharePostResponse.fromJson(item))
           .toList(),
       number: json['number'],
-      sort: Sort.fromJson(json['sort']),
+      sort: (json['sort'] as List)
+          .map((e) => Sort.fromJson(e))
+          .toList(),
       numberOfElements: json['numberOfElements'],
       pageable: Pageable.fromJson(json['pageable']),
       first: json['first'],
@@ -68,7 +70,7 @@ class Sort {
 
 class Pageable {
   final int offset;
-  final Sort sort;
+  final List<Sort> sort;
   final bool unpaged;
   final bool paged;
   final int pageNumber;
@@ -86,7 +88,9 @@ class Pageable {
   factory Pageable.fromJson(Map<String, dynamic> json) {
     return Pageable(
       offset: json['offset'],
-      sort: Sort.fromJson(json['sort']),
+      sort: (json['sort'] as List)
+          .map((e) => Sort.fromJson(e))
+          .toList(),
       unpaged: json['unpaged'],
       paged: json['paged'],
       pageNumber: json['pageNumber'],
