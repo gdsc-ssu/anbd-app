@@ -4,9 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:anbd/models/product_model.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
+import '../data/dto/response/share_post_response.dart';
 
 class ProductItem extends StatelessWidget {
-  final Product product;
+  final SharePostResponse product;
 
   const ProductItem({Key? key, required this.product}) : super(key: key);
 
@@ -26,8 +27,8 @@ class ProductItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: Image.asset(
-                    'assets/images/placeholder.png',// 기본 이미지 URL 설정
+                  child: Image.network(
+                    product.images.isNotEmpty ? product.images[0] : '',
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,

@@ -34,21 +34,21 @@ class SharePostResponse {
   });
 
   factory SharePostResponse.fromJson(Map<String, dynamic> json) => SharePostResponse(
-    id: json['id'],
-    userId: json['userId'],
-    title: json['title'],
-    category: json['category'],
-    content: json['content'],
-    images: List<String>.from(json['images']),
-    type: json['type'],
-    description: json['description'],
-    location: json['location'],
-    isSold: json['isSold'],
-    hits: json['hits'],
-    createdAt: DateTime.parse(json['createdAt']),
-    updatedAt: DateTime.parse(json['updatedAt']),
-    likeCount: json['likeCount'],
-    isLiked: json['isLiked'],
+    id: json['id'] ?? 0,
+    userId: json['userId'] ?? 0,
+    title: json['title'] ?? '',
+    category: json['category'] ?? '',
+    content: json['content'] ?? '',
+    images: (json['images'] as List?)?.map((e) => e.toString()).toList() ?? [],
+    type: json['type'] ?? '',
+    description: json['description'] ?? '',
+    location: json['location'] ?? '',
+    isSold: json['isSold'] == true,
+    hits: json['hits'] ?? 0,
+    createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+    updatedAt: DateTime.tryParse(json['updatedAt'] ?? '') ?? DateTime.now(),
+    likeCount: json['likeCount'] ?? 0,
+    isLiked: json['isLiked'] == true,
   );
 
   Map<String, dynamic> toJson() => {

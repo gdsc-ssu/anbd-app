@@ -35,6 +35,8 @@ class ShareAllPostService {
           extra: {'skipAuthToken': true},
           headers: {
             'Authorization': 'Bearer ${overrideToken ?? token}',
+            'Accept' : 'application/json;charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
         ),
       );
@@ -42,12 +44,17 @@ class ShareAllPostService {
       print("🧾 [DEBUG] response.data: ${response.data}");
       print("🧾 [DEBUG] body type: ${response.data['body'].runtimeType}");
 
-      final baseResponse = BaseResponse.fromJson(
-        response.data,
-            (json) => ShareAllPostResponse.fromJson(json),
-      );
+      if (response.statusCode == 200) {
+        final baseResponse = BaseResponse<ShareAllPostResponse>.fromJson(
+          response.data,
+              (contentJson) => ShareAllPostResponse.fromJson(contentJson),
+        );
+        return baseResponse.body;
+      }
+      else {
+        throw Exception('Unexpected status code: ${response.statusCode}');
+      }
 
-      return baseResponse.body;
     } on DioException catch (e) {
       switch (e.response?.statusCode) {
         case 400:

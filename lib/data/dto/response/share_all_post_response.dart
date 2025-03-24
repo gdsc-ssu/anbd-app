@@ -33,7 +33,10 @@ class ShareAllPostResponse {
       totalElements: json['totalElements'],
       size: json['size'],
       content: (json['content'] as List)
-          .map((item) => SharePostResponse.fromJson(item))
+          .map((item) {
+        print("🔍 content item: $item"); // ✅ 여기에 추가
+        return SharePostResponse.fromJson(item);
+      })
           .toList(),
       number: json['number'],
       sort: (json['sort'] as List)
@@ -49,21 +52,30 @@ class ShareAllPostResponse {
 }
 
 class Sort {
-  final bool empty;
-  final bool unsorted;
-  final bool sorted;
+  final String direction;
+  final String property;
+  final bool ignoreCase;
+  final String nullHandling;
+  final bool ascending;
+  final bool descending;
 
   Sort({
-    required this.empty,
-    required this.unsorted,
-    required this.sorted,
+    required this.direction,
+    required this.property,
+    required this.ignoreCase,
+    required this.nullHandling,
+    required this.ascending,
+    required this.descending,
   });
 
   factory Sort.fromJson(Map<String, dynamic> json) {
     return Sort(
-      empty: json['empty'],
-      unsorted: json['unsorted'],
-      sorted: json['sorted'],
+      direction: json['direction'],
+      property: json['property'],
+      ignoreCase: json['ignoreCase'],
+      nullHandling: json['nullHandling'],
+      ascending: json['ascending'],
+      descending: json['descending'],
     );
   }
 }
