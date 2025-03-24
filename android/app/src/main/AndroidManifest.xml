@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.anbd">
     <!-- 위치 권한 선언 -->
+
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -10,6 +12,7 @@
 
     <!-- 사진 권한 선언 -->
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
