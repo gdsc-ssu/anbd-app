@@ -2,6 +2,8 @@ import 'package:anbd/screens/auth/login/login_screen.dart';
 import 'package:anbd/screens/auth/signup/category/category_screen.dart';
 import 'package:anbd/screens/auth/signup/location/location_screen.dart';
 import 'package:anbd/screens/auth/signup/question/question_screen.dart';
+import 'package:anbd/screens/home/share_post/image/image_select_screen.dart';
+import 'package:anbd/screens/home/share_post/share_post_create_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +18,7 @@ class AppRouter {
 
   static Future<void> setupRouter() async {
     final prefs = await SharedPreferences.getInstance();
-    const String initialLocation = Paths.login;
+    const String initialLocation = Paths.home;
 
     router = GoRouter(
       initialLocation: initialLocation,
@@ -55,6 +57,14 @@ class AppRouter {
         GoRoute(
           path: Paths.loading,
           builder: (context, state) => const LoadingScreen(),
+        ),
+        GoRoute(
+          path: Paths.sharePost,
+          builder: (context, state) => const SharePostCreateScreen(),
+        ),
+        GoRoute(
+          path: Paths.sharePostImageSelect,
+          builder: (context, state) => const ImageSelectScreen(),
         ),
       ],
     );
