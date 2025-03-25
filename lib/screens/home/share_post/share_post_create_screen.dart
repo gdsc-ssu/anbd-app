@@ -1,11 +1,9 @@
 import 'dart:io';
-import 'package:anbd/constants/colors.dart';
+import 'package:anbd/common/enums/share_post_type.dart';
 import 'package:anbd/constants/constants.dart';
-import 'package:anbd/constants/style.dart';
 import 'package:anbd/widgets/basic_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'share_post_create_view_model.dart';
@@ -34,7 +32,7 @@ class SharePostCreateScreen extends StatelessWidget {
               ),
               actions: [
                 TextButton(
-                  onPressed: () => viewModel.submitPost(),
+                  onPressed: () => viewModel.postSharePosts(),
                   child: const Text('완료', style: AnbdTextStyle.BodyM16),
                 ),
               ],
@@ -110,13 +108,11 @@ class SharePostCreateScreen extends StatelessWidget {
                                     Positioned(
                                       bottom: 0,
                                       child: Container(
-                                        width: 80, // ✅ 이미지 크기와 동일하게
-                                        alignment:
-                                            Alignment.center, // ✅ 텍스트 가운데 정렬
+                                        width: 80,
+                                        alignment: Alignment.center,
                                         decoration: const BoxDecoration(
                                           color: AnbdColor.systemGray05,
                                           borderRadius: BorderRadius.only(
-                                            // ✅ 아래쪽만 둥글게
                                             bottomLeft: Radius.circular(8),
                                             bottomRight: Radius.circular(8),
                                           ),
@@ -164,12 +160,55 @@ class SharePostCreateScreen extends StatelessWidget {
                     hintText: '나눔글 내용을 작성해 주세요.',
                   ),
                   const SizedBox(height: 30),
+                  const Text("나눔 방식", style: AnbdTextStyle.BodySB15),
+                  const SizedBox(height: 15),
+                  Row(
+                    children: [
+                      _buildTypeButton(
+                          context, viewModel, '무료나눔', SharePostType.SHARE),
+                      const SizedBox(width: 20),
+                      _buildTypeButton(
+                          context, viewModel, '교환', SharePostType.EXCHANGE),
+                      const SizedBox(width: 20),
+                      _buildTypeButton(
+                          context, viewModel, '기부', SharePostType.DONATE),
+                    ],
+                  ),
                 ],
               ),
             ),
             backgroundColor: Colors.white,
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildTypeButton(
+    BuildContext context,
+    SharePostCreateViewModel viewModel,
+    String label,
+    SharePostType type,
+  ) {
+    final isSelected = viewModel.selectedType == type;
+
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        fixedSize: const Size(90, 30),
+        side: BorderSide(
+          color: isSelected ? AnbdColor.blue : Colors.black,
+        ),
+        foregroundColor: isSelected ? AnbdColor.blue : Colors.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+      onPressed: () => viewModel.selectType(type),
+      child: Text(
+        label,
+        style: isSelected
+            ? AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.blue)
+            : AnbdTextStyle.BodyL12,
       ),
     );
   }

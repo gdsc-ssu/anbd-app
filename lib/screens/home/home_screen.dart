@@ -2,6 +2,7 @@ import 'package:anbd/widgets/floating_compose_button.dart';
 import 'package:flutter/material.dart';
 import 'package:anbd/screens/home/home_viewmodel.dart';
 import 'package:anbd/widgets/custom_bottom_navigation_bar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -58,7 +59,9 @@ class HomeScreen extends StatelessWidget {
                       bottom: 16.0,
                       right: 16.0,
                       child: FloatingComposeButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(Paths.sharePost);
+                        },
                       ),
                     )
                   : const SizedBox(); // 다른 화면에서는 아무것도 표시하지 않음
