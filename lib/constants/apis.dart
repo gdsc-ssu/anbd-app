@@ -8,5 +8,5 @@ abstract class Apis {
 
   /// 토큰 관련 api
   static const String getAccessToken = "auth/mobile/google";
-  static const String sharePostList = "share-posts";
+  static const String getSharePostList = "share-posts";
 }

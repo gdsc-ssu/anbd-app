@@ -57,14 +57,14 @@ class ProductItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          // if (product.isFree)
-                          //   Padding(
-                          //     padding: const EdgeInsets.only(left: 8),
-                          //     child: Text(
-                          //       "무료나눔",
-                          //       style: AnbdTextStyle.BodyL12.copyWith(color: Colors.blue),
-                          //     ),
-                          //   ),
+                          if (product.type == "SHARE")
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Text(
+                                "무료나눔",
+                                style: AnbdTextStyle.BodyL12.copyWith(color: Colors.blue),
+                              ),
+                            ),
                         ],
                       ),
                       const SizedBox(height: 4),

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:anbd/screens/community/community_screen.dart';
 import 'package:anbd/screens/chat/chat_screen.dart';
 import 'package:anbd/screens/mypage/mypage_screen.dart';
-import 'package:anbd/models/product_model.dart';
 import 'package:anbd/widgets/product_item.dart';
-import 'package:anbd/data/service/share_all_post_service.dart'; // ✅ 이걸 사용합니다.
+import 'package:anbd/data/service/share_post_service.dart'; // ✅ 이걸 사용합니다.
 import 'package:anbd/data/dto/response/share_all_post_response.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -16,10 +15,10 @@ class HomeViewModel extends ChangeNotifier {
   String _currentLocation = "서울";
   final List<String> _locations = ["군자동", "광진구 구의제3동", "동대문구 휘경동"];
 
-  final ShareAllPostService _service;
+  final SharePostService _service;
 
   HomeViewModel({required String masterToken})
-      : _service = ShareAllPostService(token: masterToken) {
+      : _service = SharePostService(token: masterToken) {
     print("🚀 HomeViewModel 초기화됨");
     fetchProducts();
   }
@@ -56,7 +55,7 @@ class HomeViewModel extends ChangeNotifier {
 
     try {
       print("📥 서버 호출 시작");
-      ShareAllPostResponse response = await _service.fetchPosts(
+      ShareAllPostResponse response = await _service.fetchAllPosts(
         page: 0,
         size: 5,
         location: _currentLocation,
