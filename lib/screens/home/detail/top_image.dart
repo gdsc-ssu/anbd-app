@@ -12,23 +12,27 @@ class TopImage extends StatelessWidget {
         ? product.images.first
         : "assets/images/placeholder.png";
 
-    return imageUrl.startsWith("http")
-        ? Image.network(
-      imageUrl,
-      fit: BoxFit.cover,
-      width: double.infinity,
-      errorBuilder: (context, error, stackTrace) {
-        return Image.asset(
-          "assets/images/placeholder.png",
+    return ClipRRect(
+      borderRadius: BorderRadius.zero,
+      child: SizedBox(
+        height: 390,
+        width: double.infinity,
+        child: imageUrl.startsWith("http")
+            ? Image.network(
+          imageUrl,
           fit: BoxFit.cover,
-          width: double.infinity,
-        );
-      },
-    )
-        : Image.asset(
-      imageUrl,
-      fit: BoxFit.cover,
-      width: double.infinity,
+          errorBuilder: (context, error, stackTrace) {
+            return Image.asset(
+              "assets/images/placeholder.png",
+              fit: BoxFit.cover,
+            );
+          },
+        )
+            : Image.asset(
+          imageUrl,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
