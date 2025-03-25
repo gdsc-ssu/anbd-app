@@ -18,7 +18,6 @@ class AppRouter {
     final prefs = await SharedPreferences.getInstance();
     
     const String initialLocation = Paths.onboarding;
-    const String initialLocation = Paths.location;
 
     router = GoRouter(
       initialLocation: initialLocation,
