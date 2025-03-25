@@ -38,8 +38,6 @@ class SharePostService {
         (json) => SharePostResponse.fromJson(json),
       );
 
-      print("✅ 서버 응답 파싱 완료: $baseResponse");
-
       return baseResponse.body;
     } on DioException catch (e) {
       _handleDioException(e);
@@ -81,7 +79,7 @@ class SharePostService {
       if (response.statusCode == 200) {
         final baseResponse = BaseResponse<ShareAllPostResponse>.fromJson(
           response.data,
-              (contentJson) => ShareAllPostResponse.fromJson(contentJson),
+          (contentJson) => ShareAllPostResponse.fromJson(contentJson),
         );
         return baseResponse.body;
       } else {
