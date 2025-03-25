@@ -44,13 +44,14 @@ class _DetailScreenState extends State<DetailScreen> {
     });
   }
 
-  void _openBidBottomSheet() {
+  void _openBidBottomSheet(int postId) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
       isScrollControlled: true,
       builder: (context) => SafeArea(
         child: BidBottomSheet(
+          postId: postId,
           onBidCompleted: () {
             setState(() => isBidPlaced = true);
           },
@@ -90,7 +91,7 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBidButton(isBidPlaced),
+      bottomNavigationBar: _buildBidButton(isBidPlaced || product.isBid, product.id),
     );
   }
 
@@ -144,7 +145,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildBidderList(SharePostResponse product) => BidderList(product: product);
   Widget _buildRecommendList() => const RecommendList();
 
-  Widget _buildBidButton(bool isBidPlaced) {
+  Widget _buildBidButton(bool isBid, int postId) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -177,9 +178,9 @@ class _DetailScreenState extends State<DetailScreen> {
                 // 입찰하기 버튼
                 Expanded(
                   child: BasicButton(
-                    text: isBidPlaced ? "신청완료" : "나눔받기",
-                    isClickable: !isBidPlaced, // ✅ 입찰 후 비활성화
-                    onPressed: isBidPlaced ? null : _openBidBottomSheet,
+                    text: isBid ? "신청완료" : "나눔받기",
+                    isClickable: !(isBid || isBidPlaced), // ✅ 입찰 후 비활성화
+                    onPressed: isBid ? null : () => _openBidBottomSheet(postId),
                     size: BasicButtonSize.SMALL,
                   ),
                 ),

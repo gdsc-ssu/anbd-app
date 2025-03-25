@@ -5,6 +5,7 @@ import 'package:anbd/data/dto/response/share_all_post_response.dart';
 import 'package:anbd/data/dto/response/base_response.dart';
 import 'package:anbd/constants/apis.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:anbd/data/dto/request/bid_request.dart';
 
 class SharePostService {
   final ApiClient _apiClient = ApiClient();
@@ -18,7 +19,7 @@ class SharePostService {
   Future<SharePostResponse> fetchPost(int id) async {
     try {
       final response = await _apiClient.dio.get(
-        '$apiVersion${Apis.getSharePostList}/$id',
+        '$apiVersion${Apis.sharePosts}/$id',
         options: Options(
           headers: {
             'Authorization': 'Bearer ${overrideToken ?? token}',
@@ -63,7 +64,7 @@ class SharePostService {
       };
 
       final response = await _apiClient.dio.get(
-        '$apiVersion${Apis.getSharePostList}',
+        '$apiVersion${Apis.sharePosts}',
         queryParameters: queryParameters,
         options: Options(
           extra: {'skipAuthToken': true},
@@ -89,6 +90,34 @@ class SharePostService {
       throw Exception('Unreachable');
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
+    }
+  }
+
+  /// 나눔받기 요청 전송
+  Future<void> postBid({
+    required int postId,
+    required BidRequest bidRequest,
+    String? overrideToken,
+  }) async {
+    try {
+      final response = await _apiClient.dio.post(
+        '$apiVersion${Apis.sharePosts}/$postId/bid',
+        data: bidRequest.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${overrideToken ?? token}',
+            'Accept': 'application/json;charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+
+      print("✅ 나눔 받기 요청 성공: ${response.statusCode}");
+    } on DioException catch (e) {
+      _handleDioException(e);
+      throw Exception('나눔 받기 요청 실패: Unreachable');
+    } catch (e) {
+      throw Exception('나눔 받기 요청 실패: $e');
     }
   }
 

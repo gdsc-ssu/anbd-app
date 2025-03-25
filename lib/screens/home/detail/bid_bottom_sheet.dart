@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
+import 'package:anbd/data/dto/request/bid_request.dart';
+import 'package:anbd/data/service/share_post_service.dart';
+import 'package:flutter_config/flutter_config.dart';
+
 
 class BidBottomSheet extends StatefulWidget {
+  final int postId;
   final VoidCallback onBidCompleted; // ✅ 콜백 추가
 
-  const BidBottomSheet({super.key, required this.onBidCompleted});
+  const BidBottomSheet({super.key, required this.postId, required this.onBidCompleted});
 
   @override
   _BidBottomSheetState createState() => _BidBottomSheetState();
@@ -30,24 +35,39 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
     });
   }
 
-  void _submitBid() {
+  void _submitBid() async {
     if (isBidButtonEnabled) {
       setState(() {
-        isBidButtonEnabled = false; // ✅ 버튼 비활성화
+        isBidButtonEnabled = false;
       });
 
-      // ✅ 스낵바 표시
-      ScaffoldMessenger.of(context).showSnackBar(
-        BlueSnackBar(text: "나눔 신청이 완료되었습니다!"),
-      );
+      final donation = int.tryParse(_bidController.text) ?? 0;
+      final comment = _commentController.text;
 
-      // ✅ 500ms 후 BottomSheet 닫기
-      Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.pop(context);
-      });
+      final bidRequest = BidRequest(content: comment, donation: donation);
+      final service = SharePostService(token: FlutterConfig.get('master_access_token')); // 토큰이 필요하면 생성자에 넘겨주세요
 
-      // ✅ 부모 위젯에 입찰 완료 상태 전달
-      widget.onBidCompleted();
+      try {
+        await service.postBid(
+          postId: widget.postId,
+          bidRequest: bidRequest,
+        );
+        widget.onBidCompleted();
+        // 성공 시
+        ScaffoldMessenger.of(context).showSnackBar(
+          BlueSnackBar(text: "나눔 신청이 완료되었습니다!"),
+        );
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          Navigator.pop(context);
+        });
+
+        // widget.onBidCompleted();
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          BlueSnackBar(text: "신청에 실패했습니다. 다시 시도해주세요."),
+        );
+      }
     }
   }
 
