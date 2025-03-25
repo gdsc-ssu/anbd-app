@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anbd/data/di/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:anbd/data/dto/response/share_post_response.dart';
@@ -33,7 +35,7 @@ class SharePostService {
 
       final baseResponse = BaseResponse.fromJson(
         response.data,
-            (json) => SharePostResponse.fromJson(json),
+        (json) => SharePostResponse.fromJson(json),
       );
 
       print("✅ 서버 응답 파싱 완료: $baseResponse");
@@ -85,6 +87,53 @@ class SharePostService {
       } else {
         throw Exception('Unexpected status code: ${response.statusCode}');
       }
+    } on DioException catch (e) {
+      _handleDioException(e);
+      throw Exception('Unreachable');
+    } catch (e) {
+      throw Exception('An unexpected error occurred: $e');
+    }
+  }
+
+  /// 나눔글 생성
+  Future<SharePostResponse> postSharePosts(
+    String title,
+    String content,
+    String type,
+    List<File> images,
+  ) async {
+    try {
+      final formData = FormData.fromMap({
+        'images': await Future.wait(images.map((file) async {
+          return await MultipartFile.fromFile(
+            file.path,
+            filename: file.path.split('/').last,
+          );
+        })),
+      });
+      final response = await _apiClient.dio.post(
+        '$apiVersion${Apis.createSharePosts}',
+        queryParameters: {
+          'title': title,
+          'content': content,
+          'type': type,
+        },
+        data: formData,
+        options: Options(
+          extra: {'skipAuthToken': true},
+          headers: {
+            'Authorization': 'Bearer $overrideToken',
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+
+      final baseResponse = BaseResponse.fromJson(
+        response.data,
+        (json) => SharePostResponse.fromJson(json),
+      );
+
+      return baseResponse.body;
     } on DioException catch (e) {
       _handleDioException(e);
       throw Exception('Unreachable');

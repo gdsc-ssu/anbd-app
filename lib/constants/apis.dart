@@ -14,4 +14,7 @@ abstract class Apis {
 
   /// user 관련 api
   static const String putUsersProfiles = "users/profiles";
+
+  /// share post 관련 api
+  static const String createSharePosts = "share-posts";
 }
