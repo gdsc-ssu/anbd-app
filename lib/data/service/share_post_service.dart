@@ -4,11 +4,13 @@ import 'package:anbd/data/dto/response/share_post_response.dart';
 import 'package:anbd/data/dto/response/share_all_post_response.dart';
 import 'package:anbd/data/dto/response/base_response.dart';
 import 'package:anbd/constants/apis.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 class SharePostService {
   final ApiClient _apiClient = ApiClient();
   static const apiVersion = "v1/";
   final String? token;
+  final overrideToken = FlutterConfig.get('master_access_token');
 
   SharePostService({this.token});
 
@@ -17,12 +19,23 @@ class SharePostService {
     try {
       final response = await _apiClient.dio.get(
         '$apiVersion${Apis.getSharePostList}/$id',
-      );
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${overrideToken ?? token}',
+            'Accept': 'application/json;charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      ); // ✅ 여기가 닫히는 괄호
+
+      print("📥 서버 응답 원본: ${response.data}");
 
       final baseResponse = BaseResponse.fromJson(
         response.data,
             (json) => SharePostResponse.fromJson(json),
       );
+
+      print("✅ 서버 응답 파싱 완료: $baseResponse");
 
       return baseResponse.body;
     } on DioException catch (e) {
