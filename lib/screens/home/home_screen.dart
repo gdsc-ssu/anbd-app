@@ -43,31 +43,29 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Consumer<HomeViewModel>(
-            builder: (context, viewModel, child) {
-              return viewModel.currentScreen;
+      body: Consumer<HomeViewModel>(
+        builder: (context, viewModel, child) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              await viewModel.refresh(); // ⬅️ 여기에 새로고침 로직
             },
-          ),
-
-          // ✅ 홈 화면 (index == 0)일 때만 FloatingComposeButton 표시
-          Consumer<HomeViewModel>(
-            builder: (context, viewModel, child) {
-              return viewModel.currentIndex == 0
-                  ? Positioned(
-                      bottom: 16.0,
-                      right: 16.0,
-                      child: FloatingComposeButton(
-                        onPressed: () {
-                          context.push(Paths.sharePost);
-                        },
-                      ),
-                    )
-                  : const SizedBox(); // 다른 화면에서는 아무것도 표시하지 않음
-            },
-          ),
-        ],
+            child: Stack(
+              children: [
+                viewModel.currentScreen,
+                if (viewModel.currentIndex == 0)
+                  Positioned(
+                    bottom: 16.0,
+                    right: 16.0,
+                    child: FloatingComposeButton(
+                      onPressed: () {
+                        context.push(Paths.sharePost);
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
       ),
       bottomNavigationBar: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
