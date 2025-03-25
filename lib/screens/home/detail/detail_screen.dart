@@ -177,7 +177,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 // 입찰하기 버튼
                 Expanded(
                   child: BasicButton(
-                    text: isBidPlaced ? "입찰 완료" : "입찰하기",
+                    text: isBidPlaced ? "신청완료" : "나눔받기",
                     isClickable: !isBidPlaced, // ✅ 입찰 후 비활성화
                     onPressed: isBidPlaced ? null : _openBidBottomSheet,
                     size: BasicButtonSize.SMALL,

@@ -38,7 +38,7 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
 
       // ✅ 스낵바 표시
       ScaffoldMessenger.of(context).showSnackBar(
-        BlueSnackBar(text: "입찰이 완료되었습니다!"),
+        BlueSnackBar(text: "나눔 신청이 완료되었습니다!"),
       );
 
       // ✅ 500ms 후 BottomSheet 닫기
@@ -63,12 +63,12 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
             child: Container(width: 40, height: 4, color: Colors.black45),
           ),
           const SizedBox(height: 16),
-          const Text("입찰 금액을 입력하세요", style: AnbdTextStyle.TitleSB18),
+          const Text("기부하실 금액을 선정해주세요", style: AnbdTextStyle.TitleSB18),
           const SizedBox(height: 8),
 
           BasicTextField(
             controller: _bidController,
-            hintText: "입찰 금액을 입력하세요",
+            hintText: "기부하실 금액을 선정해주세요",
             onChanged: (value) => _onTextChanged(),
           ),
 
@@ -96,7 +96,7 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
               const SizedBox(width: 12),
               Expanded(
                 child: BasicButton(
-                  text: isBidButtonEnabled ? "입찰하기" : "입찰 완료",
+                  text: isBidButtonEnabled ? "나눔받기" : "신청 완료",
                   isClickable: isBidButtonEnabled,
                   onPressed: isBidButtonEnabled ? _submitBid : null,
                   size: BasicButtonSize.SMALL,
