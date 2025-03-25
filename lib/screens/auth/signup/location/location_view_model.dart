@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:anbd/common/utils/address_utils.dart';
+import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_google_maps_webservices/places.dart';
@@ -21,6 +22,9 @@ class LocationViewModel extends ChangeNotifier {
   /// 위도/경도
   String? latitude;
   String? longitude;
+
+  String? _selectedDistrict;
+  String? get selectedDistrict => _selectedDistrict;
 
   LocationViewModel() {
     _places = GoogleMapsPlaces(apiKey: googleApiKey);
@@ -148,6 +152,24 @@ class LocationViewModel extends ChangeNotifier {
       nearbyDistricts = [];
       notifyListeners();
     }
+  }
+
+  /// 사용자가 선택한 동네 저장
+  Future<void> selectAndSaveDistrict(String district) async {
+    _selectedDistrict = district;
+    notifyListeners();
+
+    final parts = district.split(' ');
+    String trimmedDistrict = district;
+
+    if (parts.length >= 2) {
+      trimmedDistrict = "${parts[parts.length - 2]} ${parts.last}";
+    }
+
+    // 저장 동네는 자치구/행정구 + 동/읍/면 조합
+    final SecureStorageRepository secureStorage = SecureStorageRepository();
+    await secureStorage.saveUserNearbyDistricts(trimmedDistrict);
+    log("✅ 저장된 동네: $trimmedDistrict");
   }
 
   @override

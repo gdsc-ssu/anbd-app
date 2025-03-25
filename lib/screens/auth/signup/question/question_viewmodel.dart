@@ -7,9 +7,6 @@ import 'package:intl/intl.dart';
 class QuestionViewModel extends ChangeNotifier {
   final SecureStorageRepository _secureStorage = SecureStorageRepository();
 
-  String? _selectedGender; // 선택된 성별
-  DateTime? _selectedDate; // 선택된 날짜(출생일 등)
-
   /// 비동기 로드를 통해 받아온 name
   String? _name;
   String? get name => _name;
@@ -30,9 +27,11 @@ class QuestionViewModel extends ChangeNotifier {
   }
 
   /// 성별 Getter
+  String? _selectedGender;
   String? get selectedGender => _selectedGender;
 
   /// 날짜 Getter
+  DateTime? _selectedDate;
   DateTime? get selectedDate => _selectedDate;
 
   /// '다음' 버튼 표시 여부 (성별과 날짜 모두 선택해야 true)
@@ -56,15 +55,15 @@ class QuestionViewModel extends ChangeNotifier {
 
   Future<void> saveUserInfo(
       String? selectedGender, String? selectedDate) async {
-    final SecureStorageRepository secureStorage = SecureStorageRepository();
-
     if (selectedGender == '남성') {
       selectedGender = 'MALE';
     } else {
       selectedGender = 'FEMALE';
     }
-    await secureStorage.saveUserGender(selectedGender);
-    await secureStorage.saveUserBirthDate(selectedDate!);
+
+    log("성별 : $selectedGender, 생일 : $selectedDate");
+    _secureStorage.saveUserGender(selectedGender);
+    _secureStorage.saveUserBirthDate(selectedDate!);
   }
 
   @override

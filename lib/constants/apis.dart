@@ -9,4 +9,7 @@ abstract class Apis {
   /// 토큰 관련 api
   static const String getAccessToken = "auth/mobile/google";
   static const String getSharePostList = "share-posts";
+
+  /// user 관련 api
+  static const String putUsersProfiles = "users/profiles";
 }
