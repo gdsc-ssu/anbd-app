@@ -62,7 +62,7 @@ class Content extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                product.description ?? '',
+                product.content ?? '',
                 style: AnbdTextStyle.Body14,
               ),
               const SizedBox(height: 16),

@@ -18,7 +18,7 @@ class UserInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipOval(
-                child: Image.network(
+                child: Image.asset(
                   "assets/images/placeholder.png",
                   width: 50,
                   height: 50,

@@ -14,6 +14,7 @@ import 'package:anbd/screens/detail/top_image.dart';
 import 'package:anbd/screens/detail/user_info.dart';
 import 'package:anbd/screens/detail/content.dart';
 import 'package:anbd/screens/detail/bid_bottom_sheet.dart';
+import 'package:anbd/screens/detail/ai_description.dart';
 
 class DetailScreen extends StatefulWidget {
   final String productId;
@@ -82,13 +83,14 @@ class _DetailScreenState extends State<DetailScreen> {
             _buildTopImage(product),
             _buildUserInfo(product),
             _buildContent(product),
+            _buildDescription(product),
             _buildReportButton(),
             _buildBidderList(product),
             _buildRecommendList(),
           ],
         ),
       ),
-      bottomSheet: _buildBidButton(isBidPlaced),
+      bottomNavigationBar: _buildBidButton(isBidPlaced),
     );
   }
 
@@ -137,6 +139,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildTopImage(SharePostResponse product) => TopImage(product: product);
   Widget _buildUserInfo(SharePostResponse product) => UserInfo(product: product);
   Widget _buildContent(SharePostResponse product) => Content(product: product);
+  Widget _buildDescription(SharePostResponse product) => Description(product: product);
   Widget _buildReportButton() => const ReportButton();
   Widget _buildBidderList(SharePostResponse product) => BidderList(product: product);
   Widget _buildRecommendList() => const RecommendList();
@@ -184,11 +187,6 @@ class _DetailScreenState extends State<DetailScreen> {
               ],
             ),
           ),
-          Container(
-            color: AnbdColor.white,
-            height: 16,
-            width: double.infinity,
-          )
         ],
       ),
     );
