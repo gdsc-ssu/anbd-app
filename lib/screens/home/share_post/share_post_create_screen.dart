@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:anbd/common/enums/share_post_type.dart';
 import 'package:anbd/constants/constants.dart';
+import 'package:anbd/widgets/basic_button.dart';
 import 'package:anbd/widgets/basic_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -30,12 +31,6 @@ class SharePostCreateScreen extends StatelessWidget {
                 icon: SvgPicture.asset("assets/svg/close.svg"),
                 onPressed: () => Navigator.pop(context),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () => viewModel.postSharePosts(),
-                  child: const Text('완료', style: AnbdTextStyle.BodyM16),
-                ),
-              ],
               bottom: const PreferredSize(
                 preferredSize: Size.fromHeight(1),
                 child: Divider(height: 1, color: AnbdColor.systemGray02),
@@ -178,6 +173,25 @@ class SharePostCreateScreen extends StatelessWidget {
               ),
             ),
             backgroundColor: Colors.white,
+            bottomNavigationBar: (viewModel.images.isNotEmpty &&
+                    viewModel.isPostValid &&
+                    viewModel.selectedType != null)
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                    ),
+                    child: BasicButton(
+                      text: '작성 완료',
+                      isClickable: true,
+                      onPressed: () {
+                        viewModel.postSharePosts();
+                        context.push(Paths.home);
+                      },
+                    ),
+                  )
+                : const SizedBox.shrink(), // 조건 불충족 시 공간 없음
           );
         },
       ),

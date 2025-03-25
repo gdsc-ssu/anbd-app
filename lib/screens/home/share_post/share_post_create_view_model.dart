@@ -10,7 +10,8 @@ import 'package:photo_manager/photo_manager.dart';
 class SharePostCreateViewModel extends ChangeNotifier {
   final SharePostService sharePostService = GetIt.instance<SharePostService>();
 
-  final ImagePicker _picker = ImagePicker();
+  bool get isPostValid =>
+      titleController.text.isNotEmpty && contentController.text.isNotEmpty;
 
   List<File> _images = [];
   List<File> get images => _images;
@@ -18,11 +19,13 @@ class SharePostCreateViewModel extends ChangeNotifier {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
-  SharePostType _selectedType = SharePostType.SHARE;
-  SharePostType get selectedType => _selectedType;
+  SharePostType? _selectedType = null;
+  SharePostType? get selectedType => _selectedType;
 
-  bool get isPostValid =>
-      titleController.text.isNotEmpty && contentController.text.isNotEmpty;
+  void selectType(SharePostType type) {
+    _selectedType = type;
+    notifyListeners();
+  }
 
   void setImages(List<File> newImages) {
     _images = newImages;
@@ -34,16 +37,11 @@ class SharePostCreateViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectType(SharePostType type) {
-    _selectedType = type;
-    notifyListeners();
-  }
-
   Future<void> postSharePosts() async {
     await sharePostService.postSharePosts(
       titleController.text,
       contentController.text,
-      selectedType.name, // enum → String 변환
+      selectedType!.name,
       images,
     );
   }
