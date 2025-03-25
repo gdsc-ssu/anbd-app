@@ -88,6 +88,12 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> refresh() async {
+    // 예: API 호출해서 데이터 새로고침
+    await fetchProducts(); // 메서드 이름은 실제 프로젝트에 맞게!
+    notifyListeners();
+  }
+
   Widget _buildHomeScreen() {
     if (isLoading) {
       print("⏳ 로딩 중...");
