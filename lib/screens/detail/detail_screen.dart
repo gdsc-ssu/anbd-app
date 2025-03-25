@@ -1,4 +1,5 @@
 import 'package:anbd/constants/colors.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
 import 'package:anbd/models/product_detail_model.dart';
 import 'package:anbd/screens/detail/bidder_list.dart';
 import 'package:anbd/screens/detail/recommend_list.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/screens/detail/detail_viewmodel.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:anbd/screens/detail/top_image.dart';
 import 'package:anbd/screens/detail/user_info.dart';
@@ -26,6 +28,21 @@ class _DetailScreenState extends State<DetailScreen> {
   bool isBidPlaced = false;
   bool isLiked = false;
 
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      final extra = GoRouterState
+          .of(context)
+          .extra as Map<String, dynamic>?;
+      final postId = extra?['id'] as int?;
+      print('postId 잘 오니? $postId');
+      if (postId != null) {
+        context.read<DetailViewModel>().fetchPost(postId);
+      }
+    });
+  }
+
   void _openBidBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -44,7 +61,15 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<DetailViewModel>();
-    final product = viewModel.productDetail;
+    final post = viewModel.post;
+
+    if (post == null) {
+      return const Scaffold (
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final product = viewModel.post!;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -54,11 +79,11 @@ class _DetailScreenState extends State<DetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildTopImage(),
-            _buildUserInfo(),
+            _buildTopImage(product),
+            _buildUserInfo(product),
             _buildContent(product),
             _buildReportButton(),
-            _buildBidderList(),
+            _buildBidderList(product),
             _buildRecommendList(),
           ],
         ),
@@ -109,11 +134,11 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildTopImage() => const TopImage();
-  Widget _buildUserInfo() => const UserInfo();
-  Widget _buildContent(ProductDetail product) => Content(product: product);
+  Widget _buildTopImage(SharePostResponse product) => TopImage(product: product);
+  Widget _buildUserInfo(SharePostResponse product) => UserInfo(product: product);
+  Widget _buildContent(SharePostResponse product) => Content(product: product);
   Widget _buildReportButton() => const ReportButton();
-  Widget _buildBidderList() => const BidderList();
+  Widget _buildBidderList(SharePostResponse product) => BidderList(product: product);
   Widget _buildRecommendList() => const RecommendList();
 
   Widget _buildBidButton(bool isBidPlaced) {

@@ -17,7 +17,11 @@ class ProductItem extends StatelessWidget {
     print("🔍 렌더링 중: ${product.title}");
     return GestureDetector(
       onTap: () {
-        context.push('/detail/${product.id}');
+        context.push('/detail/${product.id}',
+          extra: {
+            "id" : product.id,
+          }
+        );
       },
       child: Column(
         children: [
@@ -53,7 +57,7 @@ class ProductItem extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              product.title,
+                              product.title ?? '',
                               style: AnbdTextStyle.Body16,
                               overflow: TextOverflow.ellipsis,
                             ),

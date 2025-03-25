@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
 
 class TopImage extends StatelessWidget {
-  final String imagePath;
+  final SharePostResponse product;
 
-  const TopImage({super.key, this.imagePath = "assets/images/placeholder.png"});
+  const TopImage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      imagePath,
+    final imageUrl = product.images.isNotEmpty
+        ? product.images.first
+        : "assets/images/placeholder.png";
+
+    return imageUrl.startsWith("http")
+        ? Image.network(
+      imageUrl,
       fit: BoxFit.cover,
       width: double.infinity,
-      // height: 300, // 필요하면 높이도 파라미터화 가능
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset(
+          "assets/images/placeholder.png",
+          fit: BoxFit.cover,
+          width: double.infinity,
+        );
+      },
+    )
+        : Image.asset(
+      imageUrl,
+      fit: BoxFit.cover,
+      width: double.infinity,
     );
   }
 }

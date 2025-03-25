@@ -1,33 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:anbd/models/product_detail_model.dart';
+import 'package:anbd/data/service/share_post_service.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
 
 class DetailViewModel extends ChangeNotifier {
-  late ProductDetail _productDetail;
+  SharePostResponse? _post;
+  SharePostResponse? get post => _post;
 
-  ProductDetail get productDetail => _productDetail;
+  final SharePostService _sharePostService;
 
-  DetailViewModel() {
-    fetchMockData();
+  DetailViewModel({String? token}) : _sharePostService = SharePostService(token: token);
+
+  Future<void> fetchPost(int postId) async {
+    print("📡 fetchPostDetail 호출됨: postId=$postId");
+    try {
+      final response = await _sharePostService.fetchPost(postId);
+      print("📡 fetchPostDetail 호출됨: postId=$postId");
+      _post = response;
+      notifyListeners();
+    } catch (e) {
+      print('❌ 게시글 로딩 실패: $e');
+    }
   }
-
-  void fetchMockData() {
-    final mockJson = {
-      "id": 1,
-      "userId": 100,
-      "title": "소니 Wh-1000xm5 실버 나눔합니다.",
-      "category": "DIGITAL",
-      "content": "8/31일 해외직구한 한달도 안된 제품입니다. 박풀 S급입니다.",
-      "images": ["https://example.com/image.png"],
-      "type": "SHARE",
-      "description": "상세한 설명입니다.",
-      "createdAt": "2025-03-14T10:42:29.023Z",
-      "updatedAt": "2025-03-14T10:42:29.023Z",
-      "likeCount": 15,
-      "isLiked": false
-    };
-
-    _productDetail = ProductDetail.fromJson(mockJson);
-    notifyListeners();
-  }
-
 }

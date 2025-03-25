@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
 
 class UserInfo extends StatelessWidget {
-  const UserInfo({super.key});
+  final SharePostResponse product;
+  const UserInfo({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class UserInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipOval(
-                child: Image.asset(
+                child: Image.network(
                   "assets/images/placeholder.png",
                   width: 50,
                   height: 50,
