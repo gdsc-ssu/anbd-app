@@ -175,8 +175,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 const SizedBox(width: 16),
 
                 // 입찰하기 버튼
-                SizedBox(
-                  width: 300,
+                Expanded(
                   child: BasicButton(
                     text: isBidPlaced ? "입찰 완료" : "입찰하기",
                     isClickable: !isBidPlaced, // ✅ 입찰 후 비활성화

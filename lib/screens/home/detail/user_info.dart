@@ -30,11 +30,11 @@ class UserInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "감성탐방러",
+                    "나눔러",
                     style: AnbdTextStyle.BodyEB15,
                   ),
                   Text(
-                    "중랑구 면목동",
+                    "관악구 봉천동",
                     style: AnbdTextStyle.BodyL12,
                   ),
                 ],
