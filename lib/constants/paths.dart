@@ -11,4 +11,7 @@ abstract class Paths {
 
   static const String detail = '/detail/:id';
   static const String loading = '/loading';
+
+  static const String sharePost = '/sharePost';
+  static const String sharePostImageSelect = '/sharePostImageSelect';
 }

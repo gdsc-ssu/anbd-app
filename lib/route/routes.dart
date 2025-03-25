@@ -16,7 +16,7 @@ class AppRouter {
 
   static Future<void> setupRouter() async {
     final prefs = await SharedPreferences.getInstance();
-    const String initialLocation = Paths.login;
+    const String initialLocation = Paths.home;
 
     router = GoRouter(
       initialLocation: initialLocation,

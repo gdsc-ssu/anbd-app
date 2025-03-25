@@ -42,7 +42,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-
       body: Stack(
         children: [
           Consumer<HomeViewModel>(
@@ -56,18 +55,17 @@ class HomeScreen extends StatelessWidget {
             builder: (context, viewModel, child) {
               return viewModel.currentIndex == 0
                   ? Positioned(
-                bottom: 16.0,
-                right: 16.0,
-                child: FloatingComposeButton(
-                  onPressed: () {},
-                ),
-              )
-                  : const SizedBox();
+                      bottom: 16.0,
+                      right: 16.0,
+                      child: FloatingComposeButton(
+                        onPressed: () {},
+                      ),
+                    )
+                  : const SizedBox(); // 다른 화면에서는 아무것도 표시하지 않음
             },
           ),
         ],
       ),
-
       bottomNavigationBar: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
           return CustomBottomNavigationBar(
