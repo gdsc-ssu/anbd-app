@@ -1,6 +1,5 @@
 import 'package:anbd/constants/colors.dart';
 import 'package:anbd/data/dto/response/share_post_response.dart';
-import 'package:anbd/models/product_detail_model.dart';
 import 'package:anbd/screens/home/detail/bidder_list.dart';
 import 'package:anbd/screens/home/detail/recommend_list.dart';
 import 'package:anbd/screens/home/detail/report_button.dart';
@@ -15,6 +14,7 @@ import 'package:anbd/screens/home/detail/user_info.dart';
 import 'package:anbd/screens/home/detail/content.dart';
 import 'package:anbd/screens/home/detail/bid_bottom_sheet.dart';
 import 'package:anbd/screens/home/detail/ai_description.dart';
+import 'package:anbd/screens/home/detail/share_bottom_sheet.dart';
 
 class DetailScreen extends StatefulWidget {
   final String productId;
@@ -33,9 +33,7 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      final extra = GoRouterState
-          .of(context)
-          .extra as Map<String, dynamic>?;
+      final extra = GoRouterState.of(context).extra as Map<String, dynamic>?;
       final postId = extra?['id'] as int?;
       print('postId 잘 오니? $postId');
       if (postId != null) {
@@ -44,13 +42,30 @@ class _DetailScreenState extends State<DetailScreen> {
     });
   }
 
-  void _openBidBottomSheet(int postId) {
+  void _openBidBottomSheet(int postId, String type) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      builder: (context) => SafeArea(
+        child: BidBottomSheet(
+          postId: postId,
+          type: type,
+          onBidCompleted: () {
+            setState(() => isBidPlaced = true);
+          },
+        ),
+      ),
+    );
+  }
+
+  void _openDonateBottomSheet(int postId) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
       isScrollControlled: true,
       builder: (context) => SafeArea(
-        child: BidBottomSheet(
+        child: DonateBottomSheet(
           postId: postId,
           onBidCompleted: () {
             setState(() => isBidPlaced = true);
@@ -66,12 +81,12 @@ class _DetailScreenState extends State<DetailScreen> {
     final post = viewModel.post;
 
     if (post == null) {
-      return const Scaffold (
+      return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
-    final product = viewModel.post!;
+    final product = post;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -91,7 +106,7 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBidButton(isBidPlaced || product.isBid, product.id),
+      bottomNavigationBar: _buildBidButton(isBidPlaced || product.isBid, product.id, product.type ?? ""),
     );
   }
 
@@ -145,7 +160,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildBidderList(SharePostResponse product) => BidderList(product: product);
   Widget _buildRecommendList() => const RecommendList();
 
-  Widget _buildBidButton(bool isBid, int postId) {
+  Widget _buildBidButton(bool isBid, int postId, String type) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -170,17 +185,21 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-
-                // 구분선 Divider
                 SvgPicture.asset("assets/svg/col_divider.svg"),
                 const SizedBox(width: 16),
-
-                // 입찰하기 버튼
                 Expanded(
                   child: BasicButton(
                     text: isBid ? "신청완료" : "나눔받기",
-                    isClickable: !(isBid || isBidPlaced), // ✅ 입찰 후 비활성화
-                    onPressed: isBid ? null : () => _openBidBottomSheet(postId),
+                    isClickable: !isBid,
+                    onPressed: isBid
+                        ? null
+                        : () {
+                      if (type == "SHARE") {
+                        _openDonateBottomSheet(postId);
+                      } else {
+                        _openBidBottomSheet(postId, type);
+                      }
+                    },
                     size: BasicButtonSize.SMALL,
                   ),
                 ),
@@ -191,5 +210,4 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
     );
   }
-
 }
