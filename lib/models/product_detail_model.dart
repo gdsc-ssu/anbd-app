@@ -1,46 +1,35 @@
-class ProductDetail {
-  final int id;
-  final int userId;
-  final String title;
-  final String category;
-  final String content;
-  final List<String> images;
-  final String type;
-  final String description;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final int likeCount;
-  final bool isLiked;
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
 
-  ProductDetail({
-    required this.id,
-    required this.userId,
-    required this.title,
-    required this.category,
-    required this.content,
-    required this.images,
-    required this.type,
-    required this.description,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.likeCount,
-    required this.isLiked,
-  });
+part 'product_detail_model.freezed.dart';
+part 'product_detail_model.g.dart';
 
-  factory ProductDetail.fromJson(Map<String, dynamic> json) {
+@freezed
+class ProductDetail with _$ProductDetail {
+  const factory ProductDetail({
+    required int id,
+    required String title,
+    required String content,
+    required List<String> images,
+    required String description,
+    required int likeCount,
+    required bool isLiked,
+  }) = _ProductDetail;
+
+  /// JSON 지원
+  factory ProductDetail.fromJson(Map<String, dynamic> json) =>
+      _$ProductDetailFromJson(json);
+
+  /// ✅ SharePostResponse → ProductDetail 변환
+  factory ProductDetail.fromResponse(SharePostResponse res) {
     return ProductDetail(
-      id: json['id'],
-      userId: json['userId'],
-      title: json['title'],
-      category: json['category'],
-      content: json['content'],
-      images: List<String>.from(json['images']),
-      type: json['type'],
-      description: json['description'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      likeCount: json['likeCount'],
-      isLiked: json['isLiked'],
+      id: res.id,
+      title: res.title ?? '',
+      content: res.content ?? '',
+      images: res.images,
+      description: res.description ?? '',
+      likeCount: res.likeCount,
+      isLiked: res.isLiked,
     );
   }
 }

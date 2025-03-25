@@ -1,5 +1,6 @@
 import 'package:anbd/data/dto/response/share_post_response.dart';
 
+/// ❌SharePostResponse로 대체 ❌
 class SharePostModel {
   final int id;
   final int userId;

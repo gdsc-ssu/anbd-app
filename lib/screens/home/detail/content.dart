@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/models/product_detail_model.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
 
 class Content extends StatelessWidget {
-  final ProductDetail product;
+  final SharePostResponse product;
 
   const Content({super.key, required this.product});
 
@@ -36,7 +37,7 @@ class Content extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.title,
+                product.title ?? '',
                 style: AnbdTextStyle.TitleSB18,
               ),
               const SizedBox(height: 8),
@@ -44,7 +45,7 @@ class Content extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    product.category,
+                    product.category ?? '',
                     style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
                   ),
                   const SizedBox(width: 4),
@@ -61,7 +62,7 @@ class Content extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                product.description,
+                product.content ?? '',
                 style: AnbdTextStyle.Body14,
               ),
               const SizedBox(height: 16),

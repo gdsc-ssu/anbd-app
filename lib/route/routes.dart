@@ -7,7 +7,7 @@ import 'package:anbd/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:anbd/screens/home/home_screen.dart';
 import 'package:anbd/screens/onboarding/onboarding_screen.dart';
-import 'package:anbd/screens/detail/detail_screen.dart';
+import 'package:anbd/screens/home/detail/detail_screen.dart';
 import 'package:anbd/screens/loading/loading_screen.dart';
 import 'package:anbd/constants/paths.dart';
 

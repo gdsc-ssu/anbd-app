@@ -12,7 +12,7 @@ class HomeViewModel extends ChangeNotifier {
   bool isLoading = true;
   List<SharePostResponse> _products = [];
 
-  String _currentLocation = "서울";
+  String _currentLocation = "관악구 행운동";
   final List<String> _locations = ["군자동", "광진구 구의제3동", "동대문구 휘경동"];
 
   final SharePostService _service;

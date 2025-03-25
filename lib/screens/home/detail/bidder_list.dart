@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:anbd/data/dto/response/share_post_response.dart';
+
 class BidderList extends StatefulWidget {
-  const BidderList({super.key});
+  final SharePostResponse product;
+  const BidderList({super.key, required this.product});
 
   @override
   State<BidderList> createState() => _BidderListState();
