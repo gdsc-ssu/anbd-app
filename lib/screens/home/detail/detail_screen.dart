@@ -1,20 +1,20 @@
 import 'package:anbd/constants/colors.dart';
 import 'package:anbd/data/dto/response/share_post_response.dart';
 import 'package:anbd/models/product_detail_model.dart';
-import 'package:anbd/screens/detail/bidder_list.dart';
-import 'package:anbd/screens/detail/recommend_list.dart';
-import 'package:anbd/screens/detail/report_button.dart';
+import 'package:anbd/screens/home/detail/bidder_list.dart';
+import 'package:anbd/screens/home/detail/recommend_list.dart';
+import 'package:anbd/screens/home/detail/report_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anbd/widgets/widgets.dart';
-import 'package:anbd/screens/detail/detail_viewmodel.dart';
+import 'package:anbd/screens/home/detail/detail_viewmodel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:anbd/screens/detail/top_image.dart';
-import 'package:anbd/screens/detail/user_info.dart';
-import 'package:anbd/screens/detail/content.dart';
-import 'package:anbd/screens/detail/bid_bottom_sheet.dart';
-import 'package:anbd/screens/detail/ai_description.dart';
+import 'package:anbd/screens/home/detail/top_image.dart';
+import 'package:anbd/screens/home/detail/user_info.dart';
+import 'package:anbd/screens/home/detail/content.dart';
+import 'package:anbd/screens/home/detail/bid_bottom_sheet.dart';
+import 'package:anbd/screens/home/detail/ai_description.dart';
 
 class DetailScreen extends StatefulWidget {
   final String productId;

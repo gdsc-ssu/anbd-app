@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:anbd/screens/home/home_viewmodel.dart';
-import 'package:anbd/screens/detail/detail_viewmodel.dart';
+import 'package:anbd/screens/home/detail/detail_viewmodel.dart';
 import 'package:anbd/route/routes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:timeago/timeago.dart' as timeago_ko show KoMessages;
