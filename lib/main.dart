@@ -8,12 +8,17 @@ import 'package:anbd/screens/onboarding/onboarding_viewmodel.dart';
 import 'package:anbd/screens/home/home_viewmodel.dart';
 import 'package:anbd/screens/detail/detail_viewmodel.dart';
 import 'package:anbd/route/routes.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:timeago/timeago.dart' as timeago_ko show KoMessages;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ 비동기 실행을 위해 필요
   await AppRouter.setupRouter(); // ✅ 라우터 설정 (SharedPreferences 조회 후 결정)
   await FlutterConfig.loadEnvVariables(); // 환경 변수 로드
   setupServiceLocator(); //get it
+  timeago.setLocaleMessages('ko', timeago_ko.KoMessages());
+
+  // print("🔥 환경변수 토큰 확인: ${FlutterConfig.get('master_access_token')}");
 
   runApp(MyApp());
 }
@@ -28,7 +33,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
         ChangeNotifierProvider(
-            create: (_) => HomeViewModel()), // ✅ 홈 화면 관련 ViewModel 추가
+          create: (_) => HomeViewModel(
+            masterToken: FlutterConfig.get('master_access_token') ?? '',
+          ),
+        ),
         ChangeNotifierProvider(create: (_) => DetailViewModel()),
       ],
       child: MaterialApp.router(

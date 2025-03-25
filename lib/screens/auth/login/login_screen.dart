@@ -71,10 +71,13 @@ class LoginScreen extends StatelessWidget {
                               color: AnbdColor.systemGray03),
                         ),
                         const SizedBox(width: 5),
-                        Text(
-                          '둘러보기',
-                          style: AnbdTextStyle.BodyL12.copyWith(
-                              color: AnbdColor.blue),
+                        GestureDetector(
+                          onTap: () => context.push(Paths.home),
+                          child : Text(
+                            '둘러보기',
+                            style: AnbdTextStyle.BodyL12.copyWith(
+                                color: AnbdColor.blue),
+                          ),
                         ),
                       ],
                     ),

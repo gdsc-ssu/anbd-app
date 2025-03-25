@@ -17,34 +17,12 @@ class HomeScreen extends StatelessWidget {
         child: AppBar(
           automaticallyImplyLeading: false,
           title: Align(
-            alignment: Alignment.centerLeft, // ✅ 동네 이름을 왼쪽 정렬
+            alignment: Alignment.centerLeft,
             child: Consumer<HomeViewModel>(
               builder: (context, viewModel, child) {
-                return GestureDetector(
-                  onTap: () {
-                    showMenu(
-                      context: context,
-                      position: const RelativeRect.fromLTRB(100, 100, 100, 100),
-                      items: viewModel.locations.map((String location) {
-                        return PopupMenuItem<String>(
-                          value: location,
-                          child: Text(location),
-                          onTap: () => viewModel.updateLocation(location),
-                        );
-                      }).toList(),
-                    );
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        viewModel.currentLocation,
-                        style: AnbdTextStyle.TitleSB18,
-                      ),
-                      const SizedBox(width: 4),
-                      const Icon(Icons.keyboard_arrow_down, size: 20),
-                    ],
-                  ),
+                return Text(
+                  viewModel.currentLocation,
+                  style: AnbdTextStyle.TitleSB18,
                 );
               },
             ),
@@ -84,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {},
                 ),
               )
-                  : const SizedBox(); // 다른 화면에서는 아무것도 표시하지 않음
+                  : const SizedBox();
             },
           ),
         ],

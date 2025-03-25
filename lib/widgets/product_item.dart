@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:anbd/models/product_model.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
+import '../data/dto/response/share_post_response.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:timeago/timeago.dart' as timeago_ko show ko;
 
 class ProductItem extends StatelessWidget {
-  final Product product;
+  final SharePostResponse product;
 
   const ProductItem({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("🔍 렌더링 중: ${product.title}");
     return GestureDetector(
       onTap: () {
         context.push('/detail/${product.id}');
@@ -25,8 +28,8 @@ class ProductItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: Image.asset(
-                    'assets/images/placeholder.png',// 기본 이미지 URL 설정
+                  child: Image.network(
+                    product.images.isNotEmpty ? product.images[0] : '',
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
@@ -55,7 +58,7 @@ class ProductItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          if (product.isFree)
+                          if (product.type == "SHARE")
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Text(
@@ -67,7 +70,7 @@ class ProductItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "${product.location} · ${product.timeAgo}",
+                        "${product.location} · ${timeago.format(product.createdAt, locale: 'ko')}",
                         style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
                       ),
                       Align(
@@ -85,7 +88,7 @@ class ProductItem extends StatelessWidget {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                "${product.likes}",
+                                "${product.likeCount}",
                                 style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
                               ),
                             ],

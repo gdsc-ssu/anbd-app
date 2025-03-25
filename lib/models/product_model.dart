@@ -1,35 +1,57 @@
-class Product {
-  final String id;
-  final String title;
-  final String location;
-  final String timeAgo;
-  final String imageUrl;
-  final int comments;
-  final int likes;
-  final bool isFree;
+import 'package:anbd/data/dto/response/share_post_response.dart';
 
-  Product({
+class SharePostModel {
+  final int id;
+  final int userId;
+  final String title;
+  final String category;
+  final String content;
+  final List<String> images;
+  final String type;
+  final String description;
+  final String location;
+  final bool isSold;
+  final int hits;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final int likeCount;
+  final bool isLiked;
+
+  SharePostModel({
     required this.id,
+    required this.userId,
     required this.title,
+    required this.category,
+    required this.content,
+    required this.images,
+    required this.type,
+    required this.description,
     required this.location,
-    required this.timeAgo,
-    required this.imageUrl,
-    this.comments = 0,
-    this.likes = 0,
-    this.isFree = false,
+    required this.isSold,
+    required this.hits,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.likeCount,
+    required this.isLiked,
   });
 
-  // JSON 데이터를 모델로 변환하는 메서드
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'] ?? '',
+  factory SharePostModel.fromJson(Map<String, dynamic> json) {
+    return SharePostModel(
+      id: json['id'],
+      userId: json['userId'],
       title: json['title'],
-      location: json['location'],
-      timeAgo: json['timeAgo'],
-      imageUrl: json['imageUrl'],
-      comments: json['comments'] ?? 0,
-      likes: json['likes'] ?? 0,
-      isFree: json['isFree'] ?? false,
+      category: json['category'],
+      content: json['content'],
+      images: List<String>.from(json['images'] ?? []), // ✅ null-safe
+      type: json['type'],
+      description: json['description'] ?? '',
+      location: json['location'] ?? '',
+      isSold: json['isSold'] ?? false, // ✅ null-safe boolean
+      hits: json['hits'] ?? 0,
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+      likeCount: json['likeCount'] ?? 0,
+      isLiked: json['isLiked'] == true,
     );
   }
 }

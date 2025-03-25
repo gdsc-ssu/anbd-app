@@ -15,12 +15,18 @@ class BaseResponse<T> {
 
   factory BaseResponse.fromJson(
       Map<String, dynamic> json, T Function(dynamic) fromJsonT) {
+    final bodyJson = json['body'];
+
+    if (bodyJson == null) {
+      throw Exception('BaseResponse Error: body가 null입니다.');
+    }
+
     return BaseResponse(
-      traceId: json['traceId'] as String,
-      status: json['status'] as int,
-      code: json['code'] as String,
-      timestamp: json['timestamp'] as String,
-      body: fromJsonT(json['body']),
+      traceId: json['traceId'] as String? ?? '',
+      status: json['status'] as int? ?? -1,
+      code: json['code'] as String? ?? '',
+      timestamp: json['timestamp'] as String? ?? '',
+      body: fromJsonT(bodyJson),
     );
   }
 }
