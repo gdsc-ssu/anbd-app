@@ -21,6 +21,7 @@ class SharePostResponse with _$SharePostResponse {
     required DateTime updatedAt,
     required int likeCount,
     required bool isLiked,
+    required bool isBid,
   }) = _SharePostResponse;
 
   factory SharePostResponse.fromJson(Map<String, dynamic> json) =>
