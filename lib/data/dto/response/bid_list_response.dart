@@ -25,14 +25,15 @@ class UserInfo with _$UserInfo {
     required int userId,
     required String nickname,
     required String email,
-    required String profileImage,
+    String? profileImage,
     required String gender,
-    required String birthDate,
+    String? birthDate,
     required String neighborhood,
-    required List<dynamic> shareCategories, // 리스트 안 타입 필요시 수정
+    required List<dynamic> shareCategories,
     required int reliability,
   }) = _UserInfo;
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);
 }
+

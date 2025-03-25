@@ -13,7 +13,6 @@ class HomeViewModel extends ChangeNotifier {
   List<SharePostResponse> _products = [];
 
   String _currentLocation = "관악구 행운동";
-  final List<String> _locations = ["군자동", "광진구 구의제3동", "동대문구 휘경동"];
 
   final SharePostService _service;
 
@@ -26,7 +25,6 @@ class HomeViewModel extends ChangeNotifier {
   List<SharePostResponse> get products => _products;
   int get currentIndex => _currentIndex;
   String get currentLocation => _currentLocation;
-  List<String> get locations => _locations;
 
   String get currentAppBarTitle {
     return _currentIndex == 0 ? _currentLocation : _appBarTitles[_currentIndex];

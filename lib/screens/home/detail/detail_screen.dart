@@ -38,6 +38,7 @@ class _DetailScreenState extends State<DetailScreen> {
       print('postId 잘 오니? $postId');
       if (postId != null) {
         context.read<DetailViewModel>().fetchPost(postId);
+        context.read<DetailViewModel>().fetchBids(postId); // 이 줄 추가
       }
     });
   }
@@ -157,7 +158,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildContent(SharePostResponse product) => Content(product: product);
   Widget _buildDescription(SharePostResponse product) => Description(product: product);
   Widget _buildReportButton() => const ReportButton();
-  Widget _buildBidderList(SharePostResponse product) => BidderList(product: product);
+  Widget _buildBidderList(SharePostResponse product) => BidderList();
   Widget _buildRecommendList() => const RecommendList();
 
   Widget _buildBidButton(bool isBid, int postId, String type) {

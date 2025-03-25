@@ -37,7 +37,9 @@ class MyApp extends StatelessWidget {
             masterToken: FlutterConfig.get('master_access_token') ?? '',
           ),
         ),
-        ChangeNotifierProvider(create: (_) => DetailViewModel()),
+        ChangeNotifierProvider(create: (_) => DetailViewModel(
+          token: FlutterConfig.get('master_access_token') ?? '',
+        )),
       ],
       child: MaterialApp.router(
         /// 나라 지역 설정
