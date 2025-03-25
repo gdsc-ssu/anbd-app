@@ -4,6 +4,7 @@ import 'package:anbd/screens/auth/signup/location/location_screen.dart';
 import 'package:anbd/screens/auth/signup/question/question_screen.dart';
 import 'package:anbd/screens/home/share_post/image/image_select_screen.dart';
 import 'package:anbd/screens/home/share_post/share_post_create_screen.dart';
+import 'package:anbd/screens/mypage/mypage_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +66,10 @@ class AppRouter {
         GoRoute(
           path: Paths.sharePostImageSelect,
           builder: (context, state) => const ImageSelectScreen(),
+        ),
+        GoRoute(
+          path: Paths.mypage,
+          builder: (context, state) => const MyPageScreen(),
         ),
       ],
     );
