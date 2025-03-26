@@ -54,6 +54,8 @@ class _DetailScreenState extends State<DetailScreen> {
           type: type,
           onBidCompleted: () {
             setState(() => isBidPlaced = true);
+            context.read<DetailViewModel>().fetchPost(postId);
+            context.read<DetailViewModel>().fetchBids(postId);
           },
         ),
       ),

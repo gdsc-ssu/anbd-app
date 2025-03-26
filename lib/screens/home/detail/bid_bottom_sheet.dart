@@ -68,64 +68,71 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         BlueSnackBar(text: "신청에 실패했습니다. 다시 시도해주세요."),
       );
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.pop(context); // ❗ 실패했을 때도 닫기
+      });
     }
   }
 
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(width: 40, height: 4, color: Colors.black45),
-          ),
-          const SizedBox(height: 16),
-          const Text("기부하실 금액을 선정해주세요", style: AnbdTextStyle.TitleSB18),
-          const SizedBox(height: 8),
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + bottomInset),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(width: 40, height: 4, color: Colors.black45),
+            ),
+            const SizedBox(height: 16),
+            const Text("기부하실 금액을 선정해주세요", style: AnbdTextStyle.TitleSB18),
+            const SizedBox(height: 8),
 
-          BasicTextField(
-            controller: _bidController,
-            hintText: "기부하실 금액을 선정해주세요",
-            onChanged: (value) => _onTextChanged(),
-          ),
+            BasicTextField(
+              controller: _bidController,
+              hintText: "기부하실 금액을 선정해주세요",
+              onChanged: (value) => _onTextChanged(),
+            ),
 
-          const SizedBox(height: 20),
-          const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
-          const SizedBox(height: 8),
+            const SizedBox(height: 20),
+            const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
+            const SizedBox(height: 8),
 
-          BasicTextField(
-            controller: _commentController,
-            hintText: "코멘트를 입력하세요",
-            onChanged: (value) => _onTextChanged(),
-          ),
+            BasicTextField(
+              controller: _commentController,
+              hintText: "코멘트를 입력하세요",
+              onChanged: (value) => _onTextChanged(),
+            ),
 
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              ResetButton(
-                onPressed: () {
-                  setState(() {
-                    _bidController.clear();
-                    _commentController.clear();
-                  });
-                },
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: BasicButton(
-                  text: isBidButtonEnabled ? "나눔받기" : "신청 완료",
-                  isClickable: isBidButtonEnabled,
-                  onPressed: isBidButtonEnabled ? _submitBid : null,
-                  size: BasicButtonSize.SMALL,
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ResetButton(
+                  onPressed: () {
+                    setState(() {
+                      _bidController.clear();
+                      _commentController.clear();
+                    });
+                  },
                 ),
-              ),
-            ],
-          )
-        ],
+                const SizedBox(width: 12),
+                Expanded(
+                  child: BasicButton(
+                    text: isBidButtonEnabled ? "나눔받기" : "신청 완료",
+                    isClickable: isBidButtonEnabled,
+                    onPressed: isBidButtonEnabled ? _submitBid : null,
+                    size: BasicButtonSize.SMALL,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
