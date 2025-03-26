@@ -68,6 +68,10 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         BlueSnackBar(text: "신청에 실패했습니다. 다시 시도해주세요."),
       );
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.pop(context); // ❗ 실패했을 때도 닫기
+      });
     }
   }
 
