@@ -12,6 +12,7 @@ class MyPageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        centerTitle: false,
         title: const Text(
           '마이페이지',
           style: AnbdTextStyle.TitleSB18,
@@ -37,10 +38,19 @@ class MyPageScreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CircleAvatar(
-                radius: 32,
-                backgroundColor: Colors.grey,
-                //child: Image.asset('assets/images/mypage_img.png', height: 40),
+              Consumer<MyPageViewModel>(
+                builder: (context, viewModel, _) {
+                  final imageUrl = viewModel.imageUrl;
+
+                  return CircleAvatar(
+                    radius: 32,
+                    backgroundColor: Colors.grey.shade200,
+                    backgroundImage: imageUrl != null && imageUrl.isNotEmpty
+                        ? NetworkImage(imageUrl)
+                        : const AssetImage('assets/images/mypage_img.png')
+                            as ImageProvider,
+                  );
+                },
               ),
               const SizedBox(width: 20),
               const Expanded(
@@ -49,11 +59,11 @@ class MyPageScreen extends StatelessWidget {
                   style: AnbdTextStyle.TitleSB18,
                 ),
               ),
-              //Image.asset('assets/images/whale.png', height: 40),
             ],
           ),
           const SizedBox(height: 20),
-          // 레벨 진행 바
+
+          /// 레벨 진행 바
           Stack(
             children: [
               Container(
@@ -85,13 +95,17 @@ class MyPageScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
+          /// 나의 활동
           const Text("나의 활동",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 8),
           _buildMenuItem("관심 목록", Icons.favorite_border),
           _buildMenuItem("판매내역", Icons.receipt_long),
           _buildMenuItem("구매내역", Icons.shopping_bag_outlined),
+
           const SizedBox(height: 24),
+
+          /// 기타
           const Text("기타",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 8),
