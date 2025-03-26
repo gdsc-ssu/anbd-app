@@ -66,45 +66,50 @@ class _DonateBottomSheetState extends State<DonateBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
     return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(child: Container(width: 40, height: 4, color: Colors.black45)),
-          const SizedBox(height: 16),
-          const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
-          const SizedBox(height: 8),
-          BasicTextField(
-            controller: _commentController,
-            hintText: "코멘트를 남겨주세요",
-            onChanged: (value) => _onTextChanged(),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              ResetButton(
-                onPressed: () {
-                  setState(() {
-                    _commentController.clear();
-                    isBidButtonEnabled = false;
-                  });
-                },
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: BasicButton(
-                  text: isBidButtonEnabled ? "나눔받기" : "신청 완료",
-                  isClickable: isBidButtonEnabled,
-                  onPressed: isBidButtonEnabled ? _submitBid : null,
-                  size: BasicButtonSize.SMALL,
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + bottomInset),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(child: Container(width: 40, height: 4, color: Colors.black45)),
+            const SizedBox(height: 16),
+            const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
+            const SizedBox(height: 8),
+            BasicTextField(
+              controller: _commentController,
+              hintText: "코멘트를 남겨주세요",
+              onChanged: (value) => _onTextChanged(),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ResetButton(
+                  onPressed: () {
+                    setState(() {
+                      _commentController.clear();
+                      isBidButtonEnabled = false;
+                    });
+                  },
                 ),
-              ),
-            ],
-          )
-        ],
+                const SizedBox(width: 12),
+                Expanded(
+                  child: BasicButton(
+                    text: isBidButtonEnabled ? "나눔받기" : "신청 완료",
+                    isClickable: isBidButtonEnabled,
+                    onPressed: isBidButtonEnabled ? _submitBid : null,
+                    size: BasicButtonSize.SMALL,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+
 }
