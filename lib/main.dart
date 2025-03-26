@@ -1,4 +1,5 @@
 import 'package:anbd/data/di/get_it_locator.dart';
+import 'package:anbd/screens/mypage/mypage_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -37,9 +38,11 @@ class MyApp extends StatelessWidget {
             masterToken: FlutterConfig.get('master_access_token') ?? '',
           ),
         ),
-        ChangeNotifierProvider(create: (_) => DetailViewModel(
-          token: FlutterConfig.get('master_access_token') ?? '',
-        )),
+        ChangeNotifierProvider(
+            create: (_) => DetailViewModel(
+                  token: FlutterConfig.get('master_access_token') ?? '',
+                )),
+        ChangeNotifierProvider(create: (_) => MyPageViewModel()),
       ],
       child: MaterialApp.router(
         /// 나라 지역 설정
