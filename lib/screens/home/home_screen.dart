@@ -12,42 +12,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight + 2),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Consumer<HomeViewModel>(
-              builder: (context, viewModel, child) {
-                return Text(
-                  viewModel.currentLocation,
-                  style: AnbdTextStyle.TitleSB18,
-                );
-              },
-            ),
+    return Consumer<HomeViewModel>(
+      builder: (context, viewModel, child) {
+        return Scaffold(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight + 2),
+            child: viewModel.currentIndex == 0
+                ? _buildHomeAppBar(viewModel)
+                : _buildSimpleAppBar(viewModel),
           ),
-          actions: [
-            IconButton(
-              icon: SvgPicture.asset("assets/svg/search.svg"),
-              onPressed: () {},
-            ),
-          ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1.0),
-            child: Container(
-              color: AnbdColor.systemGray02,
-              height: 1.0,
-            ),
-          ),
-        ),
-      ),
-      body: Consumer<HomeViewModel>(
-        builder: (context, viewModel, child) {
-          return RefreshIndicator(
+          body: RefreshIndicator(
             onRefresh: () async {
-              await viewModel.refresh(); // ⬅️ 여기에 새로고침 로직
+              await viewModel.refresh();
             },
             child: Stack(
               children: [
@@ -64,16 +40,62 @@ class HomeScreen extends StatelessWidget {
                   ),
               ],
             ),
-          );
-        },
-      ),
-      bottomNavigationBar: Consumer<HomeViewModel>(
-        builder: (context, viewModel, child) {
-          return CustomBottomNavigationBar(
+          ),
+          bottomNavigationBar: CustomBottomNavigationBar(
             currentIndex: viewModel.currentIndex,
             onTap: viewModel.updateIndex,
-          );
-        },
+          ),
+        );
+      },
+    );
+  }
+
+  // ✅ 홈 화면 전용 AppBar
+  AppBar _buildHomeAppBar(HomeViewModel viewModel) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          viewModel.currentLocation,
+          style: AnbdTextStyle.TitleSB18,
+        ),
+      ),
+      actions: [
+        IconButton(
+          icon: SvgPicture.asset("assets/svg/search.svg"),
+          onPressed: () {},
+        ),
+      ],
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(1.0),
+        child: Container(
+          color: AnbdColor.systemGray02,
+          height: 1.0,
+        ),
+      ),
+    );
+  }
+
+  // ✅ 동네생활, 채팅, 마이페이지용 AppBar
+  AppBar _buildSimpleAppBar(HomeViewModel viewModel) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          viewModel.currentAppBarTitle,
+          style: AnbdTextStyle.TitleSB18,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(1.0),
+        child: Container(
+          color: AnbdColor.systemGray02,
+          height: 1.0,
+        ),
       ),
     );
   }

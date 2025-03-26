@@ -8,6 +8,7 @@ import 'package:anbd/data/dto/response/base_response.dart';
 import 'package:anbd/constants/apis.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:anbd/data/dto/request/bid_request.dart';
+import 'package:anbd/data/dto/response/bid_list_response.dart';
 
 class SharePostService {
   final ApiClient _apiClient = ApiClient();
@@ -165,6 +166,38 @@ class SharePostService {
       throw Exception('나눔 받기 요청 실패: Unreachable');
     } catch (e) {
       throw Exception('나눔 받기 요청 실패: $e');
+    }
+  }
+
+  Future<List<BidResponse>> fetchBids({
+    required int postId,
+    String? overrideToken,
+  }) async {
+    try {
+      final response = await _apiClient.dio.get(
+        '$apiVersion${Apis.sharePosts}/$postId/bids',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${overrideToken ?? token}',
+            'Accept': 'application/json;charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+
+      final baseResponse = BaseResponse.fromJson(
+        response.data,
+            (json) => (json as List<dynamic>)
+            .map((e) => BidResponse.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
+
+      return baseResponse.body;
+    } on DioException catch (e) {
+      _handleDioException(e);
+      throw Exception('입찰 정보 불러오기 실패: Unreachable');
+    } catch (e) {
+      throw Exception('입찰 정보 불러오기 실패: $e');
     }
   }
 
