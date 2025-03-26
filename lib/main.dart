@@ -38,9 +38,10 @@ class MyApp extends StatelessWidget {
             masterToken: FlutterConfig.get('master_access_token') ?? '',
           ),
         ),
-        ChangeNotifierProvider(create: (_) => DetailViewModel(
-          token: FlutterConfig.get('master_access_token') ?? '',
-        )),
+        ChangeNotifierProvider(
+            create: (_) => DetailViewModel(
+                  token: FlutterConfig.get('master_access_token') ?? '',
+                )),
         ChangeNotifierProvider(create: (_) => MyPageViewModel()),
       ],
       child: MaterialApp.router(

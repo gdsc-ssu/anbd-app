@@ -10,27 +10,6 @@ class MyPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: false,
-        title: const Text(
-          '마이페이지',
-          style: AnbdTextStyle.TitleSB18,
-        ),
-        actions: [
-          IconButton(
-            icon: SvgPicture.asset("assets/svg/setting.svg"),
-            onPressed: () {},
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Container(
-            color: AnbdColor.systemGray02,
-            height: 1.0,
-          ),
-        ),
-      ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
@@ -44,7 +23,7 @@ class MyPageScreen extends StatelessWidget {
 
                   return CircleAvatar(
                     radius: 32,
-                    backgroundColor: Colors.grey.shade200,
+                    backgroundColor: AnbdColor.systemGray02,
                     backgroundImage: imageUrl != null && imageUrl.isNotEmpty
                         ? NetworkImage(imageUrl)
                         : const AssetImage('assets/images/mypage_img.png')
@@ -53,10 +32,14 @@ class MyPageScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(width: 20),
-              const Expanded(
-                child: Text(
-                  '장환곤',
-                  style: AnbdTextStyle.TitleSB18,
+              Expanded(
+                child: Consumer<MyPageViewModel>(
+                  builder: (context, viewModel, _) {
+                    return Text(
+                      viewModel.name ?? '사용자',
+                      style: AnbdTextStyle.TitleSB18,
+                    );
+                  },
                 ),
               ),
             ],
@@ -87,46 +70,56 @@ class MyPageScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.warning_amber, size: 16, color: Colors.amber),
               SizedBox(width: 4),
-              Text("다음 레벨업까지 5점 남았어요!",
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+              Text("다음 레벨업까지 4점 남았어요!", style: AnbdTextStyle.Body10),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 30),
 
           /// 나의 활동
-          const Text("나의 활동",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          const SizedBox(height: 8),
-          _buildMenuItem("관심 목록", Icons.favorite_border),
-          _buildMenuItem("판매내역", Icons.receipt_long),
-          _buildMenuItem("구매내역", Icons.shopping_bag_outlined),
+          const Text("나의 활동", style: AnbdTextStyle.BodySB15),
+          const SizedBox(height: 15),
+          _buildMenuItem("관심 목록", 'assets/svg/heart.svg'),
+          const SizedBox(height: 15),
+          _buildMenuItem("판매내역", 'assets/svg/delivery.svg'),
+          const SizedBox(height: 15),
+          _buildMenuItem("구매내역", 'assets/svg/product.svg'),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 30),
 
           /// 기타
-          const Text("기타",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          const SizedBox(height: 8),
-          _buildMenuItem("로그아웃", Icons.logout),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Text("회원탈퇴",
-                style: TextStyle(color: Colors.grey.shade400, fontSize: 14)),
-          ),
+          const Text("기타", style: AnbdTextStyle.BodySB15),
+          const SizedBox(height: 20),
+          const Text("로그아웃", style: AnbdTextStyle.BodySB15),
+          const SizedBox(height: 15),
+
+          Text("회원탈퇴",
+              style: AnbdTextStyle.BodySB15.copyWith(
+                  color: AnbdColor.systemGray03)),
         ],
       ),
     );
   }
 
-  Widget _buildMenuItem(String title, IconData icon) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: Colors.black),
-      title: Text(title, style: const TextStyle(fontSize: 15)),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {},
+  Widget _buildMenuItem(String title, String icon) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: GestureDetector(
+        onTap: () {},
+        child: Row(
+          children: [
+            SvgPicture.asset(icon, width: 20, height: 20),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                title,
+                style: AnbdTextStyle.BodySB15,
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, size: 15),
+          ],
+        ),
+      ),
     );
   }
 }
