@@ -4,13 +4,16 @@ import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/data/dto/request/bid_request.dart';
 import 'package:anbd/data/service/share_post_service.dart';
 
-
 class BidBottomSheet extends StatefulWidget {
   final int postId;
   final String type;
   final VoidCallback onBidCompleted; // ✅ 콜백 추가
 
-  const BidBottomSheet({super.key, required this.postId, required this.onBidCompleted, required this.type});
+  const BidBottomSheet(
+      {super.key,
+      required this.postId,
+      required this.onBidCompleted,
+      required this.type});
 
   @override
   _BidBottomSheetState createState() => _BidBottomSheetState();
@@ -40,7 +43,7 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
     final comment = _commentController.text;
 
     final bidRequest = BidRequest(content: comment, donation: donation);
-    final service = SharePostService(token: FlutterConfig.get('master_access_token'));
+    final service = SharePostService();
 
     try {
       await service.postBid(
@@ -74,7 +77,6 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
@@ -91,23 +93,19 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
             const SizedBox(height: 16),
             const Text("기부하실 금액을 선정해주세요", style: AnbdTextStyle.TitleSB18),
             const SizedBox(height: 8),
-
             BasicTextField(
               controller: _bidController,
               hintText: "기부하실 금액을 선정해주세요",
               onChanged: (value) => _onTextChanged(),
             ),
-
             const SizedBox(height: 20),
             const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
             const SizedBox(height: 8),
-
             BasicTextField(
               controller: _commentController,
               hintText: "코멘트를 입력하세요",
               onChanged: (value) => _onTextChanged(),
             ),
-
             const SizedBox(height: 16),
             Row(
               children: [

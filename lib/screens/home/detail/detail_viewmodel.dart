@@ -15,8 +15,7 @@ class DetailViewModel extends ChangeNotifier {
 
   final SharePostService _sharePostService;
 
-  DetailViewModel({String? token})
-      : _sharePostService = SharePostService(token: token);
+  DetailViewModel({String? token}) : _sharePostService = SharePostService();
 
   /// ✅ 게시글 상세 정보 조회
   Future<void> fetchPost(int postId) async {
