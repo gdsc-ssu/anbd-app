@@ -6,7 +6,6 @@ import 'package:anbd/data/dto/response/share_post_response.dart';
 import 'package:anbd/data/dto/response/share_all_post_response.dart';
 import 'package:anbd/data/dto/response/base_response.dart';
 import 'package:anbd/constants/apis.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:anbd/data/dto/request/bid_request.dart';
 import 'package:anbd/data/dto/response/bid_list_response.dart';
 

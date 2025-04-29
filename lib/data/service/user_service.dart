@@ -6,12 +6,12 @@ import 'package:anbd/data/dto/response/base_response.dart';
 import 'package:anbd/data/dto/response/token_response.dart';
 import 'package:anbd/data/dto/response/user_profiles_response.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class UserService {
   final ApiClient _apiClient = ApiClient();
   static const apiVersion = "v1/";
-  final overrideToken = FlutterConfig.get('master_access_token');
+  final overrideToken = dotenv.get('master_access_token');
 
   /// 최초 회원가입시 사용자 프로필 업데이트
   Future<TokenResponse> putUsersProfiles(String? gender, String? birthDate,

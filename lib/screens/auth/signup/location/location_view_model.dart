@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'package:anbd/common/utils/address_utils.dart';
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_google_maps_webservices/places.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationViewModel extends ChangeNotifier {
-  final String googleApiKey = FlutterConfig.get("google_api_key");
+  final String googleApiKey = dotenv.get("google_api_key");
   late GoogleMapsPlaces _places;
 
   /// 근처 동네 검색 결과 리트
