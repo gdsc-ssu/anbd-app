@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiClient {
   static final ApiClient _instance = ApiClient._internal();
@@ -15,7 +15,7 @@ class ApiClient {
 
   ApiClient._internal() {
     _dio = Dio(BaseOptions(
-      baseUrl: FlutterConfig.get("base_url"),
+      baseUrl: dotenv.get("base_url"),
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       headers: {

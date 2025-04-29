@@ -3,7 +3,6 @@ import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/data/dto/request/bid_request.dart';
 import 'package:anbd/data/service/share_post_service.dart';
-import 'package:flutter_config/flutter_config.dart';
 
 class DonateBottomSheet extends StatefulWidget {
   final int postId;
