@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:anbd/data/dto/response/share_post_response.dart';
+import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:anbd/screens/community/community_screen.dart';
 import 'package:anbd/screens/chat/chat_screen.dart';
@@ -8,18 +11,26 @@ import 'package:anbd/data/service/share_post_service.dart'; // ✅ 이걸 사용
 import 'package:anbd/data/dto/response/share_all_post_response.dart';
 
 class HomeViewModel extends ChangeNotifier {
+  final SecureStorageRepository _secureStorage = SecureStorageRepository();
+
   int _currentIndex = 0;
   bool isLoading = true;
   List<SharePostResponse> _products = [];
 
-  String _currentLocation = "관악구 행운동";
+  String _currentLocation = '';
 
   final SharePostService _service;
 
-  HomeViewModel({required String masterToken})
-      : _service = SharePostService(token: masterToken) {
+  HomeViewModel() : _service = SharePostService() {
     print("🚀 HomeViewModel 초기화됨");
     fetchProducts();
+  }
+
+  Future<void> init() async {
+    _currentLocation = await _secureStorage.readUserNearbyDistricts() as String;
+    log('저장 장소 $_currentLocation');
+    await fetchProducts();
+    notifyListeners();
   }
 
   List<SharePostResponse> get products => _products;
@@ -62,10 +73,13 @@ class HomeViewModel extends ChangeNotifier {
       print("📥 서버 응답 성공");
       print("🧱 content raw: ${response.content}");
 
-      _products = response.content.map((post) {
-        print("🧱 게시글 title: ${post.title} (${post.id})");
-        return post;
-      }).cast<SharePostResponse>().toList();
+      _products = response.content
+          .map((post) {
+            print("🧱 게시글 title: ${post.title} (${post.id})");
+            return post;
+          })
+          .cast<SharePostResponse>()
+          .toList();
     } catch (e, stack) {
       print("❌ 에러 발생: $e");
       print("📛 스택 트레이스:\n$stack");

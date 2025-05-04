@@ -12,10 +12,6 @@ import 'package:anbd/data/dto/response/bid_list_response.dart';
 class SharePostService {
   final ApiClient _apiClient = ApiClient();
   static const apiVersion = "v1/";
-  final String? token;
-  final overrideToken = FlutterConfig.get('master_access_token');
-
-  SharePostService({this.token});
 
   /// ✅ 단일 게시글 조회
   Future<SharePostResponse> fetchPost(int id) async {
@@ -23,8 +19,8 @@ class SharePostService {
       final response = await _apiClient.dio.get(
         '$apiVersion${Apis.sharePosts}/$id',
         options: Options(
+          extra: {'skipAuthToken': false},
           headers: {
-            'Authorization': 'Bearer ${overrideToken ?? token}',
             'Accept': 'application/json;charset=UTF-8',
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -67,9 +63,8 @@ class SharePostService {
         '$apiVersion${Apis.sharePosts}',
         queryParameters: queryParameters,
         options: Options(
-          extra: {'skipAuthToken': true},
+          extra: {'skipAuthToken': false},
           headers: {
-            'Authorization': 'Bearer ${overrideToken ?? token}',
             'Accept': 'application/json;charset=UTF-8',
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -118,9 +113,8 @@ class SharePostService {
         },
         data: formData,
         options: Options(
-          extra: {'skipAuthToken': true},
+          extra: {'skipAuthToken': false},
           headers: {
-            'Authorization': 'Bearer $overrideToken',
             'Content-Type': 'multipart/form-data',
           },
         ),
@@ -151,8 +145,8 @@ class SharePostService {
         '$apiVersion${Apis.sharePosts}/$postId/bid',
         data: bidRequest.toJson(),
         options: Options(
+          extra: {'skipAuthToken': false},
           headers: {
-            'Authorization': 'Bearer ${overrideToken ?? token}',
             'Accept': 'application/json;charset=UTF-8',
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -176,8 +170,8 @@ class SharePostService {
       final response = await _apiClient.dio.get(
         '$apiVersion${Apis.sharePosts}/$postId/bids',
         options: Options(
+          extra: {'skipAuthToken': false},
           headers: {
-            'Authorization': 'Bearer ${overrideToken ?? token}',
             'Accept': 'application/json;charset=UTF-8',
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -186,7 +180,7 @@ class SharePostService {
 
       final baseResponse = BaseResponse.fromJson(
         response.data,
-            (json) => (json as List<dynamic>)
+        (json) => (json as List<dynamic>)
             .map((e) => BidResponse.fromJson(e as Map<String, dynamic>))
             .toList(),
       );

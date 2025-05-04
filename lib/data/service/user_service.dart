@@ -70,10 +70,7 @@ class UserService {
     try {
       final response = await _apiClient.dio.get(
         options: Options(
-          extra: {'skipAuthToken': true},
-          headers: {
-            'Authorization': 'Bearer $overrideToken',
-          },
+          extra: {'skipAuthToken': false},
         ),
         apiVersion + Apis.getUsersProfiles,
       );

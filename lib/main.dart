@@ -1,4 +1,5 @@
 import 'package:anbd/data/di/get_it_locator.dart';
+import 'package:anbd/screens/home/home_screen.dart';
 import 'package:anbd/screens/mypage/mypage_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -33,9 +34,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
         ChangeNotifierProvider(
-          create: (_) => HomeViewModel(
-            masterToken: FlutterConfig.get('master_access_token') ?? '',
-          ),
+          create: (_) {
+            final viewModel = HomeViewModel();
+            viewModel.init();
+            return viewModel;
+          },
+          child: HomeScreen(),
         ),
         ChangeNotifierProvider(
             create: (_) => DetailViewModel(

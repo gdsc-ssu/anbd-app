@@ -42,7 +42,7 @@ class _DonateBottomSheetState extends State<DonateBottomSheet> {
     final comment = _commentController.text;
     final bidRequest = BidRequest(content: comment, donation: 0); // 기부는 금액이 0
 
-    final service = SharePostService(token: FlutterConfig.get('master_access_token'));
+    final service = SharePostService();
 
     try {
       await service.postBid(postId: widget.postId, bidRequest: bidRequest);
@@ -74,7 +74,8 @@ class _DonateBottomSheetState extends State<DonateBottomSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(child: Container(width: 40, height: 4, color: Colors.black45)),
+            Center(
+                child: Container(width: 40, height: 4, color: Colors.black45)),
             const SizedBox(height: 16),
             const Text("코멘트를 남겨주세요", style: AnbdTextStyle.TitleSB18),
             const SizedBox(height: 8),
@@ -110,5 +111,4 @@ class _DonateBottomSheetState extends State<DonateBottomSheet> {
       ),
     );
   }
-
 }

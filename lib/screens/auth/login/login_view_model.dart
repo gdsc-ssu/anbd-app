@@ -4,8 +4,10 @@ import 'package:anbd/common/enums/login_platform.dart';
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:anbd/data/service/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:io' show Platform;
 
 class LoginViewModel extends ChangeNotifier {
   final AuthService authService = GetIt.instance<AuthService>();
@@ -23,7 +25,14 @@ class LoginViewModel extends ChangeNotifier {
   bool get isNewUser => _isNewUser;
 
   Future<void> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignIn googleSignIn = Platform.isIOS
+        ? GoogleSignIn(
+            clientId: dotenv.get("CLIENT_ID"),
+            scopes: ['email', 'profile'],
+          )
+        : GoogleSignIn();
+
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     if (googleUser != null) {
       log('name = ${googleUser.displayName}');
