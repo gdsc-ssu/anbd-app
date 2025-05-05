@@ -63,7 +63,9 @@ class LoginViewModel extends ChangeNotifier {
 
         if (e is DioException) {
           log("DioError details: ${e.response?.data}");
+          rethrow;
         }
+        rethrow;
         notifyListeners();
       }
     }

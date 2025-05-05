@@ -16,6 +16,8 @@ abstract class Apis {
   /// user 관련 api
   static const String putUsersProfiles = "users/profiles";
   static const String getUsersProfiles = "users/me/profile";
+  static const String logOut = "users/logout";
+  static const String signOut = "users/withdraw";
 
   /// share post 관련 api
   static const String createSharePosts = "share-posts";

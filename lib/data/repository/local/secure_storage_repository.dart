@@ -60,4 +60,9 @@ class SecureStorageRepository {
   Future<String?> readUserNearbyDistricts() async {
     return await _storage.read(key: "nearby_districts");
   }
+
+  ///모든 데이터 삭제
+  Future<void> deleteAllData() async {
+    await _storage.deleteAll();
+  }
 }
