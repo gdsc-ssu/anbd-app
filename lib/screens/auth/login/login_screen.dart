@@ -45,13 +45,13 @@ class LoginScreen extends StatelessWidget {
                       platform: LoginPlatform.google,
                       onTap: () async {
                         await viewModel.signInWithGoogle();
-                        context.push(Paths.question);
-                        //TODO 자동로그인 구현
-                        /*if (viewModel.isNewUser) {
-                          context.push(Paths.question);
+
+                        /// 자동 로그인
+                        if (viewModel.profileComplete == true) {
+                          context.push((Paths.home));
                         } else {
-                          context.push(Paths.home);
-                        }*/
+                          context.push(Paths.question);
+                        }
                       },
                     ),
                     const SizedBox(height: 15),
@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(width: 5),
                         GestureDetector(
                           onTap: () => context.push(Paths.home),
-                          child : Text(
+                          child: Text(
                             '둘러보기',
                             style: AnbdTextStyle.BodyL12.copyWith(
                                 color: AnbdColor.blue),
