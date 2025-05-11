@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/data/di/api_client.dart';
 import 'package:anbd/data/dto/response/base_response.dart';
+import 'package:anbd/data/dto/response/refresh_token_response.dart';
 import 'package:anbd/data/dto/response/token_response.dart';
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:dio/dio.dart';
@@ -65,6 +66,47 @@ class AuthService {
       throw Exception('Error: ${e.response?.data ?? e.message}');
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
+    }
+  }
+
+  /// POST refreshToken으로 서비스 accessToken, refreshToken 재발급
+  Future<RefreshTokenResponse> getRefreshToken() async {
+    try {
+      var refreshToken = await _secureStorage.readRefreshToken();
+
+      final response = await _apiClient.dio.post(
+        options: Options(
+          extra: {'skipAuthToken': false},
+        ),
+        Apis.getRefreshToken,
+        data: {
+          'refreshToken': refreshToken,
+        },
+      );
+      if (response.statusCode == 200) {
+        // BaseResponse
+        final baseResponse = BaseResponse<RefreshTokenResponse>.fromJson(
+          response.data as Map<String, dynamic>,
+          (contentJson) => RefreshTokenResponse.fromJson(
+              contentJson as Map<String, dynamic>),
+        );
+
+        final refreshTokenResponse = baseResponse.body;
+
+        if (refreshTokenResponse != null) {
+          await _secureStorage
+              .saveAccessToken(refreshTokenResponse.accessToken);
+          await _secureStorage
+              .saveRefreshToken(refreshTokenResponse.refreshToken);
+        }
+
+        return refreshTokenResponse;
+      } else {
+        throw Exception(
+            'Failed to send verification code ${response.data.toString()}');
+      }
+    } on DioException catch (e) {
+      throw Exception('Error: ${e.response?.data.toString() ?? e.message}');
     }
   }
 }

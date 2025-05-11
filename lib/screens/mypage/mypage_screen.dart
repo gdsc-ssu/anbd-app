@@ -2,6 +2,7 @@ import 'package:anbd/constants/constants.dart';
 import 'package:anbd/screens/mypage/mypage_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class MyPageScreen extends StatelessWidget {
@@ -90,12 +91,35 @@ class MyPageScreen extends StatelessWidget {
           /// 기타
           const Text("기타", style: AnbdTextStyle.BodySB15),
           const SizedBox(height: 20),
-          const Text("로그아웃", style: AnbdTextStyle.BodySB15),
+
+          Consumer<MyPageViewModel>(
+            builder: (context, viewModel, _) => GestureDetector(
+              onTap: () {
+                viewModel.logOut();
+                context.push(Paths.login);
+              },
+              child: const Text(
+                "로그아웃",
+                style: AnbdTextStyle.BodySB15,
+              ),
+            ),
+          ),
           const SizedBox(height: 15),
 
-          Text("회원탈퇴",
-              style: AnbdTextStyle.BodySB15.copyWith(
-                  color: AnbdColor.systemGray03)),
+          Consumer<MyPageViewModel>(
+            builder: (context, viewModel, _) => GestureDetector(
+              onTap: () {
+                viewModel.signOut(context);
+                context.push(Paths.login);
+              },
+              child: Text(
+                "회원탈퇴",
+                style: AnbdTextStyle.BodySB15.copyWith(
+                  color: AnbdColor.systemGray03,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

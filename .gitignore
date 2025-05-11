@@ -231,8 +231,5 @@ fabric.properties
 
 .env*
 
-*.freezed.dart
-*.g.dart
-
 android/app/google-services.json
 ios/Runner/GoogleServiceInfo.plist
