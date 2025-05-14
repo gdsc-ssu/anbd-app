@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/data/dto/response/share_post_response.dart';
+import 'package:anbd/data/dto/response/user_profiles_response.dart';
 
 class UserInfo extends StatelessWidget {
-  final SharePostResponse product;
-  const UserInfo({super.key, required this.product});
+  final UserProfilesResponse user;
+  const UserInfo({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -18,23 +19,30 @@ class UserInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipOval(
-                child: Image.asset(
-                  "assets/images/placeholder.png",
+                child: user.profileImage != null
+                    ? Image.network(
+                  user.profileImage!,
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,
-                ),
+                )
+                    : Image.asset(
+                  'assets/images/placeholder.png',
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                )
               ),
               const SizedBox(width: 12),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "나눔러",
+                    user.nickname,
                     style: AnbdTextStyle.BodyEB15,
                   ),
                   Text(
-                    "관악구 봉천동",
+                    user.neighborhood,
                     style: AnbdTextStyle.BodyL12,
                   ),
                 ],
