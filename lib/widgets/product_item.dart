@@ -85,10 +85,11 @@ class ProductItem extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               SvgPicture.asset(
-                                "assets/svg/heart_off.svg",
+                                product.isLiked
+                                    ? "assets/svg/heart_on.svg"
+                                    : "assets/svg/heart_off.svg",
                                 width: 14,
                                 height: 14,
-                                colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
                               ),
                               const SizedBox(width: 4),
                               Text(
