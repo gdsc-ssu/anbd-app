@@ -15,7 +15,7 @@ import 'package:timeago/timeago.dart' as timeago_ko show KoMessages;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ 비동기 실행을 위해 필요
   await AppRouter.setupRouter(); // ✅ 라우터 설정 (SharedPreferences 조회 후 결정)
-  await dotenv.load(fileName: ".env"); // env
+  await dotenv.load(fileName: ".env"); // .env
   setupServiceLocator(); //get it
   timeago.setLocaleMessages('ko', timeago_ko.KoMessages());
 
@@ -34,17 +34,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => OnboardingViewModel()), // ✅ 온보딩 관련 ViewModel
         ChangeNotifierProvider(
-          create: (_) {
-            final viewModel = HomeViewModel();
-            viewModel.init();
-            return viewModel;
-          },
-          child: HomeScreen(),
+          create: (_) => HomeViewModel(),
+          child: const HomeScreen(),
         ),
         ChangeNotifierProvider(
-            create: (_) => DetailViewModel(
-                  token: dotenv.get('master_access_token') ?? '',
-                )),
+            create: (_) => DetailViewModel()),
         ChangeNotifierProvider(create: (_) => MyPageViewModel()),
       ],
       child: MaterialApp.router(

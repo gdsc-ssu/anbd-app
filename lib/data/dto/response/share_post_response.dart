@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'user_profiles_response.dart';
+
 part 'share_post_response.freezed.dart';
 part 'share_post_response.g.dart';
 
@@ -7,7 +9,6 @@ part 'share_post_response.g.dart';
 class SharePostResponse with _$SharePostResponse {
   const factory SharePostResponse({
     required int id,
-    required int userId,
     required String? title,
     required String? category,
     required String? content,
@@ -22,6 +23,7 @@ class SharePostResponse with _$SharePostResponse {
     required int likeCount,
     required bool isLiked,
     required bool isBid,
+    required UserProfilesResponse userProfileResponse,
   }) = _SharePostResponse;
 
   factory SharePostResponse.fromJson(Map<String, dynamic> json) =>
