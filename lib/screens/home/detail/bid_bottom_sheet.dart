@@ -3,6 +3,7 @@ import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
 import 'package:anbd/data/dto/request/bid_request.dart';
 import 'package:anbd/data/service/share_post_service.dart';
+import 'package:anbd/screens/donation/donation_webview_screen.dart';
 
 class BidBottomSheet extends StatefulWidget {
   final int postId;
@@ -38,7 +39,7 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
     });
   }
 
-  void _submitBid() async {
+  Future<void> _submitBid() async {
     final donation = int.tryParse(_bidController.text) ?? 0;
     final comment = _commentController.text;
 
@@ -76,6 +77,21 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
       });
     }
   }
+
+  void _openDonationFlow() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DonationWebViewScreen(
+          url: "https://secure.donus.org/greenfund/pay/step1_direct?dontype=MIG316&period=pledge&background=b004",
+          onDonationCompleted: () async {
+            await _submitBid(); // ✅ 웹뷰 닫히면 postBid 수행
+          },
+        ),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +138,12 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
                   child: BasicButton(
                     text: isBidButtonEnabled ? "나눔받기" : "신청 완료",
                     isClickable: isBidButtonEnabled,
-                    onPressed: isBidButtonEnabled ? _submitBid : null,
+                    onPressed: isBidButtonEnabled
+                        ? () {
+                        _openDonationFlow(); // ❗ 웹뷰 먼저
+                        // _submitBid(); // 일반 나눔
+                    }
+                        : null,
                     size: BasicButtonSize.SMALL,
                   ),
                 ),

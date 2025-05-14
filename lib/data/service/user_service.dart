@@ -61,7 +61,7 @@ class UserService {
     } on DioException catch (e) {
       throw Exception('Error: ${e.response?.data ?? e.message}');
     } catch (e) {
-      throw Exception('An unexpected error occurred: $e.response?.data');
+      throw Exception('An unexpected error occurred: $e');
     }
   }
 
