@@ -13,6 +13,9 @@ class DetailViewModel extends ChangeNotifier {
   bool _isBidsLoading = false;
   bool get isBidsLoading => _isBidsLoading;
 
+  bool isLiked = false;
+
+
   final SharePostService _sharePostService;
 
   DetailViewModel({String? token}) : _sharePostService = SharePostService();
@@ -23,6 +26,7 @@ class DetailViewModel extends ChangeNotifier {
     try {
       final response = await _sharePostService.fetchPost(postId);
       _post = response;
+      isLiked = response.isLiked;
       notifyListeners();
     } catch (e) {
       print('❌ 게시글 로딩 실패: $e');
@@ -44,4 +48,21 @@ class DetailViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+  Future<void> toggleLike(int postId) async {
+    try {
+      if (isLiked) {
+        await _sharePostService.unlikePost(postId);
+      } else {
+        await _sharePostService.likePost(postId);
+      }
+      isLiked = !isLiked;
+      notifyListeners();
+    } catch (e) {
+      print("❌ 좋아요 처리 실패: $e");
+    }
+  }
 }
+
+

@@ -196,6 +196,32 @@ class SharePostService {
     }
   }
 
+  Future<void> likePost(int postId) async {
+    try {
+      await _apiClient.dio.post(
+        'v1/share-posts/$postId/like',
+        options: Options(extra: {'skipAuthToken': false}),
+      );
+      print("좋아요 성공");
+    } on DioException catch (e) {
+      print("좋아요 실패: ${e.message}");
+      rethrow;
+    }
+  }
+
+  Future<void> unlikePost(int postId) async {
+    try {
+      await _apiClient.dio.delete(
+        'v1/share-posts/$postId/like',
+        options: Options(extra: {'skipAuthToken': false}),
+      );
+      print("좋아요 취소 성공");
+    } on DioException catch (e) {
+      print("좋아요 취소 실패: ${e.message}");
+      rethrow;
+    }
+  }
+
   /// 공통 에러 핸들러
   void _handleDioException(DioException e) {
     switch (e.response?.statusCode) {

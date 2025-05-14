@@ -111,7 +111,7 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
             const SizedBox(height: 8),
             BasicTextField(
               controller: _bidController,
-              hintText: "기부하실 금액을 선정해주세요",
+              hintText: "0~5000원",
               onChanged: (value) => _onTextChanged(),
             ),
             const SizedBox(height: 20),
@@ -140,8 +140,8 @@ class _BidBottomSheetState extends State<BidBottomSheet> {
                     isClickable: isBidButtonEnabled,
                     onPressed: isBidButtonEnabled
                         ? () {
-                        _openDonationFlow(); // ❗ 웹뷰 먼저
-                        // _submitBid(); // 일반 나눔
+                        // _openDonationFlow(); // ❗ 웹뷰 먼저
+                        _submitBid(); // 일반 나눔
                     }
                         : null,
                     size: BasicButtonSize.SMALL,
