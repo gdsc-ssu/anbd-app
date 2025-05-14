@@ -3,25 +3,59 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/widgets.dart';
-import '../data/dto/response/share_post_response.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
+import 'package:anbd/data/service/share_post_service.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:timeago/timeago.dart' as timeago_ko show ko;
 
-class ProductItem extends StatelessWidget {
+class ProductItem extends StatefulWidget {
   final SharePostResponse product;
 
   const ProductItem({Key? key, required this.product}) : super(key: key);
 
   @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
+  late bool isLiked;
+  late int likeCount;
+  final SharePostService _service = SharePostService();
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.product.isLiked;
+    likeCount = widget.product.likeCount;
+  }
+
+  Future<void> _toggleLike() async {
+    try {
+      if (isLiked) {
+        await _service.unlikePost(widget.product.id);
+        setState(() {
+          isLiked = false;
+          likeCount = (likeCount > 0) ? likeCount - 1 : 0;
+        });
+      } else {
+        await _service.likePost(widget.product.id);
+        setState(() {
+          isLiked = true;
+          likeCount++;
+        });
+      }
+    } catch (e) {
+      print("❌ 좋아요 토글 실패: $e");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print("🔍 렌더링 중: ${product.title}");
+    final product = widget.product;
+
     return GestureDetector(
       onTap: () {
-        context.push('/detail/${product.id}',
-          extra: {
-            "id" : product.id,
-          }
-        );
+        context.push('/detail/${product.id}', extra: {"id": product.id});
       },
       child: Column(
         children: [
@@ -84,16 +118,23 @@ class ProductItem extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              SvgPicture.asset(
-                                product.isLiked
-                                    ? "assets/svg/heart_on.svg"
-                                    : "assets/svg/heart_off.svg",
-                                width: 14,
-                                height: 14,
+                              GestureDetector(
+                                onTap: _toggleLike,
+                                child: SvgPicture.asset(
+                                  isLiked
+                                      ? "assets/svg/heart_on.svg"
+                                      : "assets/svg/heart_off.svg",
+                                  width: 14,
+                                  height: 14,
+                                  colorFilter: ColorFilter.mode(
+                                    isLiked ? Colors.red : Colors.grey,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                "${product.likeCount}",
+                                "$likeCount",
                                 style: AnbdTextStyle.BodyL12.copyWith(color: AnbdColor.systemGray04),
                               ),
                             ],
