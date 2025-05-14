@@ -8,6 +8,7 @@ abstract class Apis {
 
   /// 토큰 관련 api
   static const String getAccessToken = "auth/mobile/google";
+  static const String getRefreshToken = "auth/tokens/refresh";
 
   /// 나눔글 관련 api
   static const String sharePosts = "share-posts";
@@ -15,6 +16,8 @@ abstract class Apis {
   /// user 관련 api
   static const String putUsersProfiles = "users/profiles";
   static const String getUsersProfiles = "users/me/profile";
+  static const String logOut = "users/logout";
+  static const String signOut = "users/withdraw";
 
   /// share post 관련 api
   static const String createSharePosts = "share-posts";

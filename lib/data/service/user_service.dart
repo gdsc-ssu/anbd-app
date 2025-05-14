@@ -109,4 +109,42 @@ class UserService {
       throw Exception('An unexpected error occurred: $e');
     }
   }
+
+  ///Post /v1/logout 로그아웃
+  Future<void> logOut() async {
+    try {
+      final response = await _apiClient.dio.post(
+        apiVersion + Apis.logOut,
+        options: Options(extra: {'skipAuthToken': false}),
+      );
+      if (response.statusCode == 200) {
+        log("로그아웃 성공");
+      } else {
+        throw Exception('Failed to send verification code ${response.data}');
+      }
+    } on DioException catch (e) {
+      throw Exception('Error: ${e.response?.data ?? e.message}');
+    } catch (e) {
+      throw Exception('An unexpected error occurred: $e');
+    }
+  }
+
+  ///DELETE /v1/users/withdraw 탈퇴하기
+  Future<void> signOut() async {
+    try {
+      final response = await _apiClient.dio.delete(
+        apiVersion + Apis.signOut,
+        options: Options(extra: {'skipAuthToken': false}),
+      );
+      if (response.statusCode == 200) {
+        log("탈퇴 성공");
+      } else {
+        throw Exception('Failed to send verification code ${response.data}');
+      }
+    } on DioException catch (e) {
+      throw Exception('Error: ${e.response?.data ?? e.message}');
+    } catch (e) {
+      throw Exception('An unexpected error occurred: $e');
+    }
+  }
 }
