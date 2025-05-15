@@ -23,7 +23,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       onTap: onTap,
       items: [
         _bottomNavigationBarItem("home", "홈"),
-        _bottomNavigationBarItem("notes", "동네생활"),
+        // _bottomNavigationBarItem("notes", "동네생활"),
         _bottomNavigationBarItem("chat", "채팅"),
         _bottomNavigationBarItem("user", "마이페이지"),
       ],
