@@ -23,7 +23,8 @@ mixin _$ShareAllPostResponse {
   int get totalPages => throw _privateConstructorUsedError;
   int get totalElements => throw _privateConstructorUsedError;
   int get size => throw _privateConstructorUsedError;
-  List<SharePostResponse> get content => throw _privateConstructorUsedError;
+  List<SharePostResponse> get content =>
+      throw _privateConstructorUsedError; // ✅ 여기에 각 게시글이 들어감
   int get number => throw _privateConstructorUsedError;
   List<Sort> get sort => throw _privateConstructorUsedError;
   int get numberOfElements => throw _privateConstructorUsedError;
@@ -275,6 +276,7 @@ class _$ShareAllPostResponseImpl implements _ShareAllPostResponse {
     return EqualUnmodifiableListView(_content);
   }
 
+// ✅ 여기에 각 게시글이 들어감
   @override
   final int number;
   final List<Sort> _sort;
@@ -380,7 +382,7 @@ abstract class _ShareAllPostResponse implements ShareAllPostResponse {
   int get size;
   @override
   List<SharePostResponse> get content;
-  @override
+  @override // ✅ 여기에 각 게시글이 들어감
   int get number;
   @override
   List<Sort> get sort;
@@ -648,12 +650,12 @@ Pageable _$PageableFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Pageable {
-  int get offset => throw _privateConstructorUsedError;
-  List<Sort> get sort => throw _privateConstructorUsedError;
-  bool get unpaged => throw _privateConstructorUsedError;
-  bool get paged => throw _privateConstructorUsedError;
   int get pageNumber => throw _privateConstructorUsedError;
   int get pageSize => throw _privateConstructorUsedError;
+  List<Sort> get sort => throw _privateConstructorUsedError;
+  int get offset => throw _privateConstructorUsedError;
+  bool get unpaged => throw _privateConstructorUsedError;
+  bool get paged => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -667,12 +669,12 @@ abstract class $PageableCopyWith<$Res> {
       _$PageableCopyWithImpl<$Res, Pageable>;
   @useResult
   $Res call(
-      {int offset,
+      {int pageNumber,
+      int pageSize,
       List<Sort> sort,
+      int offset,
       bool unpaged,
-      bool paged,
-      int pageNumber,
-      int pageSize});
+      bool paged});
 }
 
 /// @nodoc
@@ -688,30 +690,14 @@ class _$PageableCopyWithImpl<$Res, $Val extends Pageable>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? offset = null,
-    Object? sort = null,
-    Object? unpaged = null,
-    Object? paged = null,
     Object? pageNumber = null,
     Object? pageSize = null,
+    Object? sort = null,
+    Object? offset = null,
+    Object? unpaged = null,
+    Object? paged = null,
   }) {
     return _then(_value.copyWith(
-      offset: null == offset
-          ? _value.offset
-          : offset // ignore: cast_nullable_to_non_nullable
-              as int,
-      sort: null == sort
-          ? _value.sort
-          : sort // ignore: cast_nullable_to_non_nullable
-              as List<Sort>,
-      unpaged: null == unpaged
-          ? _value.unpaged
-          : unpaged // ignore: cast_nullable_to_non_nullable
-              as bool,
-      paged: null == paged
-          ? _value.paged
-          : paged // ignore: cast_nullable_to_non_nullable
-              as bool,
       pageNumber: null == pageNumber
           ? _value.pageNumber
           : pageNumber // ignore: cast_nullable_to_non_nullable
@@ -720,6 +706,22 @@ class _$PageableCopyWithImpl<$Res, $Val extends Pageable>
           ? _value.pageSize
           : pageSize // ignore: cast_nullable_to_non_nullable
               as int,
+      sort: null == sort
+          ? _value.sort
+          : sort // ignore: cast_nullable_to_non_nullable
+              as List<Sort>,
+      offset: null == offset
+          ? _value.offset
+          : offset // ignore: cast_nullable_to_non_nullable
+              as int,
+      unpaged: null == unpaged
+          ? _value.unpaged
+          : unpaged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      paged: null == paged
+          ? _value.paged
+          : paged // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -733,12 +735,12 @@ abstract class _$$PageableImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int offset,
+      {int pageNumber,
+      int pageSize,
       List<Sort> sort,
+      int offset,
       bool unpaged,
-      bool paged,
-      int pageNumber,
-      int pageSize});
+      bool paged});
 }
 
 /// @nodoc
@@ -752,30 +754,14 @@ class __$$PageableImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? offset = null,
-    Object? sort = null,
-    Object? unpaged = null,
-    Object? paged = null,
     Object? pageNumber = null,
     Object? pageSize = null,
+    Object? sort = null,
+    Object? offset = null,
+    Object? unpaged = null,
+    Object? paged = null,
   }) {
     return _then(_$PageableImpl(
-      offset: null == offset
-          ? _value.offset
-          : offset // ignore: cast_nullable_to_non_nullable
-              as int,
-      sort: null == sort
-          ? _value._sort
-          : sort // ignore: cast_nullable_to_non_nullable
-              as List<Sort>,
-      unpaged: null == unpaged
-          ? _value.unpaged
-          : unpaged // ignore: cast_nullable_to_non_nullable
-              as bool,
-      paged: null == paged
-          ? _value.paged
-          : paged // ignore: cast_nullable_to_non_nullable
-              as bool,
       pageNumber: null == pageNumber
           ? _value.pageNumber
           : pageNumber // ignore: cast_nullable_to_non_nullable
@@ -784,6 +770,22 @@ class __$$PageableImplCopyWithImpl<$Res>
           ? _value.pageSize
           : pageSize // ignore: cast_nullable_to_non_nullable
               as int,
+      sort: null == sort
+          ? _value._sort
+          : sort // ignore: cast_nullable_to_non_nullable
+              as List<Sort>,
+      offset: null == offset
+          ? _value.offset
+          : offset // ignore: cast_nullable_to_non_nullable
+              as int,
+      unpaged: null == unpaged
+          ? _value.unpaged
+          : unpaged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      paged: null == paged
+          ? _value.paged
+          : paged // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -792,19 +794,21 @@ class __$$PageableImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PageableImpl implements _Pageable {
   const _$PageableImpl(
-      {required this.offset,
+      {required this.pageNumber,
+      required this.pageSize,
       required final List<Sort> sort,
+      required this.offset,
       required this.unpaged,
-      required this.paged,
-      required this.pageNumber,
-      required this.pageSize})
+      required this.paged})
       : _sort = sort;
 
   factory _$PageableImpl.fromJson(Map<String, dynamic> json) =>
       _$$PageableImplFromJson(json);
 
   @override
-  final int offset;
+  final int pageNumber;
+  @override
+  final int pageSize;
   final List<Sort> _sort;
   @override
   List<Sort> get sort {
@@ -814,17 +818,15 @@ class _$PageableImpl implements _Pageable {
   }
 
   @override
+  final int offset;
+  @override
   final bool unpaged;
   @override
   final bool paged;
-  @override
-  final int pageNumber;
-  @override
-  final int pageSize;
 
   @override
   String toString() {
-    return 'Pageable(offset: $offset, sort: $sort, unpaged: $unpaged, paged: $paged, pageNumber: $pageNumber, pageSize: $pageSize)';
+    return 'Pageable(pageNumber: $pageNumber, pageSize: $pageSize, sort: $sort, offset: $offset, unpaged: $unpaged, paged: $paged)';
   }
 
   @override
@@ -832,26 +834,20 @@ class _$PageableImpl implements _Pageable {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PageableImpl &&
-            (identical(other.offset, offset) || other.offset == offset) &&
-            const DeepCollectionEquality().equals(other._sort, _sort) &&
-            (identical(other.unpaged, unpaged) || other.unpaged == unpaged) &&
-            (identical(other.paged, paged) || other.paged == paged) &&
             (identical(other.pageNumber, pageNumber) ||
                 other.pageNumber == pageNumber) &&
             (identical(other.pageSize, pageSize) ||
-                other.pageSize == pageSize));
+                other.pageSize == pageSize) &&
+            const DeepCollectionEquality().equals(other._sort, _sort) &&
+            (identical(other.offset, offset) || other.offset == offset) &&
+            (identical(other.unpaged, unpaged) || other.unpaged == unpaged) &&
+            (identical(other.paged, paged) || other.paged == paged));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      offset,
-      const DeepCollectionEquality().hash(_sort),
-      unpaged,
-      paged,
-      pageNumber,
-      pageSize);
+  int get hashCode => Object.hash(runtimeType, pageNumber, pageSize,
+      const DeepCollectionEquality().hash(_sort), offset, unpaged, paged);
 
   @JsonKey(ignore: true)
   @override
@@ -869,28 +865,28 @@ class _$PageableImpl implements _Pageable {
 
 abstract class _Pageable implements Pageable {
   const factory _Pageable(
-      {required final int offset,
+      {required final int pageNumber,
+      required final int pageSize,
       required final List<Sort> sort,
+      required final int offset,
       required final bool unpaged,
-      required final bool paged,
-      required final int pageNumber,
-      required final int pageSize}) = _$PageableImpl;
+      required final bool paged}) = _$PageableImpl;
 
   factory _Pageable.fromJson(Map<String, dynamic> json) =
       _$PageableImpl.fromJson;
 
   @override
-  int get offset;
+  int get pageNumber;
+  @override
+  int get pageSize;
   @override
   List<Sort> get sort;
+  @override
+  int get offset;
   @override
   bool get unpaged;
   @override
   bool get paged;
-  @override
-  int get pageNumber;
-  @override
-  int get pageSize;
   @override
   @JsonKey(ignore: true)
   _$$PageableImplCopyWith<_$PageableImpl> get copyWith =>

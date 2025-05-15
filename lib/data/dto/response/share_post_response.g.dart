@@ -10,7 +10,6 @@ _$SharePostResponseImpl _$$SharePostResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$SharePostResponseImpl(
       id: (json['id'] as num).toInt(),
-      userId: (json['userId'] as num).toInt(),
       title: json['title'] as String?,
       category: json['category'] as String?,
       content: json['content'] as String?,
@@ -26,13 +25,14 @@ _$SharePostResponseImpl _$$SharePostResponseImplFromJson(
       likeCount: (json['likeCount'] as num).toInt(),
       isLiked: json['isLiked'] as bool,
       isBid: json['isBid'] as bool,
+      userProfileResponse: UserProfilesResponse.fromJson(
+          json['userProfileResponse'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$SharePostResponseImplToJson(
         _$SharePostResponseImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
       'title': instance.title,
       'category': instance.category,
       'content': instance.content,
@@ -47,4 +47,5 @@ Map<String, dynamic> _$$SharePostResponseImplToJson(
       'likeCount': instance.likeCount,
       'isLiked': instance.isLiked,
       'isBid': instance.isBid,
+      'userProfileResponse': instance.userProfileResponse,
     };

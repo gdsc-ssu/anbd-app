@@ -63,22 +63,22 @@ Map<String, dynamic> _$$SortImplToJson(_$SortImpl instance) =>
 
 _$PageableImpl _$$PageableImplFromJson(Map<String, dynamic> json) =>
     _$PageableImpl(
-      offset: (json['offset'] as num).toInt(),
+      pageNumber: (json['pageNumber'] as num).toInt(),
+      pageSize: (json['pageSize'] as num).toInt(),
       sort: (json['sort'] as List<dynamic>)
           .map((e) => Sort.fromJson(e as Map<String, dynamic>))
           .toList(),
+      offset: (json['offset'] as num).toInt(),
       unpaged: json['unpaged'] as bool,
       paged: json['paged'] as bool,
-      pageNumber: (json['pageNumber'] as num).toInt(),
-      pageSize: (json['pageSize'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$PageableImplToJson(_$PageableImpl instance) =>
     <String, dynamic>{
-      'offset': instance.offset,
-      'sort': instance.sort,
-      'unpaged': instance.unpaged,
-      'paged': instance.paged,
       'pageNumber': instance.pageNumber,
       'pageSize': instance.pageSize,
+      'sort': instance.sort,
+      'offset': instance.offset,
+      'unpaged': instance.unpaged,
+      'paged': instance.paged,
     };

@@ -21,7 +21,6 @@ SharePostResponse _$SharePostResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SharePostResponse {
   int get id => throw _privateConstructorUsedError;
-  int get userId => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
@@ -36,6 +35,8 @@ mixin _$SharePostResponse {
   int get likeCount => throw _privateConstructorUsedError;
   bool get isLiked => throw _privateConstructorUsedError;
   bool get isBid => throw _privateConstructorUsedError;
+  UserProfilesResponse get userProfileResponse =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +52,6 @@ abstract class $SharePostResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int userId,
       String? title,
       String? category,
       String? content,
@@ -65,7 +65,10 @@ abstract class $SharePostResponseCopyWith<$Res> {
       DateTime updatedAt,
       int likeCount,
       bool isLiked,
-      bool isBid});
+      bool isBid,
+      UserProfilesResponse userProfileResponse});
+
+  $UserProfilesResponseCopyWith<$Res> get userProfileResponse;
 }
 
 /// @nodoc
@@ -82,7 +85,6 @@ class _$SharePostResponseCopyWithImpl<$Res, $Val extends SharePostResponse>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? title = freezed,
     Object? category = freezed,
     Object? content = freezed,
@@ -97,15 +99,12 @@ class _$SharePostResponseCopyWithImpl<$Res, $Val extends SharePostResponse>
     Object? likeCount = null,
     Object? isLiked = null,
     Object? isBid = null,
+    Object? userProfileResponse = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as int,
       title: freezed == title
           ? _value.title
@@ -163,7 +162,20 @@ class _$SharePostResponseCopyWithImpl<$Res, $Val extends SharePostResponse>
           ? _value.isBid
           : isBid // ignore: cast_nullable_to_non_nullable
               as bool,
+      userProfileResponse: null == userProfileResponse
+          ? _value.userProfileResponse
+          : userProfileResponse // ignore: cast_nullable_to_non_nullable
+              as UserProfilesResponse,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfilesResponseCopyWith<$Res> get userProfileResponse {
+    return $UserProfilesResponseCopyWith<$Res>(_value.userProfileResponse,
+        (value) {
+      return _then(_value.copyWith(userProfileResponse: value) as $Val);
+    });
   }
 }
 
@@ -177,7 +189,6 @@ abstract class _$$SharePostResponseImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      int userId,
       String? title,
       String? category,
       String? content,
@@ -191,7 +202,11 @@ abstract class _$$SharePostResponseImplCopyWith<$Res>
       DateTime updatedAt,
       int likeCount,
       bool isLiked,
-      bool isBid});
+      bool isBid,
+      UserProfilesResponse userProfileResponse});
+
+  @override
+  $UserProfilesResponseCopyWith<$Res> get userProfileResponse;
 }
 
 /// @nodoc
@@ -206,7 +221,6 @@ class __$$SharePostResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? title = freezed,
     Object? category = freezed,
     Object? content = freezed,
@@ -221,15 +235,12 @@ class __$$SharePostResponseImplCopyWithImpl<$Res>
     Object? likeCount = null,
     Object? isLiked = null,
     Object? isBid = null,
+    Object? userProfileResponse = null,
   }) {
     return _then(_$SharePostResponseImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as int,
       title: freezed == title
           ? _value.title
@@ -287,6 +298,10 @@ class __$$SharePostResponseImplCopyWithImpl<$Res>
           ? _value.isBid
           : isBid // ignore: cast_nullable_to_non_nullable
               as bool,
+      userProfileResponse: null == userProfileResponse
+          ? _value.userProfileResponse
+          : userProfileResponse // ignore: cast_nullable_to_non_nullable
+              as UserProfilesResponse,
     ));
   }
 }
@@ -296,7 +311,6 @@ class __$$SharePostResponseImplCopyWithImpl<$Res>
 class _$SharePostResponseImpl implements _SharePostResponse {
   const _$SharePostResponseImpl(
       {required this.id,
-      required this.userId,
       required this.title,
       required this.category,
       required this.content,
@@ -310,7 +324,8 @@ class _$SharePostResponseImpl implements _SharePostResponse {
       required this.updatedAt,
       required this.likeCount,
       required this.isLiked,
-      required this.isBid})
+      required this.isBid,
+      required this.userProfileResponse})
       : _images = images;
 
   factory _$SharePostResponseImpl.fromJson(Map<String, dynamic> json) =>
@@ -318,8 +333,6 @@ class _$SharePostResponseImpl implements _SharePostResponse {
 
   @override
   final int id;
-  @override
-  final int userId;
   @override
   final String? title;
   @override
@@ -354,10 +367,12 @@ class _$SharePostResponseImpl implements _SharePostResponse {
   final bool isLiked;
   @override
   final bool isBid;
+  @override
+  final UserProfilesResponse userProfileResponse;
 
   @override
   String toString() {
-    return 'SharePostResponse(id: $id, userId: $userId, title: $title, category: $category, content: $content, images: $images, type: $type, description: $description, location: $location, isSold: $isSold, hits: $hits, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLiked: $isLiked, isBid: $isBid)';
+    return 'SharePostResponse(id: $id, title: $title, category: $category, content: $content, images: $images, type: $type, description: $description, location: $location, isSold: $isSold, hits: $hits, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLiked: $isLiked, isBid: $isBid, userProfileResponse: $userProfileResponse)';
   }
 
   @override
@@ -366,7 +381,6 @@ class _$SharePostResponseImpl implements _SharePostResponse {
         (other.runtimeType == runtimeType &&
             other is _$SharePostResponseImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.category, category) ||
                 other.category == category) &&
@@ -386,7 +400,9 @@ class _$SharePostResponseImpl implements _SharePostResponse {
             (identical(other.likeCount, likeCount) ||
                 other.likeCount == likeCount) &&
             (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
-            (identical(other.isBid, isBid) || other.isBid == isBid));
+            (identical(other.isBid, isBid) || other.isBid == isBid) &&
+            (identical(other.userProfileResponse, userProfileResponse) ||
+                other.userProfileResponse == userProfileResponse));
   }
 
   @JsonKey(ignore: true)
@@ -394,7 +410,6 @@ class _$SharePostResponseImpl implements _SharePostResponse {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      userId,
       title,
       category,
       content,
@@ -408,7 +423,8 @@ class _$SharePostResponseImpl implements _SharePostResponse {
       updatedAt,
       likeCount,
       isLiked,
-      isBid);
+      isBid,
+      userProfileResponse);
 
   @JsonKey(ignore: true)
   @override
@@ -427,30 +443,29 @@ class _$SharePostResponseImpl implements _SharePostResponse {
 
 abstract class _SharePostResponse implements SharePostResponse {
   const factory _SharePostResponse(
-      {required final int id,
-      required final int userId,
-      required final String? title,
-      required final String? category,
-      required final String? content,
-      required final List<String> images,
-      required final String? type,
-      required final String? description,
-      required final String? location,
-      required final bool isSold,
-      required final int hits,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      required final int likeCount,
-      required final bool isLiked,
-      required final bool isBid}) = _$SharePostResponseImpl;
+          {required final int id,
+          required final String? title,
+          required final String? category,
+          required final String? content,
+          required final List<String> images,
+          required final String? type,
+          required final String? description,
+          required final String? location,
+          required final bool isSold,
+          required final int hits,
+          required final DateTime createdAt,
+          required final DateTime updatedAt,
+          required final int likeCount,
+          required final bool isLiked,
+          required final bool isBid,
+          required final UserProfilesResponse userProfileResponse}) =
+      _$SharePostResponseImpl;
 
   factory _SharePostResponse.fromJson(Map<String, dynamic> json) =
       _$SharePostResponseImpl.fromJson;
 
   @override
   int get id;
-  @override
-  int get userId;
   @override
   String? get title;
   @override
@@ -479,6 +494,8 @@ abstract class _SharePostResponse implements SharePostResponse {
   bool get isLiked;
   @override
   bool get isBid;
+  @override
+  UserProfilesResponse get userProfileResponse;
   @override
   @JsonKey(ignore: true)
   _$$SharePostResponseImplCopyWith<_$SharePostResponseImpl> get copyWith =>
