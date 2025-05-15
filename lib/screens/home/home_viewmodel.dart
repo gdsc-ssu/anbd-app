@@ -67,7 +67,7 @@ class HomeViewModel extends ChangeNotifier {
       print("📥 서버 호출 시작");
       ShareAllPostResponse response = await _service.fetchAllPosts(
         page: 0,
-        size: 5,
+        size: 10,
         location: _currentLocation,
       );
 

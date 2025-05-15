@@ -175,17 +175,21 @@ class _DetailScreenState extends State<DetailScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isLiked = !isLiked;
-                    });
+                Consumer<DetailViewModel>(
+                  builder: (context, viewModel, _) {
+                    return GestureDetector(
+                      onTap: () {
+                        viewModel.toggleLike(viewModel.post!.id);
+                      },
+                      child: SvgPicture.asset(
+                        viewModel.isLiked
+                            ? "assets/svg/heart_on.svg"
+                            : "assets/svg/heart_off.svg",
+                        width: 24,
+                        height: 24,
+                      ),
+                    );
                   },
-                  child: SvgPicture.asset(
-                    isLiked ? "assets/svg/heart_on.svg" : "assets/svg/heart_off.svg",
-                    width: 24,
-                    height: 24,
-                  ),
                 ),
                 const SizedBox(width: 8),
                 SvgPicture.asset("assets/svg/col_divider.svg"),
