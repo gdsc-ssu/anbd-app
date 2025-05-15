@@ -52,13 +52,14 @@ class SharePostService {
     String? overrideToken,
   }) async {
     try {
+      print("여기야");
       final queryParameters = {
         'page': page,
         'size': size,
         'sort': sort,
-        if (location != null) 'location': location,
+        if (location != null && location.isNotEmpty) 'location' : location,
       };
-
+      print("⛳️location : $location");
       final response = await _apiClient.dio.get(
         '$apiVersion${Apis.sharePosts}',
         queryParameters: queryParameters,
@@ -72,6 +73,7 @@ class SharePostService {
       );
 
       if (response.statusCode == 200) {
+        print('Raw Json : ${response.data}');
         final baseResponse = BaseResponse<ShareAllPostResponse>.fromJson(
           response.data,
           (contentJson) => ShareAllPostResponse.fromJson(contentJson),

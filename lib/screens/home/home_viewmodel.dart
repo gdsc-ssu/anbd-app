@@ -46,6 +46,7 @@ class HomeViewModel extends ChangeNotifier {
   void updateIndex(int index) {
     _currentIndex = index;
     print("🧭 현재 index: $_currentIndex");
+    print("현재 위치 : $_currentLocation");
     notifyListeners();
   }
 

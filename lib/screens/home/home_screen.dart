@@ -7,8 +7,24 @@ import 'package:provider/provider.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      context.read<HomeViewModel>().init(); // ✅ 최초 한 번만 호출
+      _initialized = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

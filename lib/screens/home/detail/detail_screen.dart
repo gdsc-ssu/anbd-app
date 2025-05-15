@@ -156,7 +156,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Widget _buildTopImage(SharePostResponse product) => TopImage(product: product);
-  Widget _buildUserInfo(SharePostResponse product) => UserInfo(product: product);
+  Widget _buildUserInfo(SharePostResponse product) => UserInfo(user: product.userProfileResponse);
   Widget _buildContent(SharePostResponse product) => Content(product: product);
   Widget _buildDescription(SharePostResponse product) => Description(product: product);
   Widget _buildReportButton() => const ReportButton();
