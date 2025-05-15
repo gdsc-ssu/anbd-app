@@ -1,4 +1,6 @@
-import 'package:anbd/screens/chat/chat_screen_view_model.dart';
+import 'package:anbd/constants/constants.dart';
+import 'package:anbd/screens/chat/chat_view_model.dart';
+import 'package:anbd/data/service/chat_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,11 +10,15 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => ChatViewModel(),
+      create: (_) => ChatViewModel(ChatService()),
       child: Scaffold(
         body: Consumer<ChatViewModel>(
           builder: (context, viewModel, child) {
             final chatData = viewModel.chatData;
+
+            if (viewModel.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
             return ListView.builder(
               itemCount: chatData.length,
@@ -23,7 +29,7 @@ class ChatScreen extends StatelessWidget {
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 10),
-                      leading: chat['profileImage']!.isEmpty
+                      leading: (chat.partner.profileImage?.isEmpty ?? true)
                           ? const CircleAvatar(
                               radius: 22,
                               backgroundColor: Colors.grey,
@@ -32,32 +38,31 @@ class ChatScreen extends StatelessWidget {
                           : CircleAvatar(
                               radius: 22,
                               backgroundImage:
-                                  NetworkImage(chat['profileImage']!),
+                                  NetworkImage(chat.partner.profileImage!),
                             ),
                       title: Row(
                         children: [
-                          Text(chat['name']!,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(chat.partner.nickname,
+                              style: AnbdTextStyle.BodySB15),
                           const SizedBox(width: 6),
                           Text(
-                            '${chat['location']} · ${chat['time']}',
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 12),
+                            chat.partner.neighborhood,
+                            style: AnbdTextStyle.Body10.copyWith(
+                                color: AnbdColor.systemGray03),
                           ),
                         ],
                       ),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 4.0),
-                        child: Text(chat['message']!),
+                        child: Text(chat.sharePost.title),
                       ),
-                      trailing: chat['thumbnail'] != null
+                      trailing: chat.sharePost.images.isNotEmpty
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
-                                chat['thumbnail']!,
-                                width: 48,
-                                height: 48,
+                                chat.sharePost.images.first,
+                                width: 50,
+                                height: 50,
                                 fit: BoxFit.cover,
                               ),
                             )
