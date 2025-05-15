@@ -5,9 +5,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:anbd/constants/constants.dart';
 import 'package:anbd/widgets/basic_divider.dart';
 import 'package:anbd/screens/home/detail/detail_viewmodel.dart';
+import 'package:anbd/data/service/chat_service.dart';
 
 class BidderList extends StatelessWidget {
-  const BidderList({super.key});
+  final ChatService _chatService = ChatService();
+  final int sharePostId;
+  BidderList({super.key, required this.sharePostId});
+
+  Future<void> _handleDonation(BuildContext context, int partnerId, int sharePostId) async {
+    try {
+      final chatService = ChatService();
+      await chatService.makeChatRoom(
+        partnerId: partnerId,
+        sharePostId: sharePostId,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('채팅방이 생성되었습니다!')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('채팅방 생성 실패: $e')),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +57,7 @@ class BidderList extends StatelessWidget {
               (bid) =>
               _buildBidderTile(
                 context,
+                bid.user.userId,
                 bid.user.nickname,
                 '${bid.donation}원',
                 bid.content,
@@ -46,11 +68,11 @@ class BidderList extends StatelessWidget {
     );
   }
 
-  Widget _buildBidderTile(BuildContext context, String name, String price,
+  Widget _buildBidderTile(BuildContext context, int userId, String name, String price,
       String comment) {
     return InkWell(
       onTap: () {
-        _showDonationDialog(context, name, comment);
+        _showDonationDialog(context, userId, name, comment);
       },
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -76,7 +98,7 @@ class BidderList extends StatelessWidget {
     );
   }
 
-  void _showDonationDialog(BuildContext context, String name, String comment) {
+  void _showDonationDialog(BuildContext context, int userId, String name, String comment) {
     if (Platform.isIOS) {
       showCupertinoDialog(
         context: context,
@@ -86,9 +108,9 @@ class BidderList extends StatelessWidget {
               content: Text("기부자 메시지 : $comment"),
               actions: [
                 CupertinoDialogAction(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pop(context);
-                    // TODO: 기부 처리
+                    await _handleDonation(context, userId, sharePostId);
                   },
                   child: const Text("기부하기"),
                 ),
@@ -108,9 +130,9 @@ class BidderList extends StatelessWidget {
               content: Text("기부자 메시지 : $comment"),
               actions: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pop(context);
-                    // TODO: 기부 처리
+                    await _handleDonation(context, userId, sharePostId);
                   },
                   child: const Text("기부하기"),
                 ),
