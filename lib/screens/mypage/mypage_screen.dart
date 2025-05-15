@@ -68,9 +68,9 @@ class MyPageScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 4),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               SizedBox(width: 4),
               Text("다음 레벨업까지 4점 남았어요!", style: AnbdTextStyle.Body10),
             ],
@@ -80,11 +80,13 @@ class MyPageScreen extends StatelessWidget {
           /// 나의 활동
           const Text("나의 활동", style: AnbdTextStyle.BodySB15),
           const SizedBox(height: 15),
-          _buildMenuItem("관심 목록", 'assets/svg/heart.svg'),
+          _buildMenuItem("관심 목록", 'assets/svg/heart.svg', () {
+            context.push('/liked'); // GoRouter 사용 시 경로에 맞게
+          }),
           const SizedBox(height: 15),
-          _buildMenuItem("판매내역", 'assets/svg/delivery.svg'),
+          _buildMenuItem("판매내역", 'assets/svg/delivery.svg', (){}),
           const SizedBox(height: 15),
-          _buildMenuItem("구매내역", 'assets/svg/product.svg'),
+          _buildMenuItem("구매내역", 'assets/svg/product.svg', (){}),
 
           const SizedBox(height: 30),
 
@@ -125,11 +127,11 @@ class MyPageScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(String title, String icon) {
+  Widget _buildMenuItem(String title, String icon, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: GestureDetector(
-        onTap: () {},
+        onTap: onTap,
         child: Row(
           children: [
             SvgPicture.asset(icon, width: 20, height: 20),

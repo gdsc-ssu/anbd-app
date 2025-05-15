@@ -13,6 +13,7 @@ import 'package:anbd/screens/onboarding/onboarding_screen.dart';
 import 'package:anbd/screens/home/detail/detail_screen.dart';
 import 'package:anbd/screens/loading/loading_screen.dart';
 import 'package:anbd/constants/paths.dart';
+import 'package:anbd/screens/mypage/liked/liked_screen.dart';
 
 class AppRouter {
   static late GoRouter router;
@@ -71,6 +72,11 @@ class AppRouter {
           path: Paths.mypage,
           builder: (context, state) => const MyPageScreen(),
         ),
+        GoRoute(
+          path: Paths.liked,
+          builder: (context, state) => const LikedScreen(),
+        ),
+
       ],
     );
   }
