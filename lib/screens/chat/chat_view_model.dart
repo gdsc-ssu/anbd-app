@@ -13,7 +13,7 @@ class ChatViewModel extends ChangeNotifier {
   }
 
   List<ChattingRoomResponse> _chatData = [];
-  final Map<int, ChatMessageResponse> _latestMessages = {}; // ✅ 변경
+  final Map<int, ChatMessageResponse> _latestMessages = {};
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
@@ -29,7 +29,7 @@ class ChatViewModel extends ChangeNotifier {
       final data = await _service.getChattingRoomList();
       _chatData = data;
 
-      await _loadChatting(); // ✅ 채팅 메시지도 함께 로딩
+      await _loadChatting(); // 채팅 메시지도 함께 로딩
     } catch (e) {
       print('채팅방 목록 불러오기 오류: $e');
     } finally {
@@ -49,7 +49,7 @@ class ChatViewModel extends ChangeNotifier {
         );
 
         if (page.content.isNotEmpty) {
-          final latestMessage = page.content.last; // ✅ 최신 메시지
+          final latestMessage = page.content.last; // 최신 메시지
           _latestMessages[chatRoom.id] = latestMessage;
         }
       });

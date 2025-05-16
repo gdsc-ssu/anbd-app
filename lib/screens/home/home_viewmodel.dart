@@ -36,7 +36,6 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   List<SharePostResponse> get products => _products;
   int get currentIndex => _currentIndex;
   String get currentLocation => _currentLocation;
@@ -107,12 +106,13 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future<void> _ensureUserIdCached() async {
-    String? storedUserId = await _secureStorage.getUserId();
+    int? storedUserId = await _secureStorage.getUserId();
 
     if (storedUserId == null) {
       try {
-        final userInfo = await _userService.getUsersProfiles(); // 예: userService.getUsersProfiles()
-        await _secureStorage.saveUserId(userInfo.userId.toString());
+        final userInfo = await _userService
+            .getUsersProfiles(); // 예: userService.getUsersProfiles()
+        await _secureStorage.saveUserId(userInfo as int);
         log("✅ userId 저장 완료: ${userInfo.userId}");
       } catch (e) {
         log("❌ userId 가져오기 실패: $e");
@@ -121,7 +121,6 @@ class HomeViewModel extends ChangeNotifier {
       log("📦 이미 저장된 userId 사용: $storedUserId");
     }
   }
-
 
   Future<void> refresh() async {
     // 예: API 호출해서 데이터 새로고침

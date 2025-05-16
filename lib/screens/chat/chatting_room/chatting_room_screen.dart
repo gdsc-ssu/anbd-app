@@ -78,6 +78,7 @@ class ChattingRoomScreen extends StatelessWidget {
                 else
                   Expanded(
                     child: ListView.builder(
+                      reverse: false,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       itemCount: viewModel.messages.length,

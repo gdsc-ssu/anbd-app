@@ -2,6 +2,7 @@ import 'package:anbd/screens/auth/login/login_screen.dart';
 import 'package:anbd/screens/auth/signup/category/category_screen.dart';
 import 'package:anbd/screens/auth/signup/location/location_screen.dart';
 import 'package:anbd/screens/auth/signup/question/question_screen.dart';
+import 'package:anbd/screens/chat/chatting_room/chatting_room_screen.dart';
 import 'package:anbd/screens/home/share_post/image/image_select_screen.dart';
 import 'package:anbd/screens/home/share_post/share_post_create_screen.dart';
 import 'package:anbd/screens/mypage/mypage_screen.dart';
@@ -102,7 +103,6 @@ class AppRouter {
             return SearchScreen(allPosts: posts);
           },
         ),
-
       ],
     );
   }

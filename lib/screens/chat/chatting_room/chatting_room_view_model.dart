@@ -30,7 +30,7 @@ class ChattingRoomViewModel extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      final myId = int.parse(/*await _secureStorage.readUserId() ?? */ '30');
+      final myId = await _secureStorage.getUserId();
 
       final page = await _service.getChattingMessages(
         roomId: roomId,
@@ -53,12 +53,14 @@ class ChattingRoomViewModel extends ChangeNotifier {
         accessToken: await _secureStorage.readAccessToken() ?? '',
         roomId: roomId,
         onMessage: (json) {
-          final myId = 30;
+          final senderId = json['writer'];
+          final isMine = senderId == myId; // ✅ 정확한 비교
+
           messages.add(
             Message(
               text: json['message'],
               time: _formatTime(DateTime.now()),
-              isMe: json['writer'] == myId,
+              isMe: isMine,
               profileUrl: profileUrl,
             ),
           );
