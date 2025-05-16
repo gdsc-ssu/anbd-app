@@ -60,6 +60,7 @@ Together, we promote sustainability, reduce waste, and connect people through me
 ---
 
 ## 🧩 Tech Stack
+![Background+Shadow](https://github.com/user-attachments/assets/fc9bb1c0-e43e-4a9a-b344-5081b9327679)  
 
 ### **Frontend**
 - `Flutter` – Cross-platform mobile app development
