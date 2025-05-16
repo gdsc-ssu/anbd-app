@@ -17,7 +17,6 @@ import 'package:anbd/screens/mypage/liked/liked_screen.dart';
 import 'package:anbd/screens/home/search/search_screen.dart';
 import 'package:anbd/data/dto/response/share_post_response.dart';
 
-
 class AppRouter {
   static late GoRouter router;
 
