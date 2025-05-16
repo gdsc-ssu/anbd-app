@@ -20,6 +20,8 @@ class ChattingRoomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _controller = TextEditingController();
+
     return ChangeNotifierProvider(
       create: (_) => ChattingRoomViewModel(
           roomId: roomId, profileUrl: profileUrl, title: title, image: image)
@@ -116,17 +118,30 @@ class ChattingRoomScreen extends StatelessWidget {
                             color: const Color(0xFFF3F3F3),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const TextField(
-                            decoration: InputDecoration(
+                          child: TextField(
+                            controller: _controller, // ✅ 입력값 바인딩
+                            decoration: const InputDecoration(
                               hintText: '메시지 보내기',
                               border: InputBorder.none,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      SvgPicture.asset('assets/svg/chatting_send.svg',
-                          width: 24, height: 24)
+
+// 보내기 버튼 수정
+                      GestureDetector(
+                        onTap: () {
+                          final text = _controller.text.trim();
+                          if (text.isNotEmpty) {
+                            context
+                                .read<ChattingRoomViewModel>()
+                                .sendMessage(text);
+                            _controller.clear(); // 입력창 비우기
+                          }
+                        },
+                        child: SvgPicture.asset('assets/svg/chatting_send.svg',
+                            width: 24, height: 24),
+                      ),
                     ],
                   ),
                 )

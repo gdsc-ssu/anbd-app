@@ -1,3 +1,4 @@
+import 'package:anbd/data/service/stomp_service.dart';
 import 'package:flutter/material.dart';
 import 'package:anbd/data/dto/response/chatting_messages_response.dart';
 import 'package:anbd/data/service/chat_service.dart';
@@ -9,8 +10,13 @@ class ChattingRoomViewModel extends ChangeNotifier {
   final String profileUrl;
   final String title;
   final String image;
+
   final ChatService _service = ChatService();
   final SecureStorageRepository _secureStorage = SecureStorageRepository();
+  final StompService _stompService = StompService();
+
+  List<Message> messages = [];
+  bool isLoading = false;
 
   ChattingRoomViewModel({
     required this.roomId,
@@ -18,9 +24,6 @@ class ChattingRoomViewModel extends ChangeNotifier {
     required this.title,
     required this.image,
   });
-
-  List<Message> messages = [];
-  bool isLoading = false;
 
   Future<void> loadChatting() async {
     try {
@@ -39,11 +42,29 @@ class ChattingRoomViewModel extends ChangeNotifier {
       messages = page.content.map((msg) {
         return Message(
           text: msg.message,
-          time: _formatTime(DateTime.parse(msg.timestamp.toString())),
+          time: _formatTime(msg.timestamp),
           isMe: msg.senderId == myId,
           profileUrl: profileUrl,
         );
       }).toList();
+
+      // ✅ STOMP 연결
+      _stompService.connect(
+        accessToken: await _secureStorage.readAccessToken() ?? '',
+        roomId: roomId,
+        onMessage: (json) {
+          final myId = 30;
+          messages.add(
+            Message(
+              text: json['message'],
+              time: _formatTime(DateTime.now()),
+              isMe: json['writer'] == myId,
+              profileUrl: profileUrl,
+            ),
+          );
+          notifyListeners();
+        },
+      );
     } catch (e) {
       print('채팅 메시지 불러오기 오류: $e');
     } finally {
@@ -52,19 +73,18 @@ class ChattingRoomViewModel extends ChangeNotifier {
     }
   }
 
+  void sendMessage(String text) {
+    _stompService.send(roomId: roomId, message: text);
+  }
+
   String _formatTime(DateTime time) {
     return DateFormat('a h:mm', 'ko').format(time.toLocal());
   }
 
-  void sendMessage(String text) {
-    messages.add(
-      Message(
-        text: text,
-        time: _formatTime(DateTime.now()),
-        isMe: true,
-      ),
-    );
-    notifyListeners();
+  @override
+  void dispose() {
+    _stompService.disconnect();
+    super.dispose();
   }
 }
 
