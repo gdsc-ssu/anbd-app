@@ -160,7 +160,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildContent(SharePostResponse product) => Content(product: product);
   Widget _buildDescription(SharePostResponse product) => Description(product: product);
   Widget _buildReportButton() => const ReportButton();
-  Widget _buildBidderList(SharePostResponse product) => BidderList();
+  Widget _buildBidderList(SharePostResponse product) => BidderList(sharePostId: product.id);
   Widget _buildRecommendList() => const RecommendList();
 
   Widget _buildBidButton(bool isBid, int postId, String type) {

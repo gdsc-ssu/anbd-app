@@ -41,7 +41,8 @@ class HomeViewModel extends ChangeNotifier {
     return _currentIndex == 0 ? _currentLocation : _appBarTitles[_currentIndex];
   }
 
-  final List<String> _appBarTitles = ["홈", "동네생활", "채팅", "마이페이지"];
+  // final List<String> _appBarTitles = ["홈", "동네생활", "채팅", "마이페이지"];
+  final List<String> _appBarTitles = ["홈", "채팅", "마이페이지"];
 
   void updateIndex(int index) {
     _currentIndex = index;
@@ -128,7 +129,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   final List<Widget> _screens = [
-    const CommunityScreen(),
+    // const CommunityScreen(),
     const ChatScreen(),
     const MyPageScreen(),
   ];

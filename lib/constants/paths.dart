@@ -16,4 +16,6 @@ abstract class Paths {
   static const String sharePostImageSelect = '/sharePostImageSelect';
 
   static const String mypage = '/mypage';
+
+  static const String liked = '/liked';
 }
