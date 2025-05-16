@@ -60,9 +60,9 @@ class ChattingRoomScreen extends StatelessWidget {
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('세제용품 나눔합니다'),
-                          Text('1000원'),
+                        children: [
+                          Text('${viewModel.title}'),
+                          Text('무료나눔'),
                         ],
                       )
                     ],

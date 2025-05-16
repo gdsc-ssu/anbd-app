@@ -25,6 +25,7 @@ class HomeViewModel extends ChangeNotifier {
 
   HomeViewModel() : _service = SharePostService() {
     print("🚀 HomeViewModel 초기화됨");
+    _ensureUserIdCached();
     fetchProducts();
   }
 
@@ -110,9 +111,8 @@ class HomeViewModel extends ChangeNotifier {
 
     if (storedUserId == null) {
       try {
-        final userInfo = await _userService
-            .getUsersProfiles(); // 예: userService.getUsersProfiles()
-        await _secureStorage.saveUserId(userInfo as int);
+        final userInfo = await _userService.getUsersProfiles(); // ✅ 전체 객체 반환
+        await _secureStorage.saveUserId(userInfo.userId); // ✅ 내부 필드만 저장
         log("✅ userId 저장 완료: ${userInfo.userId}");
       } catch (e) {
         log("❌ userId 가져오기 실패: $e");
