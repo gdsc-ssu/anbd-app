@@ -9,6 +9,7 @@ import 'package:anbd/screens/mypage/mypage_screen.dart';
 import 'package:anbd/widgets/product_item.dart';
 import 'package:anbd/data/service/share_post_service.dart'; // ✅ 이걸 사용합니다.
 import 'package:anbd/data/dto/response/share_all_post_response.dart';
+import 'package:anbd/data/service/user_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final SecureStorageRepository _secureStorage = SecureStorageRepository();
@@ -20,6 +21,7 @@ class HomeViewModel extends ChangeNotifier {
   String _currentLocation = '';
 
   final SharePostService _service;
+  final UserService _userService = UserService();
 
   HomeViewModel() : _service = SharePostService() {
     print("🚀 HomeViewModel 초기화됨");
@@ -27,11 +29,13 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    _currentLocation = await _secureStorage.readUserNearbyDistricts() as String;
+    _currentLocation = await _secureStorage.readUserNearbyDistricts() ?? '';
+    await _ensureUserIdCached(); // ✅ userId 확보
     log('저장 장소 $_currentLocation');
     await fetchProducts();
     notifyListeners();
   }
+
 
   List<SharePostResponse> get products => _products;
   int get currentIndex => _currentIndex;
@@ -101,6 +105,23 @@ class HomeViewModel extends ChangeNotifier {
       return _screens[_currentIndex - 1];
     }
   }
+
+  Future<void> _ensureUserIdCached() async {
+    String? storedUserId = await _secureStorage.getUserId();
+
+    if (storedUserId == null) {
+      try {
+        final userInfo = await _userService.getUsersProfiles(); // 예: userService.getUsersProfiles()
+        await _secureStorage.saveUserId(userInfo.userId.toString());
+        log("✅ userId 저장 완료: ${userInfo.userId}");
+      } catch (e) {
+        log("❌ userId 가져오기 실패: $e");
+      }
+    } else {
+      log("📦 이미 저장된 userId 사용: $storedUserId");
+    }
+  }
+
 
   Future<void> refresh() async {
     // 예: API 호출해서 데이터 새로고침

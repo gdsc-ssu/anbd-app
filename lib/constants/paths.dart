@@ -18,4 +18,5 @@ abstract class Paths {
   static const String mypage = '/mypage';
 
   static const String liked = '/liked';
+  static const String search = '/search';
 }

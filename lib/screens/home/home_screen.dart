@@ -80,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
       actions: [
         IconButton(
           icon: SvgPicture.asset("assets/svg/search.svg"),
-          onPressed: () {},
+          onPressed: () {
+            final posts = context.read<HomeViewModel>().products;
+            context.push(Paths.search, extra: posts);
+          },
         ),
       ],
       bottom: PreferredSize(

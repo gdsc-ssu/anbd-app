@@ -164,57 +164,66 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildRecommendList() => const RecommendList();
 
   Widget _buildBidButton(bool isBid, int postId, String type) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Consumer<DetailViewModel>(
-                  builder: (context, viewModel, _) {
-                    return GestureDetector(
-                      onTap: () {
-                        viewModel.toggleLike(viewModel.post!.id);
+    final viewModel = context.read<DetailViewModel>();
+
+    return FutureBuilder<bool>(
+      future: viewModel.isOwner(),
+      builder: (context, snapshot) {
+        final isOwner = snapshot.data ?? false;
+
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Consumer<DetailViewModel>(
+                      builder: (context, viewModel, _) {
+                        return GestureDetector(
+                          onTap: () {
+                            viewModel.toggleLike(viewModel.post!.id);
+                          },
+                          child: SvgPicture.asset(
+                            viewModel.isLiked
+                                ? "assets/svg/heart_on.svg"
+                                : "assets/svg/heart_off.svg",
+                            width: 24,
+                            height: 24,
+                          ),
+                        );
                       },
-                      child: SvgPicture.asset(
-                        viewModel.isLiked
-                            ? "assets/svg/heart_on.svg"
-                            : "assets/svg/heart_off.svg",
-                        width: 24,
-                        height: 24,
+                    ),
+                    const SizedBox(width: 8),
+                    SvgPicture.asset("assets/svg/col_divider.svg"),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: BasicButton(
+                        text: isBid ? "신청완료" : "나눔받기",
+                        isClickable: !isBid && !isOwner,
+                        onPressed: (!isBid && !isOwner)
+                            ? () {
+                          if (type == "SHARE") {
+                            _openDonateBottomSheet(postId);
+                          } else {
+                            _openBidBottomSheet(postId, type);
+                          }
+                        }
+                            : null,
+                        size: BasicButtonSize.SMALL,
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                SvgPicture.asset("assets/svg/col_divider.svg"),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: BasicButton(
-                    text: isBid ? "신청완료" : "나눔받기",
-                    isClickable: !isBid,
-                    onPressed: isBid
-                        ? null
-                        : () {
-                      if (type == "SHARE") {
-                        _openDonateBottomSheet(postId);
-                      } else {
-                        _openBidBottomSheet(postId, type);
-                      }
-                    },
-                    size: BasicButtonSize.SMALL,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

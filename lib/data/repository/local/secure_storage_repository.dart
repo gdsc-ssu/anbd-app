@@ -65,4 +65,12 @@ class SecureStorageRepository {
   Future<void> deleteAllData() async {
     await _storage.deleteAll();
   }
+
+  Future<void> saveUserId(String userId) async {
+    await _storage.write(key: 'userId', value: userId);
+  }
+
+  Future<String?> getUserId() async {
+    return await _storage.read(key: 'userId');
+  }
 }
