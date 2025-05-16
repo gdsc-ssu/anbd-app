@@ -7,9 +7,9 @@ part 'user_profiles_response.g.dart';
 class UserProfilesResponse with _$UserProfilesResponse {
   const factory UserProfilesResponse({
     @JsonKey(name: 'userId') required int userId,
-    @JsonKey(name: 'nickname') required String nickname,
+    @JsonKey(name: 'nickname') required String? nickname,
     @JsonKey(name: 'profileImage') String? profileImage,
-    @JsonKey(name: 'neighborhood') required String neighborhood,
+    @JsonKey(name: 'neighborhood') required String? neighborhood,
     @JsonKey(name: 'reliability') required int reliability,
   }) = _UserProfilesResponse;
 

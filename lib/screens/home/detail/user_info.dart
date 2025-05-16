@@ -38,11 +38,11 @@ class UserInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user.nickname,
+                    user.nickname ?? '',
                     style: AnbdTextStyle.BodyEB15,
                   ),
                   Text(
-                    user.neighborhood,
+                    user.neighborhood?? '',
                     style: AnbdTextStyle.BodyL12,
                   ),
                 ],
