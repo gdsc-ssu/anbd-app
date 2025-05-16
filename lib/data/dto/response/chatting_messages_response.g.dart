@@ -15,7 +15,9 @@ _$PageResponseImpl _$$PageResponseImplFromJson(Map<String, dynamic> json) =>
           .map((e) => ChatMessageResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       number: (json['number'] as num).toInt(),
-      sort: Sort.fromJson(json['sort'] as Map<String, dynamic>),
+      sort: (json['sort'] as List<dynamic>)
+          .map((e) => Sort.fromJson(e as Map<String, dynamic>))
+          .toList(),
       pageable: Pageable.fromJson(json['pageable'] as Map<String, dynamic>),
       numberOfElements: (json['numberOfElements'] as num).toInt(),
       first: json['first'] as bool,
@@ -59,9 +61,9 @@ Map<String, dynamic> _$$ChatMessageResponseImplToJson(
     };
 
 _$SortImpl _$$SortImplFromJson(Map<String, dynamic> json) => _$SortImpl(
-      empty: json['empty'] as bool,
-      sorted: json['sorted'] as bool,
-      unsorted: json['unsorted'] as bool,
+      empty: json['empty'] as bool?,
+      sorted: json['sorted'] as bool?,
+      unsorted: json['unsorted'] as bool?,
     );
 
 Map<String, dynamic> _$$SortImplToJson(_$SortImpl instance) =>
@@ -74,7 +76,9 @@ Map<String, dynamic> _$$SortImplToJson(_$SortImpl instance) =>
 _$PageableImpl _$$PageableImplFromJson(Map<String, dynamic> json) =>
     _$PageableImpl(
       offset: (json['offset'] as num).toInt(),
-      sort: Sort.fromJson(json['sort'] as Map<String, dynamic>),
+      sort: (json['sort'] as List<dynamic>)
+          .map((e) => Sort.fromJson(e as Map<String, dynamic>))
+          .toList(),
       paged: json['paged'] as bool,
       pageNumber: (json['pageNumber'] as num).toInt(),
       pageSize: (json['pageSize'] as num).toInt(),

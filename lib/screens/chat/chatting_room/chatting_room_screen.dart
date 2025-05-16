@@ -1,5 +1,6 @@
 import 'package:anbd/screens/chat/chatting_room/chatting_room_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'widgets/sender_message.dart';
 import 'widgets/receiver_message.dart';
@@ -105,7 +106,8 @@ class ChattingRoomScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.add),
+                      SvgPicture.asset('assets/svg/chatting_add.svg',
+                          width: 24, height: 24),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Container(
@@ -123,7 +125,8 @@ class ChattingRoomScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      const Icon(Icons.send, color: Colors.grey),
+                      SvgPicture.asset('assets/svg/chatting_send.svg',
+                          width: 24, height: 24)
                     ],
                   ),
                 )

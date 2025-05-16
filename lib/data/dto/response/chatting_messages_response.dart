@@ -11,7 +11,7 @@ class PageResponse with _$PageResponse {
     required int size,
     required List<ChatMessageResponse> content,
     required int number,
-    required Sort sort,
+    required List<Sort> sort, // ✅ List로 변경
     required Pageable pageable,
     required int numberOfElements,
     required bool first,
@@ -40,9 +40,9 @@ class ChatMessageResponse with _$ChatMessageResponse {
 @freezed
 class Sort with _$Sort {
   const factory Sort({
-    required bool empty,
-    required bool sorted,
-    required bool unsorted,
+    required bool? empty,
+    required bool? sorted,
+    required bool? unsorted,
   }) = _Sort;
 
   factory Sort.fromJson(Map<String, dynamic> json) => _$SortFromJson(json);
@@ -52,7 +52,7 @@ class Sort with _$Sort {
 class Pageable with _$Pageable {
   const factory Pageable({
     required int offset,
-    required Sort sort,
+    required List<Sort> sort, // ✅ 여기도 List로 맞춰야 함
     required bool paged,
     required int pageNumber,
     required int pageSize,

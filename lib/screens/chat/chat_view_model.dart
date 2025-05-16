@@ -45,11 +45,12 @@ class ChatViewModel extends ChangeNotifier {
           roomId: chatRoom.id,
           page: 0,
           size: 1,
-          sort: ['timestamp,desc'],
+          sort: ['timestamp,asc'], // 오래된 순으로 정렬됨
         );
 
         if (page.content.isNotEmpty) {
-          _latestMessages[chatRoom.id] = page.content.first;
+          final latestMessage = page.content.last; // ✅ 최신 메시지
+          _latestMessages[chatRoom.id] = latestMessage;
         }
       });
 
