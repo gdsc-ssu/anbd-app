@@ -34,7 +34,10 @@ class ChattingRoomScreen extends StatelessWidget {
           elevation: 1,
           foregroundColor: Colors.black,
           actions: [
-            IconButton(icon: const Icon(Icons.more_vert), onPressed: () {}),
+            IconButton(
+              icon: SvgPicture.asset("assets/svg/arrow_back.svg"),
+              onPressed: () => Navigator.pop(context),
+            ),
           ],
         ),
         body: Consumer<ChattingRoomViewModel>(
