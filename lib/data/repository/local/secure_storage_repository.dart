@@ -66,11 +66,12 @@ class SecureStorageRepository {
     await _storage.deleteAll();
   }
 
-  Future<void> saveUserId(String userId) async {
-    await _storage.write(key: 'userId', value: userId);
+  Future<void> saveUserId(int userId) async {
+    await _storage.write(key: 'userId', value: userId.toString()); // ✅ 문자열로 저장
   }
 
-  Future<String?> getUserId() async {
-    return await _storage.read(key: 'userId');
+  Future<int?> getUserId() async {
+    final value = await _storage.read(key: 'userId');
+    return value != null ? int.tryParse(value) : null; // ✅ 문자열 → int 변환
   }
 }
