@@ -33,7 +33,7 @@ class MyPageViewModel extends ChangeNotifier {
   }
 
   Future<void> logOut() async {
-    _secureStorage.deleteAllData();
+    // _secureStorage.deleteAllData();
   }
 
   Future<void> signOut(BuildContext context) async {

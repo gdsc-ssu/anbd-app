@@ -14,6 +14,9 @@ import 'package:anbd/screens/home/detail/detail_screen.dart';
 import 'package:anbd/screens/loading/loading_screen.dart';
 import 'package:anbd/constants/paths.dart';
 import 'package:anbd/screens/mypage/liked/liked_screen.dart';
+import 'package:anbd/screens/home/search/search_screen.dart';
+import 'package:anbd/data/dto/response/share_post_response.dart';
+
 
 class AppRouter {
   static late GoRouter router;
@@ -75,6 +78,13 @@ class AppRouter {
         GoRoute(
           path: Paths.liked,
           builder: (context, state) => const LikedScreen(),
+        ),
+        GoRoute(
+          path: Paths.search,
+          builder: (context, state) {
+            final posts = state.extra as List<SharePostResponse>;
+            return SearchScreen(allPosts: posts);
+          },
         ),
 
       ],

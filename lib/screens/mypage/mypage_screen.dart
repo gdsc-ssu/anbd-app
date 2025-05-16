@@ -81,7 +81,7 @@ class MyPageScreen extends StatelessWidget {
           const Text("나의 활동", style: AnbdTextStyle.BodySB15),
           const SizedBox(height: 15),
           _buildMenuItem("관심 목록", 'assets/svg/heart.svg', () {
-            context.push('/liked'); // GoRouter 사용 시 경로에 맞게
+            context.push(Paths.liked); // GoRouter 사용 시 경로에 맞게
           }),
           const SizedBox(height: 15),
           _buildMenuItem("판매내역", 'assets/svg/delivery.svg', (){}),
