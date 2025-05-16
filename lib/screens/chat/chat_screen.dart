@@ -2,6 +2,7 @@ import 'package:anbd/constants/constants.dart';
 import 'package:anbd/screens/chat/chat_view_model.dart';
 import 'package:anbd/data/service/chat_service.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -31,6 +32,9 @@ class ChatScreen extends StatelessWidget {
                 return Column(
                   children: [
                     ListTile(
+                      onTap: () {
+                        context.push(Paths.chattingRoom);
+                      },
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 10,

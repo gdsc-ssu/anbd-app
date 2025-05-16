@@ -79,6 +79,10 @@ class AppRouter {
           builder: (context, state) => const LikedScreen(),
         ),
         GoRoute(
+          path: Paths.chattingRoom,
+          builder: (context, state) => const ChattingRoomScreen(),
+        ),
+        GoRoute(
           path: Paths.search,
           builder: (context, state) {
             final posts = state.extra as List<SharePostResponse>;
