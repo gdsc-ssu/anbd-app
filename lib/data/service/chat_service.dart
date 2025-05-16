@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:anbd/constants/apis.dart';
 import 'package:anbd/data/di/api_client.dart';
 import 'package:anbd/data/dto/response/base_response.dart';
+import 'package:anbd/data/dto/response/chatting_messages_response.dart';
 import 'package:anbd/data/dto/response/chatting_room_response.dart';
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 import 'package:dio/dio.dart';
@@ -28,6 +29,40 @@ class ChatService {
             .map(
                 (e) => ChattingRoomResponse.fromJson(e as Map<String, dynamic>))
             .toList(),
+      );
+
+      return baseResponse.body;
+    } on DioException catch (e) {
+      _handleDioException(e);
+      throw Exception('Unreachable');
+    } catch (e) {
+      throw Exception('An unexpected error occurred: $e');
+    }
+  }
+
+  ///GET 특정 채팅방의 메세지 조회
+  Future<PageResponse> getChattingMessages({
+    required int roomId,
+    int page = 0,
+    int size = 1,
+    List<String> sort = const [],
+  }) async {
+    try {
+      final response = await _apiClient.dio.get(
+        '$apiVersion${Apis.chattingRoom}/$roomId/messages',
+        queryParameters: {
+          'page': page,
+          'size': size,
+          'sort': sort, // sort: ["timestamp,desc"] 같은 값 전달 가능
+        },
+        options: Options(
+          extra: {'skipAuthToken': false},
+        ),
+      );
+
+      final baseResponse = BaseResponse.fromJson(
+        response.data,
+        (json) => PageResponse.fromJson(json as Map<String, dynamic>),
       );
 
       return baseResponse.body;

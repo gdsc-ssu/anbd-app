@@ -22,6 +22,6 @@ abstract class Apis {
   /// share post 관련 api
   static const String createSharePosts = "share-posts";
 
-  /// user 관련 api
+  /// chat 관련 api
   static const String chattingRoom = "chat/rooms";
 }

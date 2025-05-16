@@ -15,6 +15,7 @@ class ChatScreen extends StatelessWidget {
         body: Consumer<ChatViewModel>(
           builder: (context, viewModel, child) {
             final chatData = viewModel.chatData;
+            final latestMessages = viewModel.latestMessages;
 
             if (viewModel.isLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -24,11 +25,16 @@ class ChatScreen extends StatelessWidget {
               itemCount: chatData.length,
               itemBuilder: (context, index) {
                 final chat = chatData[index];
+                final latestMessage =
+                    latestMessages[chat.id]?.message ?? '최근 메시지가 없습니다';
+
                 return Column(
                   children: [
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
                       leading: (chat.partner.profileImage?.isEmpty ?? true)
                           ? const CircleAvatar(
                               radius: 22,
@@ -48,13 +54,19 @@ class ChatScreen extends StatelessWidget {
                           Text(
                             chat.partner.neighborhood,
                             style: AnbdTextStyle.Body10.copyWith(
-                                color: AnbdColor.systemGray03),
+                              color: AnbdColor.systemGray03,
+                            ),
                           ),
                         ],
                       ),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 4.0),
-                        child: Text(chat.sharePost.title),
+                        child: Text(
+                          latestMessage,
+                          style: AnbdTextStyle.Body14,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       trailing: chat.sharePost.images.isNotEmpty
                           ? ClipRRect(
