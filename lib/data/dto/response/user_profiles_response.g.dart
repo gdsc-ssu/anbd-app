@@ -10,9 +10,9 @@ _$UserProfilesResponseImpl _$$UserProfilesResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$UserProfilesResponseImpl(
       userId: (json['userId'] as num).toInt(),
-      nickname: json['nickname'] as String,
+      nickname: json['nickname'] as String?,
       profileImage: json['profileImage'] as String?,
-      neighborhood: json['neighborhood'] as String,
+      neighborhood: json['neighborhood'] as String?,
       reliability: (json['reliability'] as num).toInt(),
     );
 
