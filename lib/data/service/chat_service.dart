@@ -57,6 +57,7 @@ class ChatService {
     }
     throw Exception('Unreachable');
   }
+
   /// 채팅방 생성 API
   Future<void> makeChatRoom({
     required int partnerId,
