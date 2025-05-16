@@ -80,7 +80,20 @@ class AppRouter {
         ),
         GoRoute(
           path: Paths.chattingRoom,
-          builder: (context, state) => const ChattingRoomScreen(),
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>;
+            final int roomId = extra['roomId'];
+            final String profileUrl = extra['profileUrl'];
+            final String title = extra['title'];
+            final String image = extra['image'];
+
+            return ChattingRoomScreen(
+              roomId: roomId,
+              profileUrl: profileUrl,
+              title: title,
+              image: image,
+            );
+          },
         ),
         GoRoute(
           path: Paths.search,

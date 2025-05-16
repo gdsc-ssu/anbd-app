@@ -33,7 +33,15 @@ class ChatScreen extends StatelessWidget {
                   children: [
                     ListTile(
                       onTap: () {
-                        context.push(Paths.chattingRoom);
+                        context.push(
+                          Paths.chattingRoom,
+                          extra: {
+                            'roomId': chat.id,
+                            'profileUrl': chat.partner.profileImage,
+                            'title': chat.sharePost.title,
+                            'image': chat.sharePost.images[0],
+                          },
+                        );
                       },
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
