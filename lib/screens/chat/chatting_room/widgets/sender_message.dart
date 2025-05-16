@@ -22,7 +22,7 @@ class SenderMessage extends StatelessWidget {
         Flexible(
           child: Container(
             padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.only(right: 60),
+            margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
               color: const Color(0xFFF2F2F2),
               borderRadius: BorderRadius.circular(12),

@@ -70,7 +70,7 @@ class ChattingRoomScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
 
-                // 메시지 목록
+                /// 메시지 목록
                 if (viewModel.isLoading)
                   const Expanded(
                     child: Center(child: CircularProgressIndicator()),
@@ -85,7 +85,7 @@ class ChattingRoomScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final msg = viewModel.messages[index];
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
+                          padding: const EdgeInsets.only(bottom: 15),
                           child: msg.isMe
                               ? ReceiverMessage(
                                   text: msg.text,
@@ -105,7 +105,7 @@ class ChattingRoomScreen extends StatelessWidget {
                 // 입력창
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   decoration: const BoxDecoration(
                     border: Border(top: BorderSide(color: Color(0xFFEEEEEE))),
                     color: Colors.white,
