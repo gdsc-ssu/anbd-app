@@ -6,20 +6,20 @@ class RecommendList extends StatelessWidget {
 
   final List<Map<String, String>> items = const [
     {
-      "title": "에어팟 맥스 실버",
-      "image": "assets/images/placeholder.png",
+      "title": "다 읽은 책 교환",
+      "image": "assets/images/items/book.jpeg",
     },
     {
-      "title": "닌텐도 스위치",
-      "image": "assets/images/placeholder.png",
+      "title": "옷 나눔",
+      "image": "assets/images/items/clothes.jpeg",
     },
     {
-      "title": "소니 헤드폰 블랙색상",
-      "image": "assets/images/placeholder.png",
+      "title": "테이블 기부합니다",
+      "image": "assets/images/items/table.jpeg",
     },
     {
-      "title": "급처) 맥북프로",
-      "image": "assets/images/placeholder.png",
+      "title": "텀블러 무료 나눔 합니다",
+      "image": "assets/images/items/tumbler.jpeg",
     },
   ];
 

@@ -5,7 +5,6 @@ import 'package:anbd/data/dto/response/share_post_response.dart';
 import 'package:anbd/data/dto/response/bid_list_response.dart';
 import 'package:anbd/data/repository/local/secure_storage_repository.dart';
 
-
 class DetailViewModel extends ChangeNotifier {
   SharePostResponse? _post;
   SharePostResponse? get post => _post;
@@ -64,6 +63,6 @@ class DetailViewModel extends ChangeNotifier {
   Future<bool> isOwner() async {
     final storage = SecureStorageRepository();
     final userId = await storage.getUserId();
-    return _post?.userProfileResponse.userId.toString() == userId;
+    return _post?.userProfileResponse.userId == userId;
   }
 }

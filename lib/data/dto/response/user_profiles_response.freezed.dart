@@ -23,11 +23,11 @@ mixin _$UserProfilesResponse {
   @JsonKey(name: 'userId')
   int get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'nickname')
-  String get nickname => throw _privateConstructorUsedError;
+  String? get nickname => throw _privateConstructorUsedError;
   @JsonKey(name: 'profileImage')
   String? get profileImage => throw _privateConstructorUsedError;
   @JsonKey(name: 'neighborhood')
-  String get neighborhood => throw _privateConstructorUsedError;
+  String? get neighborhood => throw _privateConstructorUsedError;
   @JsonKey(name: 'reliability')
   int get reliability => throw _privateConstructorUsedError;
 
@@ -45,9 +45,9 @@ abstract class $UserProfilesResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'userId') int userId,
-      @JsonKey(name: 'nickname') String nickname,
+      @JsonKey(name: 'nickname') String? nickname,
       @JsonKey(name: 'profileImage') String? profileImage,
-      @JsonKey(name: 'neighborhood') String neighborhood,
+      @JsonKey(name: 'neighborhood') String? neighborhood,
       @JsonKey(name: 'reliability') int reliability});
 }
 
@@ -66,9 +66,9 @@ class _$UserProfilesResponseCopyWithImpl<$Res,
   @override
   $Res call({
     Object? userId = null,
-    Object? nickname = null,
+    Object? nickname = freezed,
     Object? profileImage = freezed,
-    Object? neighborhood = null,
+    Object? neighborhood = freezed,
     Object? reliability = null,
   }) {
     return _then(_value.copyWith(
@@ -76,18 +76,18 @@ class _$UserProfilesResponseCopyWithImpl<$Res,
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      nickname: null == nickname
+      nickname: freezed == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       profileImage: freezed == profileImage
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      neighborhood: null == neighborhood
+      neighborhood: freezed == neighborhood
           ? _value.neighborhood
           : neighborhood // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       reliability: null == reliability
           ? _value.reliability
           : reliability // ignore: cast_nullable_to_non_nullable
@@ -106,9 +106,9 @@ abstract class _$$UserProfilesResponseImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'userId') int userId,
-      @JsonKey(name: 'nickname') String nickname,
+      @JsonKey(name: 'nickname') String? nickname,
       @JsonKey(name: 'profileImage') String? profileImage,
-      @JsonKey(name: 'neighborhood') String neighborhood,
+      @JsonKey(name: 'neighborhood') String? neighborhood,
       @JsonKey(name: 'reliability') int reliability});
 }
 
@@ -124,9 +124,9 @@ class __$$UserProfilesResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = null,
-    Object? nickname = null,
+    Object? nickname = freezed,
     Object? profileImage = freezed,
-    Object? neighborhood = null,
+    Object? neighborhood = freezed,
     Object? reliability = null,
   }) {
     return _then(_$UserProfilesResponseImpl(
@@ -134,18 +134,18 @@ class __$$UserProfilesResponseImplCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      nickname: null == nickname
+      nickname: freezed == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       profileImage: freezed == profileImage
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      neighborhood: null == neighborhood
+      neighborhood: freezed == neighborhood
           ? _value.neighborhood
           : neighborhood // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       reliability: null == reliability
           ? _value.reliability
           : reliability // ignore: cast_nullable_to_non_nullable
@@ -172,13 +172,13 @@ class _$UserProfilesResponseImpl implements _UserProfilesResponse {
   final int userId;
   @override
   @JsonKey(name: 'nickname')
-  final String nickname;
+  final String? nickname;
   @override
   @JsonKey(name: 'profileImage')
   final String? profileImage;
   @override
   @JsonKey(name: 'neighborhood')
-  final String neighborhood;
+  final String? neighborhood;
   @override
   @JsonKey(name: 'reliability')
   final int reliability;
@@ -228,9 +228,9 @@ class _$UserProfilesResponseImpl implements _UserProfilesResponse {
 abstract class _UserProfilesResponse implements UserProfilesResponse {
   const factory _UserProfilesResponse(
           {@JsonKey(name: 'userId') required final int userId,
-          @JsonKey(name: 'nickname') required final String nickname,
+          @JsonKey(name: 'nickname') required final String? nickname,
           @JsonKey(name: 'profileImage') final String? profileImage,
-          @JsonKey(name: 'neighborhood') required final String neighborhood,
+          @JsonKey(name: 'neighborhood') required final String? neighborhood,
           @JsonKey(name: 'reliability') required final int reliability}) =
       _$UserProfilesResponseImpl;
 
@@ -242,13 +242,13 @@ abstract class _UserProfilesResponse implements UserProfilesResponse {
   int get userId;
   @override
   @JsonKey(name: 'nickname')
-  String get nickname;
+  String? get nickname;
   @override
   @JsonKey(name: 'profileImage')
   String? get profileImage;
   @override
   @JsonKey(name: 'neighborhood')
-  String get neighborhood;
+  String? get neighborhood;
   @override
   @JsonKey(name: 'reliability')
   int get reliability;
