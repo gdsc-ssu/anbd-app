@@ -26,7 +26,7 @@ class ReceiverMessage extends StatelessWidget {
         Flexible(
           child: Container(
             padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.only(left: 60),
+            margin: const EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
               color: const Color(0xFF338DFF),
               borderRadius: BorderRadius.circular(12),

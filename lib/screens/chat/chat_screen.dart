@@ -49,15 +49,15 @@ class ChatScreen extends StatelessWidget {
                       ),
                       leading: (chat.partner.profileImage?.isEmpty ?? true)
                           ? const CircleAvatar(
-                        radius: 22,
-                        backgroundColor: Colors.grey,
-                        child: Icon(Icons.person, color: Colors.white),
-                      )
+                              radius: 22,
+                              backgroundColor: Colors.grey,
+                              child: Icon(Icons.person, color: Colors.white),
+                            )
                           : CircleAvatar(
-                        radius: 22,
-                        backgroundImage:
-                        NetworkImage(chat.partner.profileImage!),
-                      ),
+                              radius: 22,
+                              backgroundImage:
+                                  NetworkImage(chat.partner.profileImage!),
+                            ),
                       title: Row(
                         children: [
                           Text(chat.partner.nickname,
@@ -82,14 +82,14 @@ class ChatScreen extends StatelessWidget {
                       ),
                       trailing: chat.sharePost.images.isNotEmpty
                           ? ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          chat.sharePost.images.first,
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
-                        ),
-                      )
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                chat.sharePost.images.first,
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                              ),
+                            )
                           : null,
                     ),
                     if (index != chatData.length - 1)
