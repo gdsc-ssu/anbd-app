@@ -21,6 +21,4 @@ abstract class Paths {
 
   static const String chattingRoom = '/chattingRoom';
   static const String search = '/search';
-
-  static const String chattingRoom = '/chattingRoom';
 }

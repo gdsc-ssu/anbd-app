@@ -109,7 +109,8 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBidButton(isBidPlaced || product.isBid, product.id, product.type ?? ""),
+      bottomNavigationBar: _buildBidButton(
+          isBidPlaced || product.isBid, product.id, product.type ?? ""),
     );
   }
 
@@ -155,12 +156,16 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildTopImage(SharePostResponse product) => TopImage(product: product);
-  Widget _buildUserInfo(SharePostResponse product) => UserInfo(user: product.userProfileResponse);
+  Widget _buildTopImage(SharePostResponse product) =>
+      TopImage(product: product);
+  Widget _buildUserInfo(SharePostResponse product) =>
+      UserInfo(user: product.userProfileResponse);
   Widget _buildContent(SharePostResponse product) => Content(product: product);
-  Widget _buildDescription(SharePostResponse product) => Description(product: product);
+  Widget _buildDescription(SharePostResponse product) =>
+      Description(product: product);
   Widget _buildReportButton() => const ReportButton();
-  Widget _buildBidderList(SharePostResponse product) => BidderList(sharePostId: product.id);
+  Widget _buildBidderList(SharePostResponse product) =>
+      BidderList(sharePostId: product.id);
   Widget _buildRecommendList() => const RecommendList();
 
   Widget _buildBidButton(bool isBid, int postId, String type) {
@@ -203,16 +208,16 @@ class _DetailScreenState extends State<DetailScreen> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: BasicButton(
-                        text: isBid ? "신청완료" : "나눔받기",
+                        text: isBid ? "신청완료" : "신청하기",
                         isClickable: !isBid && !isOwner,
                         onPressed: (!isBid && !isOwner)
                             ? () {
-                          if (type == "SHARE") {
-                            _openDonateBottomSheet(postId);
-                          } else {
-                            _openBidBottomSheet(postId, type);
-                          }
-                        }
+                                if (type == "SHARE") {
+                                  _openDonateBottomSheet(postId);
+                                } else {
+                                  _openBidBottomSheet(postId, type);
+                                }
+                              }
                             : null,
                         size: BasicButtonSize.SMALL,
                       ),

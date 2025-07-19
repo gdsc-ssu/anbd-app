@@ -163,10 +163,10 @@ class SharePostCreateScreen extends StatelessWidget {
                           context, viewModel, '무료나눔', SharePostType.SHARE),
                       const SizedBox(width: 20),
                       _buildTypeButton(
-                          context, viewModel, '교환', SharePostType.EXCHANGE),
+                          context, viewModel, '거래', SharePostType.EXCHANGE),
                       const SizedBox(width: 20),
-                      _buildTypeButton(
-                          context, viewModel, '기부', SharePostType.DONATE),
+                      // _buildTypeButton(
+                      //     context, viewModel, '기부', SharePostType.DONATE),
                     ],
                   ),
                 ],

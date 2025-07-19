@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 50),
                     const Text(
-                      '무료 나눔부터 기부까지\n지금 내 동네를 선택하고 시작해보세요!',
+                      '무료 나눔부터 중고거래까지\n지금 내 학교를 선택하고 시작해보세요!',
                       textAlign: TextAlign.center,
                       style: AnbdTextStyle.Body16,
                     ),
@@ -55,32 +55,32 @@ class LoginScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 15),
-                    _loginButton(
-                      platform: LoginPlatform.apple,
-                      onTap: () {
-                        /// TODO 클릭시 애플 로그인 구현
-                      },
-                    ),
+                    // _loginButton(
+                    //   platform: LoginPlatform.apple,
+                    //   onTap: () {
+                    //     /// TODO 클릭시 애플 로그인 구현
+                    //   },
+                    // ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '로그인 없이 사용하고 싶나요?',
-                          style: AnbdTextStyle.BodyL12.copyWith(
-                              color: AnbdColor.systemGray03),
-                        ),
-                        const SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () => context.push(Paths.home),
-                          child: Text(
-                            '둘러보기',
-                            style: AnbdTextStyle.BodyL12.copyWith(
-                                color: AnbdColor.blue),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text(
+                    //       '로그인 없이 사용하고 싶나요?',
+                    //       style: AnbdTextStyle.BodyL12.copyWith(
+                    //           color: AnbdColor.systemGray03),
+                    //     ),
+                    //     const SizedBox(width: 5),
+                    //     GestureDetector(
+                    //       onTap: () => context.push(Paths.home),
+                    //       child: Text(
+                    //         '둘러보기',
+                    //         style: AnbdTextStyle.BodyL12.copyWith(
+                    //             color: AnbdColor.blue),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 );
               },

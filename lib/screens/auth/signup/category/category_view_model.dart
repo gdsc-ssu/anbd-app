@@ -39,9 +39,9 @@ class CategoryViewModel extends ChangeNotifier {
 
   String? get birthDate => _birthDate;
 
-  String? _neighborhood;
+  String neighborhood = "숭실대";
 
-  String? get neighborhood => _neighborhood;
+  //String? get neighborhood => _neighborhood;
 
   /// 선택한 카테고리 저장 리스트
   final List<String> _selectedCategoryKeys = [];
@@ -52,7 +52,7 @@ class CategoryViewModel extends ChangeNotifier {
     _name = await _secureStorage.readUserName();
     _gender = await _secureStorage.readUserGender();
     _birthDate = await _secureStorage.readUserBirthDate();
-    _neighborhood = await _secureStorage.readUserNearbyDistricts();
+    //_neighborhood = await _secureStorage.readUserNearbyDistricts();
     notifyListeners();
   }
 
