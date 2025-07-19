@@ -74,7 +74,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             onPressed: () {
                               viewModel.saveUserInfo(viewModel.selectedGender,
                                   viewModel.ageController.text);
-                              context.push(Paths.location);
+                              context.push(Paths.category);
                             },
                           ),
                         )
