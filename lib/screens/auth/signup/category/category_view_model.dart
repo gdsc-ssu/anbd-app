@@ -39,7 +39,7 @@ class CategoryViewModel extends ChangeNotifier {
 
   String? get birthDate => _birthDate;
 
-  String neighborhood = "숭실대";
+  String neighborhood = "숭실대학교";
 
   //String? get neighborhood => _neighborhood;
 
